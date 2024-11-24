@@ -1,14 +1,14 @@
 import { Router } from "express";
-import authController from "../controllers/auth.controller";
+import authController from "./auth.controller";
 import {
   confirmResetPassword,
   login,
   register,
   ResetPassword,
   validateOTP,
-} from "../validation/auth.validation";
-import { validateSchema } from "../middleware/ValidationMiddleware";
-import { authorizeChange, protect } from "../middleware/authorize";
+} from "./auth.validation";
+import { validateSchema } from "../../middleware/ValidationMiddleware";
+import { authorizeChange, protect } from "../../middleware/authorize";
 const authRoutes = Router();
 
 authRoutes.post(

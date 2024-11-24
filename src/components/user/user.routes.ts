@@ -1,12 +1,12 @@
 import { Router } from "express";
-import userController from "../controllers/user.controller";
-import { protect, isAdmin } from "../middleware/authorize";
-import { validateSchema } from "../middleware/ValidationMiddleware";
+import userController from "./user.controller";
+import { protect, isAdmin } from "../../middleware/authorize";
+import { validateSchema } from "../../middleware/ValidationMiddleware";
 import {
   deleteUserValidation,
   getUserValidation,
   updateUserValidation,
-} from "../validation/user.validation";
+} from "./user.validation";
 const userRoutes = Router();
 
 userRoutes.get("/users", protect, isAdmin, userController.getAllUsers);

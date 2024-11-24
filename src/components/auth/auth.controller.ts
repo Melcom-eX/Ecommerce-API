@@ -1,11 +1,11 @@
 import { Request, Response } from "express"; // Import Request and Response types
-import userService from "../service/user.service"; // Ensure the userService is exported correctly
-import emailService from "../utils/email"; // Ensure the emailService is exported correctly
-import { sendOTPToUser } from "../utils/otp";
+import userService from "../user/user.service"; // Ensure the userService is exported correctly
+import emailService from "../../utils/email"; // Ensure the emailService is exported correctly
+import { sendOTPToUser } from "../../utils/otp";
 import {
   CreateUserResponse,
   UserServiceResponse,
-} from "../types/ResponseTypes";
+} from "../../types/ResponseTypes";
 // import logger from "../utils/logger";
 
 class AuthController {

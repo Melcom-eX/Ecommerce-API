@@ -1,23 +1,23 @@
 import jwt from "jsonwebtoken";
-import { comparePassword, encrypt } from "../utils/encryption";
+import { comparePassword, encrypt } from "../../utils/encryption";
 import {
   passwordMismatchError,
   doesNotExistError,
   defaultError,
   noDuplicateError,
-} from "../error/error";
+} from "../../error/error";
 import httpStatus from "http-status";
-import userRepository from "../repositories/user.repository";
+import userRepository from "./user.repository";
 import {
   LoginResponse,
   CreateUserResponse,
   DeleteUserResponse,
   GetUserResponse,
   User,
-} from "../types/ResponseTypes";
+} from "../../types/ResponseTypes";
 import { Role } from "@prisma/client";
-import { UserDocument, UserUpdateInput } from "../types/DBTypes";
-import { logger } from "../utils/logger";
+import { UserDocument, UserUpdateInput } from "../../types/DBTypes";
+import { logger } from "../../utils/logger";
 
 class UserService {
   async loginUser(

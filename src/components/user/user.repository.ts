@@ -5,7 +5,7 @@ import {
   Enrollment,
 } from "@prisma/client";
 const prisma = new PrismaClient();
-import { UserDocument, UserUpdateInput } from "../types/DBTypes";
+import { UserDocument, UserUpdateInput } from "../../types/DBTypes";
 // Define the interface for the user data
 
 class UserRepository {
