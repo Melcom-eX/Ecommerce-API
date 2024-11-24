@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String       @id @default(uuid())
+  fullName       String
+  password       String
+  email          String       @unique
+  dateOfBirth    DateTime
+  phoneNumber    String
+  enrollmentDate DateTime     @default(now())
+  major          String
+  isVerified     Boolean      @default(false)
+  otp            String?
+  otpExpiration  DateTime?
+  role           Role         @default(STUDENT)
+  enrollments    Enrollment[]
+}
+
+// Enum for user roles
+enum Role {
+  STUDENT
+  ADMIN
+}
+
+// Enrollment Model
+model Enrollment {
+  id             String           @id @default(uuid())
+  student        User             @relation(fields: [studentId], references: [id])
+  studentId      String
+  course         Course           @relation(fields: [courseId], references: [id])
+  courseId       String
+  enrollmentDate DateTime
+  status         EnrollmentStatus @default(PENDING)
+  grades         Grade[]
+}
+
+// Enum for enrollment status
+enum EnrollmentStatus {
+  ACTIVE
+  DROPPED
+  COMPLETED
+  PENDING // New value to add
+}
+
+// Course Model
+model Course {
+  id                String       @id @default(uuid())
+  courseName        String
+  courseDescription String?
+  credits           Int
+  department        String
+  enrollments       Enrollment[]
+}
+
+// Grade Model
+model Grade {
+  id           String     @id @default(uuid())
+  enrollment   Enrollment @relation(fields: [enrollmentId], references: [id])
+  enrollmentId String
+  grade        String // Can be a char or varchar depending on your system (e.g., A, B, C)
+  gradeDate    DateTime
+}
