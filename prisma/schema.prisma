@@ -14,62 +14,29 @@ datasource db {
 }
 
 model User {
-  id             String       @id @default(uuid())
-  fullName       String
-  password       String
-  email          String       @unique
-  dateOfBirth    DateTime
-  phoneNumber    String
-  enrollmentDate DateTime     @default(now())
-  major          String
-  isVerified     Boolean      @default(false)
-  otp            String?
-  otpExpiration  DateTime?
-  role           Role         @default(STUDENT)
-  enrollments    Enrollment[]
+  id            String    @id @default(uuid())
+  fullName      String
+  username      String    @unique
+  password      String
+  email         String    @unique
+  phone         Int       @unique
+  wallet        Int       @unique
+  dateOfBirth   DateTime
+  photo         String?
+  balance       Int       @default(0)
+  createdAt     DateTime  @default(now())
+  address       String?
+  active        Boolean   @default(true)
+  isBlocked     Boolean   @default(false)
+  isVerified    Boolean   @default(false)
+  otp           String?
+  otpExpiration DateTime?
+  role          Role      @default(USER)
 }
 
 // Enum for user roles
 enum Role {
-  STUDENT
+  USER
+  SELLER
   ADMIN
-}
-
-// Enrollment Model
-model Enrollment {
-  id             String           @id @default(uuid())
-  student        User             @relation(fields: [studentId], references: [id])
-  studentId      String
-  course         Course           @relation(fields: [courseId], references: [id])
-  courseId       String
-  enrollmentDate DateTime
-  status         EnrollmentStatus @default(PENDING)
-  grades         Grade[]
-}
-
-// Enum for enrollment status
-enum EnrollmentStatus {
-  ACTIVE
-  DROPPED
-  COMPLETED
-  PENDING // New value to add
-}
-
-// Course Model
-model Course {
-  id                String       @id @default(uuid())
-  courseName        String
-  courseDescription String?
-  credits           Int
-  department        String
-  enrollments       Enrollment[]
-}
-
-// Grade Model
-model Grade {
-  id           String     @id @default(uuid())
-  enrollment   Enrollment @relation(fields: [enrollmentId], references: [id])
-  enrollmentId String
-  grade        String // Can be a char or varchar depending on your system (e.g., A, B, C)
-  gradeDate    DateTime
 }
