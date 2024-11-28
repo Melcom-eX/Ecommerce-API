@@ -14,14 +14,15 @@ import {
   DeleteUserResponse,
   GetUserResponse,
   User,
-} from "../../types/ResponseTypes";
+} from "./user.response";
 import { Role } from "@prisma/client";
-import { UserDocument, UserUpdateInput } from "../../types/DBTypes";
+import { UserDocument, UserUpdateInput } from "./user.response";
 import { logger } from "../../utils/logger";
+import { generateWalletId } from "../../utils/wallet";
 
 class UserService {
   async loginUser(
-    email: string,
+    username: string,
     password: string
   ): Promise<
     | LoginResponse
@@ -30,7 +31,9 @@ class UserService {
     | typeof defaultError
   > {
     try {
-      const user = (await userRepository.findByEmail(email)) as UserDocument;
+      const user = (await userRepository.findByUsername(
+        username
+      )) as UserDocument;
       if (!user) return doesNotExistError;
       // const hashedPassword = await encrypt(password);
       const trimmedPassword = password.trim().toLowerCase();
@@ -66,11 +69,13 @@ class UserService {
 
   async createUser(
     fullName: string,
+    username: string,
     password: string,
     email: string,
     dateOfBirth: Date,
-    phoneNumber: string,
-    major: string,
+    phone: number,
+    photo: string,
+    address: string,
     role: Role
   ): Promise<
     CreateUserResponse | typeof noDuplicateError | typeof defaultError
@@ -81,16 +86,20 @@ class UserService {
       if (existingUser) return noDuplicateError;
       const trimmedFullName = fullName.trim();
       const trimmedPassword = password.trim().toLowerCase();
+      const wallet = generateWalletId();
 
       const hashedPassword = await encrypt(trimmedPassword);
 
       const user = await userRepository.createUser({
         fullName: trimmedFullName,
+        username,
         password: hashedPassword,
         email,
         dateOfBirth,
-        phoneNumber,
-        major,
+        phone,
+        wallet,
+        photo,
+        address,
         role,
       });
 
@@ -104,8 +113,13 @@ class UserService {
         data: {
           id: user.id,
           fullName: user.fullName,
+          username: user.username,
           email: user.email,
-          major: user.major,
+          dateOfBirth: user.dateOfBirth,
+          phone: user.phone,
+          wallet: user.wallet,
+          photo: user.photo,
+          address: user.address,
           role: user.role,
         },
       };

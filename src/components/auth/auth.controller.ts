@@ -18,7 +18,6 @@ class AuthController {
   }
 
   async signup(req: Request, res: Response): Promise<Response> {
-    // logger.log("proccesing signup request")
     const {
       fullName,
       username,

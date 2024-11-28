@@ -52,8 +52,13 @@ type CreateUserResponse = {
   data: {
     id: string;
     fullName: string;
+    username: string;
     email: string;
-    major: string;
+    dateOfBirth: Date;
+    phone: number;
+    wallet: number;
+    photo?: string;
+    address: string;
     role: string;
   };
 };

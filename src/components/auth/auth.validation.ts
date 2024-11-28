@@ -24,9 +24,9 @@ export const register = Joi.object({
     "any.required": "Email is a required field",
     "string.email": "Email must be a valid email address",
   }),
-  phone: Joi.string().required().messages({
-    "string.base": "Phone Number must be a string",
-    "string.empty": "Phone Number is required",
+  phone: Joi.number().required().messages({
+    "number.base": "Phone Number must be a number",
+    "number.empty": "Phone Number is required",
     "any.required": "Phone Number is a required field",
   }),
   dateOfBirth: Joi.date().required().messages({
