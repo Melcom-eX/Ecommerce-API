@@ -2,29 +2,38 @@ import { User as PrismaUser, Role } from "@prisma/client";
 interface UserDocument extends PrismaUser {
   id: string;
   fullName: string;
-  email: string;
+  username: string;
   password: string;
+  email: string;
+  phone: string;
+  wallet: number;
   dateOfBirth: Date;
-  phoneNumber: string;
-  enrollmentDate: Date;
-  major: string;
+  address: string;
+  photo: string;
+  balance: number;
+  active: boolean;
+  isBlocked: boolean;
   isVerified: boolean;
   role: Role;
+  createdAt: Date;
 }
-
 interface UserUpdateInput {
   fullName?: string;
-  email?: string;
+  username?: string;
   password?: string;
+  email?: string;
+  phone?: string;
+  wallet?: number;
   dateOfBirth?: Date;
-  phoneNumber?: string;
-  enrollmentDate?: Date;
-  otp?: string | null;
-  otpExpiration?: Date | null;
-  major?: string;
+  address?: string;
+  photo?: string;
+  balance?: number;
+  active?: boolean;
+  isBlocked?: boolean;
   isVerified?: boolean;
   role?: Role;
 }
+
 type LoginResponse = {
   status: string;
   error: boolean;
@@ -43,8 +52,13 @@ type CreateUserResponse = {
   data: {
     id: string;
     fullName: string;
+    username: string;
     email: string;
-    major: string;
+    dateOfBirth: Date;
+    phone: string;
+    wallet: number;
+    photo?: string;
+    address: string;
     role: string;
   };
 };

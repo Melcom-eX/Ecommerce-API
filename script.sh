@@ -1,5 +1,5 @@
 #!bin
-print "We are running ourserver"
+# print "We are running ourserver"
 #Check package vunerebility
 # npm outdated
 npm run dev

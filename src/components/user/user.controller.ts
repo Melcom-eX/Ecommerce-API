@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 // import { sendErrorResponse } from "../error/validation.error";
 import userService from "./user.service";
-import { UserServiceResponse } from "../../types/ResponseTypes";
+import { UserServiceResponse } from "./user.response";
 
 // Define the type for the response returned by the user service
 

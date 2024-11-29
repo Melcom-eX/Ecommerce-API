@@ -2,17 +2,14 @@ import { Request, Response } from "express"; // Import Request and Response type
 import userService from "../user/user.service"; // Ensure the userService is exported correctly
 import emailService from "../../utils/email"; // Ensure the emailService is exported correctly
 import { sendOTPToUser } from "../../utils/otp";
-import {
-  CreateUserResponse,
-  UserServiceResponse,
-} from "../../types/ResponseTypes";
+import { CreateUserResponse, UserServiceResponse } from "../user/user.response";
 // import logger from "../utils/logger";
 
 class AuthController {
   async login(req: Request, res: Response): Promise<Response> {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
     try {
-      const response = await userService.loginUser(email, password);
+      const response = await userService.loginUser(username, password);
       return res.status(response.statusCode).send(response);
     } catch (err) {
       console.error("Login error:", err);
@@ -21,18 +18,28 @@ class AuthController {
   }
 
   async signup(req: Request, res: Response): Promise<Response> {
-    // logger.log("proccesing signup request")
-    const { fullName, password, email, dateOfBirth, phoneNumber, major, role } =
-      req.body;
+    const {
+      fullName,
+      username,
+      password,
+      email,
+      phone,
+      dateOfBirth,
+      photo,
+      address,
+      role,
+    } = req.body;
 
     try {
       const response = await userService.createUser(
         fullName,
+        username,
         password,
         email,
         new Date(dateOfBirth),
-        phoneNumber,
-        major,
+        phone,
+        photo,
+        address,
         role
       );
 
@@ -51,7 +58,7 @@ class AuthController {
 
       // Prepare the email data
       const data = {
-        subject: "Student information system validation",
+        subject: "Ecommerce-API validation",
         username: fullName,
         OTP: otp, // This is now a string
       };
