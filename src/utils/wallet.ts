@@ -6,6 +6,6 @@ import randomatic from "randomatic";
  */
 export const generateWalletId = (): number => {
   // Generate random 11 digit string with only numbers
-  const walletId = parseInt(randomatic("0", 11));
+  const walletId = parseInt(randomatic("0", 8));
   return walletId;
 };
