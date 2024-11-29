@@ -15,25 +15,38 @@ const protect = async (req: Request, res: Response, next: NextFunction) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       // Fetch the user from the database
-      req.user = await prisma.user.findUnique({
+      const user = await prisma.user.findUnique({
         where: {
           id: decoded.id, // Ensure this matches the token payload
         },
         select: {
           id: true,
           fullName: true,
+          username: true,
           email: true,
+          phone: true,
+          wallet: true,
           dateOfBirth: true,
-          phoneNumber: true,
-          major: true,
-          role: true,
-          isVerified: true, // Ensure this field is true
+          photo: true,
+          balance: true,
+          createdAt: true,
+          address: true,
+          active: true,
+          isBlocked: true,
+          isVerified: true,
+          role: true, // Ensure this field is true
         },
       });
 
-      if (!req.user) {
+      if (!user) {
         return res.status(401).json({ message: "User not found" });
       }
+
+      req.user = {
+        ...user,
+        photo: user.photo ?? undefined,
+        address: user.address ?? undefined,
+      };
 
       // Check if the user is verified
       if (!req.user.isVerified) {
@@ -76,12 +89,19 @@ const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
         select: {
           id: true,
           fullName: true,
+          username: true,
           email: true,
+          phone: true,
+          wallet: true,
           dateOfBirth: true,
-          phoneNumber: true,
-          major: true,
-          role: true,
+          photo: true,
+          balance: true,
+          createdAt: true,
+          address: true,
+          active: true,
+          isBlocked: true,
           isVerified: true,
+          role: true,
         },
       });
 
@@ -103,7 +123,12 @@ const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
       }
 
       // If all checks pass, proceed to the next middleware
-      req.user = user;
+      req.user = {
+        ...user,
+        photo: user.photo ?? undefined,
+        address: user.address ?? undefined,
+      };
+
       next();
     } catch (err) {
       return res.status(401).json({ message: "Invalid or expired token" });
@@ -139,12 +164,19 @@ const authorizeChange = async (
         select: {
           id: true,
           fullName: true,
+          username: true,
           email: true,
+          phone: true,
+          wallet: true,
           dateOfBirth: true,
-          phoneNumber: true,
-          major: true,
-          role: true,
+          photo: true,
+          balance: true,
+          createdAt: true,
+          address: true,
+          active: true,
+          isBlocked: true,
           isVerified: true,
+          role: true,
         },
       });
 
@@ -153,7 +185,11 @@ const authorizeChange = async (
       }
 
       // Attach user to the request
-      req.user = user;
+      req.user = {
+        ...user,
+        photo: user.photo ?? undefined,
+        address: user.address ?? undefined,
+      };
 
       const { id } = req.params; // Assuming the user ID to check is in the params
 
