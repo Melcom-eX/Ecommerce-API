@@ -74,7 +74,7 @@ class UserRepository {
     password: string;
     email: string;
     dateOfBirth: Date;
-    phone: number;
+    phone: string;
     wallet: number;
     photo?: string;
     address: string;

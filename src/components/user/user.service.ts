@@ -73,7 +73,7 @@ class UserService {
     password: string,
     email: string,
     dateOfBirth: Date,
-    phone: number,
+    phone: string,
     photo: string,
     address: string,
     role: Role

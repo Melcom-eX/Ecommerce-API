@@ -5,7 +5,7 @@ interface UserDocument extends PrismaUser {
   username: string;
   password: string;
   email: string;
-  phone: number;
+  phone: string;
   wallet: number;
   dateOfBirth: Date;
   address: string;
@@ -22,7 +22,7 @@ interface UserUpdateInput {
   username?: string;
   password?: string;
   email?: string;
-  phone?: number;
+  phone?: string;
   wallet?: number;
   dateOfBirth?: Date;
   address?: string;
@@ -55,7 +55,7 @@ type CreateUserResponse = {
     username: string;
     email: string;
     dateOfBirth: Date;
-    phone: number;
+    phone: string;
     wallet: number;
     photo?: string;
     address: string;

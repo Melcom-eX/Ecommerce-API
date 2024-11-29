@@ -9,7 +9,7 @@ declare global {
         fullName: string;
         username: string;
         email: string;
-        phone: number;
+        phone: string;
         wallet: number;
         dateOfBirth: Date;
         photo?: string | undefined | null;

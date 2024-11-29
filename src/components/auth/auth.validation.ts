@@ -24,11 +24,14 @@ export const register = Joi.object({
     "any.required": "Email is a required field",
     "string.email": "Email must be a valid email address",
   }),
-  phone: Joi.number().required().messages({
-    "number.base": "Phone Number must be a number",
-    "number.empty": "Phone Number is required",
-    "any.required": "Phone Number is a required field",
-  }),
+  phone: Joi.string()
+    .pattern(/^[+]?[0-9]{10,15}$/)
+    .required()
+    .messages({
+      "string.base": "Phone string must be a string",
+      "string.empty": "Phone string is required",
+      "any.required": "Phone string is a required field",
+    }),
   dateOfBirth: Joi.date().required().messages({
     "date.base": "Date of Birth must be a valid date",
     "any.required": "Date of Birth is a required field",

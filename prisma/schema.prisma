@@ -19,7 +19,7 @@ model User {
   username      String    @unique
   password      String
   email         String    @unique
-  phone         Int       @unique
+  phone         String    @unique
   wallet        Int       @unique
   dateOfBirth   DateTime
   photo         String?
