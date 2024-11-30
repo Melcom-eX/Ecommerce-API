@@ -6,7 +6,9 @@ import {
   deleteUserValidation,
   getUserValidation,
   updateUserValidation,
+  uploadProfile,
 } from "./user.validation";
+import upload from "../../middleware/multer";
 const userRoutes = Router();
 
 userRoutes.get("/users", protect, isAdmin, userController.getAllUsers);
@@ -15,6 +17,13 @@ userRoutes.get(
   validateSchema(getUserValidation),
   protect,
   userController.getUser
+);
+userRoutes.post(
+  "/upload-profile/:userId", // Add `userId` as a route parameter
+  // validateSchema(uploadProfile),
+  protect,
+  upload.single("profile"), // Use the named import
+  userController.uploadProfile
 );
 userRoutes.put(
   "/update-user/:id",
