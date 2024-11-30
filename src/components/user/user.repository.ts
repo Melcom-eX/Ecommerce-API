@@ -16,7 +16,7 @@ class UserRepository {
         phone: true,
         wallet: true,
         dateOfBirth: true,
-        photo: true,
+        profile: true,
         balance: true,
         createdAt: true,
         address: true,
@@ -42,7 +42,7 @@ class UserRepository {
         phone: true,
         wallet: true,
         dateOfBirth: true,
-        photo: true,
+        profile: true,
         balance: true,
         createdAt: true,
         address: true,
@@ -65,7 +65,7 @@ class UserRepository {
     dateOfBirth,
     phone,
     wallet,
-    photo,
+    profile,
     address,
     role,
   }: {
@@ -76,7 +76,7 @@ class UserRepository {
     dateOfBirth: Date;
     phone: string;
     wallet: number;
-    photo?: string;
+    profile?: string;
     address: string;
     role?: Role;
   }): Promise<UserDocument> {
@@ -89,7 +89,7 @@ class UserRepository {
         dateOfBirth,
         phone,
         wallet,
-        photo,
+        profile,
         address,
         role,
       },

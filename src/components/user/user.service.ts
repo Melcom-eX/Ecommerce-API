@@ -74,7 +74,7 @@ class UserService {
     email: string,
     dateOfBirth: Date,
     phone: string,
-    photo: string,
+    profile: string,
     address: string,
     role: Role
   ): Promise<
@@ -98,7 +98,7 @@ class UserService {
         phone,
         wallet,
         dateOfBirth,
-        photo,
+        profile,
         address,
         role,
       });
@@ -118,7 +118,7 @@ class UserService {
           dateOfBirth: user.dateOfBirth,
           phone: user.phone,
           wallet: user.wallet,
-          photo: user.photo,
+          profile: user.profile,
           address: user.address,
           role: user.role,
         },

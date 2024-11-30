@@ -22,7 +22,7 @@ model User {
   phone         String    @unique
   wallet        Int       @unique
   dateOfBirth   DateTime
-  photo         String?
+  profile       String?
   balance       Int       @default(0)
   createdAt     DateTime  @default(now())
   address       String?
