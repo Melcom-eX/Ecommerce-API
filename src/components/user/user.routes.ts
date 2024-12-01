@@ -14,7 +14,7 @@ const userRoutes = Router();
 userRoutes.get("/users", protect, isAdmin, userController.getAllUsers);
 userRoutes.get(
   "/user/:id",
-  validateSchema(getUserValidation),
+  // validateSchema(getUserValidation),
   protect,
   userController.getUser
 );
