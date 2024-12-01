@@ -9,7 +9,7 @@ interface UserDocument extends PrismaUser {
   wallet: number;
   dateOfBirth: Date;
   address: string;
-  photo: string;
+  profile: string;
   balance: number;
   active: boolean;
   isBlocked: boolean;
@@ -26,7 +26,7 @@ interface UserUpdateInput {
   wallet?: number;
   dateOfBirth?: Date;
   address?: string;
-  photo?: string;
+  profile?: string;
   balance?: number;
   active?: boolean;
   isBlocked?: boolean;
@@ -57,7 +57,7 @@ type CreateUserResponse = {
     dateOfBirth: Date;
     phone: string;
     wallet: number;
-    photo?: string;
+    profile?: string;
     address: string;
     role: string;
   };

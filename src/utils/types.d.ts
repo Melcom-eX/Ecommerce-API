@@ -12,7 +12,7 @@ declare global {
         phone: string;
         wallet: number;
         dateOfBirth: Date;
-        photo?: string | undefined | null;
+        profile?: string | undefined | null;
         balance: number;
         createdAt: Date;
         address: string | undefined | null;

@@ -17,6 +17,14 @@ export const getUserValidation = Joi.object({
     "any.required": "ID is a required field",
   }),
 });
+// uploadProfile validator schema
+export const uploadProfile = Joi.object({
+  profile: Joi.string().required().messages({
+    "string.base": "profile must be a string",
+    "string.empty": "profile is required",
+    "any.required": "profile is a required field",
+  }),
+});
 
 // updateUserValidation validator schema
 export const updateUserValidation = Joi.object({

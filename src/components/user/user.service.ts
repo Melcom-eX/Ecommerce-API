@@ -19,6 +19,7 @@ import { Role } from "@prisma/client";
 import { UserDocument, UserUpdateInput } from "./user.response";
 import { logger } from "../../utils/logger";
 import { generateWalletId } from "../../utils/wallet";
+import cloudinary from "../../utils/cloudinary";
 
 class UserService {
   async loginUser(
@@ -74,7 +75,7 @@ class UserService {
     email: string,
     dateOfBirth: Date,
     phone: string,
-    photo: string,
+    profile: string,
     address: string,
     role: Role
   ): Promise<
@@ -98,7 +99,7 @@ class UserService {
         phone,
         wallet,
         dateOfBirth,
-        photo,
+        profile,
         address,
         role,
       });
@@ -118,7 +119,7 @@ class UserService {
           dateOfBirth: user.dateOfBirth,
           phone: user.phone,
           wallet: user.wallet,
-          photo: user.photo,
+          profile: user.profile,
           address: user.address,
           role: user.role,
         },
@@ -340,6 +341,67 @@ class UserService {
     } catch (error) {
       console.error(error);
       return defaultError;
+    }
+  }
+  async uploadProfile(
+    userId: string,
+    file: Express.Multer.File
+  ): Promise<{
+    status: string;
+    error: boolean;
+    statusCode: number;
+    message: string;
+    data?: { url: string };
+  }> {
+    try {
+      if (!file) {
+        return {
+          status: "error",
+          error: true,
+          statusCode: httpStatus.BAD_REQUEST,
+          message: "No file uploaded",
+        };
+      }
+
+      // Upload file to Cloudinary
+      const result = await cloudinary.uploader.upload(file.path, {
+        folder: "profiles",
+        width: 150,
+        height: 150,
+        crop: "fill",
+      });
+
+      // Store the URL in the database and associate it with the user
+      const updatedUser = await userRepository.update(userId, {
+        profile: result.secure_url, // Save the Cloudinary URL to the 'profile' field
+      });
+
+      if (!updatedUser) {
+        return {
+          status: "error",
+          error: true,
+          statusCode: httpStatus.BAD_REQUEST,
+          message: "Failed to update user profile",
+        };
+      }
+
+      return {
+        status: "success",
+        error: false,
+        statusCode: httpStatus.OK,
+        message: "Profile image uploaded and saved successfully",
+        data: {
+          url: result.secure_url,
+        },
+      };
+    } catch (error) {
+      console.error(error);
+      return {
+        status: "error",
+        error: true,
+        statusCode: httpStatus.INTERNAL_SERVER_ERROR,
+        message: "Error uploading profile image",
+      };
     }
   }
 }

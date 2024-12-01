@@ -27,7 +27,7 @@ const protect = async (req: Request, res: Response, next: NextFunction) => {
           phone: true,
           wallet: true,
           dateOfBirth: true,
-          photo: true,
+          profile: true,
           balance: true,
           createdAt: true,
           address: true,
@@ -44,7 +44,7 @@ const protect = async (req: Request, res: Response, next: NextFunction) => {
 
       req.user = {
         ...user,
-        photo: user.photo ?? undefined,
+        profile: user.profile ?? undefined,
         address: user.address ?? undefined,
       };
 
@@ -94,7 +94,7 @@ const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
           phone: true,
           wallet: true,
           dateOfBirth: true,
-          photo: true,
+          profile: true,
           balance: true,
           createdAt: true,
           address: true,
@@ -125,7 +125,7 @@ const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
       // If all checks pass, proceed to the next middleware
       req.user = {
         ...user,
-        photo: user.photo ?? undefined,
+        profile: user.profile ?? undefined,
         address: user.address ?? undefined,
       };
 
@@ -169,7 +169,7 @@ const authorizeChange = async (
           phone: true,
           wallet: true,
           dateOfBirth: true,
-          photo: true,
+          profile: true,
           balance: true,
           createdAt: true,
           address: true,
@@ -187,7 +187,7 @@ const authorizeChange = async (
       // Attach user to the request
       req.user = {
         ...user,
-        photo: user.photo ?? undefined,
+        profile: user.profile ?? undefined,
         address: user.address ?? undefined,
       };
 

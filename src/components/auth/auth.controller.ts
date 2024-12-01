@@ -25,7 +25,7 @@ class AuthController {
       email,
       phone,
       dateOfBirth,
-      photo,
+      profile,
       address,
       role,
     } = req.body;
@@ -38,7 +38,7 @@ class AuthController {
         email,
         new Date(dateOfBirth),
         phone,
-        photo,
+        profile,
         address,
         role
       );
