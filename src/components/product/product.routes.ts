@@ -1,32 +1,32 @@
 import { Router } from "express";
-import { isAdmin, protect } from "../../middleware/authorize";
-import categoryController from "./category.controller";
+import { isAdmin, prod, protect } from "../../middleware/authorize";
+import productController from "./product.controller";
 import { validateSchema } from "../../middleware/ValidationMiddleware";
 import {
-  createCategoryValidation,
-  deleteCategoryValidation,
-  updateCategoryValidation,
-} from "./category.validation";
+  createProductValidation,
+  deleteProductValidation,
+  updateProductValidation,
+} from "./product.validation";
 const productRoutes = Router();
-productRoutes.get("/products", protect, categoryController.getAllCategories);
-productRoutes.get("/product/:id", protect, categoryController.getCategory);
+productRoutes.get("/products", protect, productController.getAllProducts);
+productRoutes.get("/product/:id", protect, productController.getProduct);
 productRoutes.post(
-  "/create-category",
-  validateSchema(createCategoryValidation),
-  isAdmin,
-  categoryController.createCategory
+  "/create-product",
+  validateSchema(createProductValidation),
+  prod,
+  productController.createProduct
 );
 productRoutes.put(
   "/update-product/:id",
-  validateSchema(updateCategoryValidation),
-  isAdmin,
-  categoryController.updateCategory
+  validateSchema(updateProductValidation),
+  prod,
+  productController.updateProduct
 );
 productRoutes.delete(
   "/delete-product/:id",
-  validateSchema(deleteCategoryValidation),
-  isAdmin,
-  categoryController.deleteCategory
+  validateSchema(deleteProductValidation),
+  prod,
+  productController.deleteProduct
 );
 
 export default productRoutes;

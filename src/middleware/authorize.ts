@@ -137,6 +137,79 @@ const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
     return res.status(401).json({ message: "No token provided" });
   }
 };
+const prod = async (req: Request, res: Response, next: NextFunction) => {
+  let token;
+
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    try {
+      token = req.headers.authorization.split(" ")[1];
+
+      // Verify the token and decode its payload
+      const decoded = jwt.verify(token, process.env.JWT_SECRET) as {
+        id: string;
+      };
+
+      // Fetch the user from the database
+      const user = await prisma.user.findUnique({
+        where: {
+          id: decoded.id,
+        },
+        select: {
+          id: true,
+          fullName: true,
+          username: true,
+          email: true,
+          phone: true,
+          wallet: true,
+          dateOfBirth: true,
+          profile: true,
+          balance: true,
+          createdAt: true,
+          address: true,
+          active: true,
+          isBlocked: true,
+          isVerified: true,
+          role: true,
+        },
+      });
+
+      // If no user is found, return unauthorized
+      if (!user) {
+        return res.status(401).json({ message: "User not found" });
+      }
+
+      // Check if the user is verified
+      if (!user.isVerified) {
+        return res
+          .status(403)
+          .json({ message: "Access denied. User not verified." });
+      }
+
+      // Check if the user is an admin or seller
+      if (user.role !== "ADMIN" && user.role !== "SELLER") {
+        return res
+          .status(403)
+          .json({ message: "Access denied. Admin or Seller only." });
+      }
+
+      // If all checks pass, proceed to the next middleware
+      req.user = {
+        ...user,
+        profile: user.profile ?? undefined,
+        address: user.address ?? undefined,
+      };
+
+      next();
+    } catch (err) {
+      return res.status(401).json({ message: "Invalid or expired token" });
+    }
+  } else {
+    return res.status(401).json({ message: "No token provided" });
+  }
+};
 
 const authorizeChange = async (
   req: Request,
@@ -210,4 +283,4 @@ const authorizeChange = async (
   }
 };
 
-export { protect, isAdmin, authorizeChange };
+export { protect, isAdmin, authorizeChange, prod };
