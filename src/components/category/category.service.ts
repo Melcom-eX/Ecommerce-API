@@ -5,7 +5,7 @@ import {
   CategoryUpdateInput,
 } from "./category.response";
 import { createErrorResponse, Errors } from "../../error/error";
-
+import categoryRepository from "./category.repository";
 const prisma = new PrismaClient();
 
 class CategoryService {
@@ -14,7 +14,7 @@ class CategoryService {
     CategoryServiceResponse | typeof Errors.defaultError
   > {
     try {
-      const categories = await prisma.category.findMany();
+      const categories = await categoryRepository.findAll();
       return {
         status: "success",
         statusCode: httpStatus.OK,
@@ -31,12 +31,11 @@ class CategoryService {
     id: string
   ): Promise<CategoryServiceResponse | typeof createErrorResponse> {
     try {
-      const category = await prisma.category.findUnique({
-        where: { id },
-      });
+      const category = await categoryRepository.findById(id);
 
-      if (!category)
+      if (!category) {
         return createErrorResponse("Category not found", httpStatus.NOT_FOUND);
+      }
 
       return {
         status: "success",
@@ -52,14 +51,12 @@ class CategoryService {
   // Create new category
   async createCategory(
     name: string,
-    description?: string
+    description: string
   ): Promise<CategoryServiceResponse | typeof createErrorResponse> {
     try {
-      const category = await prisma.category.create({
-        data: {
-          name,
-          description,
-        },
+      const category = await categoryRepository.create({
+        name,
+        description,
       });
 
       return {
@@ -79,15 +76,16 @@ class CategoryService {
     updateData: CategoryUpdateInput
   ): Promise<CategoryServiceResponse | typeof createErrorResponse> {
     try {
-      const category = await prisma.category.update({
-        where: { id },
-        data: updateData,
-      });
+      const category = await categoryRepository.findById(id);
+      if (!category) {
+        return createErrorResponse("category not found", httpStatus.NOT_FOUND);
+      }
+      const updatedCategory = await categoryRepository.update(id, updateData);
 
       return {
         status: "success",
         statusCode: httpStatus.OK,
-        data: category,
+        data: updatedCategory,
       };
     } catch (error) {
       return createErrorResponse(
@@ -102,9 +100,7 @@ class CategoryService {
     id: string
   ): Promise<CategoryServiceResponse | typeof createErrorResponse> {
     try {
-      await prisma.category.delete({
-        where: { id },
-      });
+      const category = await categoryRepository.delete(id);
 
       return {
         status: "success",
