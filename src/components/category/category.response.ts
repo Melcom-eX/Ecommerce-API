@@ -1,4 +1,4 @@
-import { Category as CategoryModel, Product } from "@prisma/client";
+import { Category as CategoryModel } from "@prisma/client";
 
 interface CategoryUpdateInput {
   name?: string;
@@ -9,7 +9,6 @@ type CategoryResponse = {
   status: string;
   error: boolean;
   statusCode: number;
-  message: string;
   data?: CategoryModel | null;
 };
 
@@ -33,20 +32,12 @@ type DeleteCategoryResponse = {
   message: string;
 };
 
-type GetCategoryResponse = {
-  status: string;
-  error: boolean;
-  statusCode: number;
-  message: string;
-  data?: CategoryModel | null;
-};
-
 type CategoryServiceResponse = {
   status: string;
+  error?: boolean;
   statusCode: number;
   message?: string;
-  data?: any;
-  error?: boolean;
+  data?: CategoryModel | CategoryModel[] | null;
 };
 
 export {
@@ -54,6 +45,5 @@ export {
   CategoryResponse,
   CreateCategoryResponse,
   DeleteCategoryResponse,
-  GetCategoryResponse,
   CategoryServiceResponse,
 };

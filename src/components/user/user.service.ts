@@ -1,11 +1,6 @@
 import jwt from "jsonwebtoken";
 import { comparePassword, encrypt } from "../../utils/encryption";
-import {
-  passwordMismatchError,
-  doesNotExistError,
-  defaultError,
-  noDuplicateError,
-} from "../../error/error";
+import { Errors } from "../../error/error";
 import httpStatus from "http-status";
 import userRepository from "./user.repository";
 import {
@@ -27,15 +22,15 @@ class UserService {
     password: string
   ): Promise<
     | LoginResponse
-    | typeof doesNotExistError
-    | typeof passwordMismatchError
-    | typeof defaultError
+    | typeof Errors.doesNotExist
+    | typeof Errors.passwordMismatch
+    | typeof Errors.defaultError
   > {
     try {
       const user = (await userRepository.findByUsername(
         username
       )) as UserDocument;
-      if (!user) return doesNotExistError;
+      if (!user) return Errors.doesNotExist;
       // const hashedPassword = await encrypt(password);
       const trimmedPassword = password.trim().toLowerCase();
 
@@ -44,7 +39,7 @@ class UserService {
         user.password
       );
 
-      if (!isPasswordCorrect) return passwordMismatchError;
+      if (!isPasswordCorrect) return Errors.passwordMismatch;
 
       let { password: userPassword, ...userWithoutPassword } = user;
       const payload = {
@@ -64,7 +59,7 @@ class UserService {
       };
     } catch (error) {
       console.error(error);
-      return defaultError;
+      return Errors.defaultError;
     }
   }
 
@@ -79,12 +74,11 @@ class UserService {
     address: string,
     role: Role
   ): Promise<
-    CreateUserResponse | typeof noDuplicateError | typeof defaultError
+    CreateUserResponse | typeof Errors.noDuplicate | typeof Errors.defaultError
   > {
     try {
-      logger.info("Request to create a user");
       const existingUser = await userRepository.findByEmail(email);
-      if (existingUser) return noDuplicateError;
+      if (existingUser) return Errors.noDuplicate;
       const trimmedFullName = fullName.trim();
       const trimmedPassword = password.trim().toLowerCase();
       const wallet = generateWalletId();
@@ -104,7 +98,7 @@ class UserService {
         role,
       });
 
-      if (!user) return defaultError;
+      if (!user) return Errors.defaultError;
 
       return {
         status: "success",
@@ -127,16 +121,16 @@ class UserService {
     } catch (error) {
       console.error(error);
 
-      return defaultError;
+      return Errors.defaultError;
     }
   }
 
   async deleteUser(
     id: string
-  ): Promise<DeleteUserResponse | typeof doesNotExistError> {
+  ): Promise<DeleteUserResponse | typeof Errors.doesNotExist> {
     try {
       const user = await userRepository.delete(id);
-      if (!user) return doesNotExistError;
+      if (!user) return Errors.doesNotExist;
 
       return {
         status: "success",
@@ -146,7 +140,7 @@ class UserService {
       };
     } catch (error) {
       console.error(error);
-      return defaultError;
+      return Errors.defaultError;
     }
   }
 
@@ -172,16 +166,16 @@ class UserService {
       };
     } catch (error) {
       console.error(error);
-      return defaultError;
+      return Errors.defaultError;
     }
   }
 
   async getUser(
     id: string
-  ): Promise<GetUserResponse | typeof doesNotExistError> {
+  ): Promise<GetUserResponse | typeof Errors.doesNotExist> {
     try {
       const user = await userRepository.findById(id);
-      if (!user) return doesNotExistError;
+      if (!user) return Errors.doesNotExist;
 
       return {
         status: "success",
@@ -192,7 +186,7 @@ class UserService {
       };
     } catch (error) {
       console.error(error);
-      return defaultError;
+      return Errors.defaultError;
     }
   }
 
@@ -239,7 +233,7 @@ class UserService {
       };
     } catch (error) {
       console.error(error);
-      return defaultError;
+      return Errors.defaultError;
     }
   }
 
@@ -287,7 +281,7 @@ class UserService {
       };
     } catch (error) {
       console.error(`Error validating OTP for user ${userId}:`, error);
-      return defaultError;
+      return Errors.defaultError;
     }
   }
 
@@ -340,7 +334,7 @@ class UserService {
       };
     } catch (error) {
       console.error(error);
-      return defaultError;
+      return Errors.defaultError;
     }
   }
   async uploadProfile(

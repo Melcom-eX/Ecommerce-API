@@ -3,6 +3,7 @@ import { isAdmin, protect } from "../../middleware/authorize";
 import categoryController from "./category.controller";
 import { validateSchema } from "../../middleware/ValidationMiddleware";
 import {
+  createCategoryValidation,
   deleteCategoryValidation,
   updateCategoryValidation,
 } from "./category.validation";
@@ -11,7 +12,7 @@ categoryRoutes.get("/categories", protect, categoryController.getAllCategories);
 categoryRoutes.get("/category/:id", protect, categoryController.getCategory);
 categoryRoutes.post(
   "/create-category",
-  // validateSchema(uploadProfile),
+  validateSchema(createCategoryValidation),
   isAdmin,
   categoryController.createCategory
 );
