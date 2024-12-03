@@ -11,9 +11,9 @@ import {
 import upload from "../../middleware/multer";
 const userRoutes = Router();
 
-userRoutes.get("/users", protect, isAdmin, userController.getAllUsers);
+userRoutes.get("", protect, isAdmin, userController.getAllUsers);
 userRoutes.get(
-  "/user/:id",
+  "/:id",
   // validateSchema(getUserValidation),
   protect,
   userController.getUser
@@ -26,13 +26,13 @@ userRoutes.post(
   userController.uploadProfile
 );
 userRoutes.put(
-  "/update-user/:id",
+  "/:id",
   validateSchema(updateUserValidation),
   protect,
   userController.updateUser
 );
 userRoutes.delete(
-  "/delete-user/:id",
+  "/:id",
   validateSchema(deleteUserValidation),
   isAdmin,
   userController.deleteUser

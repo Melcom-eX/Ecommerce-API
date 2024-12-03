@@ -6,6 +6,8 @@ import dotenv from "dotenv";
 import rateLimit from "express-rate-limit";
 import userRoutes from "./components/user/user.routes";
 import authRoutes from "./components/auth/auth.routes";
+import categoryRoutes from "./components/category/category.routes";
+import productRoutes from "./components/product/product.routes";
 
 // Load environment variables
 dotenv.config();
@@ -41,8 +43,10 @@ app.get("/", async (req: Request, res: Response) => {
   res.json({ success: true, message: "Backend Connected Successfully" });
 });
 
-app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/categories", categoryRoutes);
+app.use("/api/v1/products", productRoutes);
 
 // Start server and connect to the database
 app.listen(port, () => {

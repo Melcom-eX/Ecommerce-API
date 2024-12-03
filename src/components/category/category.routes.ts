@@ -8,8 +8,8 @@ import {
   updateCategoryValidation,
 } from "./category.validation";
 const categoryRoutes = Router();
-categoryRoutes.get("/categories", protect, categoryController.getAllCategories);
-categoryRoutes.get("/category/:id", protect, categoryController.getCategory);
+categoryRoutes.get("", protect, categoryController.getAllCategories);
+categoryRoutes.get("/:id", protect, categoryController.getCategory);
 categoryRoutes.post(
   "/create-category",
   validateSchema(createCategoryValidation),
@@ -17,13 +17,13 @@ categoryRoutes.post(
   categoryController.createCategory
 );
 categoryRoutes.put(
-  "/update-category/:id",
+  "/:id",
   validateSchema(updateCategoryValidation),
   isAdmin,
   categoryController.updateCategory
 );
 categoryRoutes.delete(
-  "/delete-category/:id",
+  "/:id",
   validateSchema(deleteCategoryValidation),
   isAdmin,
   categoryController.deleteCategory

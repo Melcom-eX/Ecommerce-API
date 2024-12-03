@@ -1,110 +1,88 @@
 ### **Backend README**
 
-<!-- ```md -->
+# Project Overview
 
-# Express Template TS
+This project is a backend application built using TypeScript and Express.js, designed to provide a robust API for managing users, products, and categories. It utilizes Prisma as an ORM for database interactions, ensuring type safety and ease of use.
 
-An Express.js project template to kickstart your Node.js applications with a basic setup.
+## Key Components
 
-## Features
+### 1. **Controllers**
 
-**Express.js:** A minimalist web framework for Node.js.
-**ESLint:** For linting JavaScript code.
-**Pre-configured Routes:** Basic routing setup to get started with.
-**Environment Variables:** Uses .env file for environment configuration.
-**Nodemon:** For auto-restarting the server during development.
+Controllers handle incoming requests and return responses. They act as intermediaries between the client and the service layer.
 
-# Project Structure
+- **auth.controller.ts**: Manages authentication-related operations.
+- **user.controller.ts**: Handles user-related requests such as creating, updating, and retrieving user information.
 
-```bash
-express-template-ts/
-├── package.json
-├── package-lock.json
-├── README.md
-├── src
-│   ├── controllers
-│   │   ├── auth.controller.ts
-│   │   └── user.controller.ts
-│   ├── error
-│   │   ├── error.ts
-│   │   └── validation.error.ts
-│   ├── index.ts
-│   ├── middleware
-│   │   ├── jwt.ts
-│   │   └── ValidationMiddleware.ts
-│   ├── models
-│   │   └── User.ts
-│   ├── repositories
-│   │   └── user.repository.ts
-│   ├── routes
-│   │   ├── auth.routes.ts
-│   │   └── user.routes.ts
-│   ├── service
-│   │   └── user.service.ts
-│   ├── types
-│   │   └── types.d.ts
-│   ├── utils
-│   │   ├── db.ts
-│   │   ├── email.ts
-│   │   └── encryption.ts
-│   ├── validation
-│   │   └── auth.validation.ts
-│   └── views
-│       ├── forgetPassword.handlebars
-│       ├── welcome.hbs
-│       └── welcomeMessage.handlebars
-├── tsconfig.json
-└── vercel.json
-```
+### 2. **Services**
 
-# Prerequisites
+Services contain the business logic of the application. They interact with repositories to perform CRUD operations.
 
-1. Node.js (v14 or higher)
-2. NPM or Yarn
+- **user.service.ts**: Contains methods for user management, including creating and retrieving users.
 
-# Installation
+### 3. **Repositories**
 
-1. Clone the repository:
+Repositories are responsible for direct database interactions. They abstract the data access layer and provide methods to interact with the database.
 
-```bash
-git clone https://github.com/Chu-rill/express-template-js.git
+- **user.repository.ts**: Contains methods for querying user data from the database.
 
-```
+### 4. **Middleware**
 
-2. Navigate to the project directory:
+Middleware functions are executed during the request-response cycle. They can modify the request or response objects, end the request-response cycle, or call the next middleware function.
 
-```bash
-cd express-template-js
-```
+- **jwt.ts**: Handles JWT token verification for protected routes.
+- **ValidationMiddleware.ts**: Validates incoming request data against defined schemas.
 
-3. Install dependencies:
+### 5. **Models**
 
-```bash
-npm install
-```
+Models define the structure of the data in the application. They represent the database entities.
 
-4. Create a .env file based on the .env.example:
+- **User.ts**: Defines the User model, including fields like username, email, and password.
 
-```bash
-cp .env.example .env
-```
+### 6. **Routes**
 
-5. Start the development server:
+Routes define the endpoints of the API and map them to the appropriate controller methods.
 
-```bash
-npm run dev
-```
+- **auth.routes.ts**: Contains routes related to authentication.
+- **user.routes.ts**: Contains routes for user management.
 
-# Usage
+### 7. **Error Handling**
 
-1. Open http://localhost:{PORT} in your browser to see the app running.
-2. Customize routes by modifying files in the routes/ folder.
+The application includes a centralized error handling mechanism to manage and respond to errors consistently.
 
-# Available Scripts
+- **error.ts**: Defines error response structures and common error messages.
+- **validation.error.ts**: Handles validation-specific errors.
 
-1. **npm start:** Starts the server in production mode.
-2. **npm run dev:** Starts the server with Nodemon for auto-reloading during development.
+### 8. **Utilities**
 
-# License
+Utility functions provide common functionalities that can be reused across the application.
 
-This project is licensed under the MIT License.
+- **db.ts**: Manages database connections.
+- **email.ts**: Contains functions for sending emails.
+- **encryption.ts**: Provides encryption and decryption functionalities.
+
+### 9. **Validation**
+
+Validation schemas ensure that incoming data meets the required format and constraints.
+
+- **auth.validation.ts**: Defines validation rules for authentication-related data.
+
+### 10. **Types**
+
+Type definitions enhance type safety across the application.
+
+- **types.d.ts**: Contains custom type definitions used throughout the project.
+
+## Getting Started
+
+To get started with the project, follow these steps:
+
+1. Clone the repository.
+2. Install the dependencies using `npm install`.
+3. Set up your environment variables in a `.env` file.
+4. Run the application using `npm run dev`.
+
+## Conclusion
+
+This project serves as a comprehensive backend solution, providing essential features for user and product management. It is designed to be scalable and maintainable, making it suitable for various applications.
+
+<!-- End Generation Here -->
