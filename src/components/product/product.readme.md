@@ -116,6 +116,46 @@
   - `categoryId` (string): Category ID
   - `sellerId` (string): Seller ID
 - **Validation**:
+
   - Name must be a string (if provided)
   - Description must be a string (if provided)
   - Price must be a positive number (if provided)
+
+  ### Upload Product Images
+
+  - **URL**: `/products/image/:id`
+  - **Method**: `POST`
+  - **Description**: Upload images for a specific product
+  - **Required URL Parameters**:
+    - `id` (string): Product's ID
+  - **Required Body Parameters**:
+    - `images` (array of files): Array of image files to be uploaded
+  - **Validation**:
+    - `id` must be a valid UUID
+    - `images` must be an array of valid image files
+  - **Success Response**:
+    ```json
+    {
+      "status": "success",
+      "statusCode": 200,
+      "message": "Product images uploaded and saved successfully",
+      "data": {
+        "urls": ["image_url_1", "image_url_2"]
+      }
+    }
+    ```
+  - **Error Responses**:
+    - **400 Bad Request**:
+      ```json
+      {
+        "status": "error",
+        "message": "No files uploaded"
+      }
+      ```
+    - **500 Internal Server Error**:
+      ```json
+      {
+        "status": "error",
+        "message": "Internal server error"
+      }
+      ```
