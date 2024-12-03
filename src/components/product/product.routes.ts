@@ -8,23 +8,24 @@ import {
   updateProductValidation,
 } from "./product.validation";
 const productRoutes = Router();
-productRoutes.get("/products", protect, productController.getAllProducts);
-productRoutes.get("/product/:id", protect, productController.getProduct);
+productRoutes.get("", protect, productController.getAllProducts);
+productRoutes.get("/:id", protect, productController.getProduct);
+
 productRoutes.post(
-  "/create-product",
+  "",
   validateSchema(createProductValidation),
   prod,
   productController.createProduct
 );
 productRoutes.put(
-  "/update-product/:id",
+  "/:id",
   validateSchema(updateProductValidation),
   prod,
   productController.updateProduct
 );
 productRoutes.delete(
-  "/delete-product/:id",
-  validateSchema(deleteProductValidation),
+  "/:id",
+  //   validateSchema(deleteProductValidation),
   prod,
   productController.deleteProduct
 );

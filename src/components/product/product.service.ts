@@ -2,6 +2,7 @@ import { PrismaClient, Product } from "@prisma/client";
 import { ProductData, ProductServiceResponse } from "./product.response";
 import httpStatus from "http-status";
 import { createErrorResponse, Errors } from "../../error/error";
+import productRepository from "./product.repository";
 
 const prisma = new PrismaClient();
 
@@ -17,16 +18,14 @@ class ProductService {
     sellerId: string
   ): Promise<ProductServiceResponse> {
     try {
-      const product: Product = await prisma.product.create({
-        data: {
-          name,
-          description,
-          price,
-          stock,
-          images,
-          categoryId,
-          sellerId,
-        },
+      const product: Product = await productRepository.create({
+        name,
+        description,
+        price,
+        stock,
+        images,
+        categoryId,
+        sellerId,
       });
 
       return {
@@ -59,9 +58,7 @@ class ProductService {
   }
 
   // Get a specific product by id
-  async getProduct(
-    id: string
-  ): Promise<ProductServiceResponse | typeof createErrorResponse> {
+  async getProduct(id: string): Promise<ProductServiceResponse> {
     try {
       const product: Product | null = await prisma.product.findUnique({
         where: { id },
@@ -120,6 +117,31 @@ class ProductService {
       };
     } catch (error) {
       console.error("Delete product error:", error);
+      return Errors.defaultError;
+    }
+  }
+  // Find products by category
+  async findProductsByCategory(
+    categoryId: string
+  ): Promise<ProductServiceResponse> {
+    try {
+      console.log(`category: ${categoryId}`);
+      const products: Product[] = await productRepository.findByCategory(
+        categoryId
+      );
+
+      if (!products) {
+        return createErrorResponse("Products not found", httpStatus.NOT_FOUND);
+      }
+
+      return {
+        status: "success",
+        statusCode: httpStatus.OK,
+        message: "Products retrieved successfully",
+        data: products,
+      };
+    } catch (error) {
+      console.error("Find products by category error:", error);
       return Errors.defaultError;
     }
   }

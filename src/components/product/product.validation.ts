@@ -66,3 +66,11 @@ export const deleteProductValidation = Joi.object({
     "any.required": "Product ID is required",
   }),
 });
+
+export const categoryQueryValidation = Joi.object({
+  categoryId: Joi.string().required().uuid().messages({
+    "string.base": "Category ID must be a string",
+    "string.empty": "Category ID is required",
+    "string.guid": "Category ID must be a valid UUID",
+  }),
+});

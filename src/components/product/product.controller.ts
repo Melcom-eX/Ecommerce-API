@@ -30,6 +30,13 @@ class ProductController {
   // Get all products
   async getAllProducts(req: Request, res: Response): Promise<Response> {
     try {
+      const categoryId = req.query.categoryId as string;
+      if (categoryId) {
+        const response: ProductServiceResponse =
+          await productService.findProductsByCategory(categoryId);
+
+        return res.status(response.statusCode).send(response);
+      }
       const response: ProductServiceResponse | any =
         await productService.getAllProducts();
       return res.status(response.statusCode).send(response);
@@ -84,6 +91,22 @@ class ProductController {
       return res.status(500).json({ message: "Internal server error" });
     }
   }
+  // Find products by category
+  //   async findProductsByCategory(req: Request, res: Response): Promise<Response> {
+  //     const categoryId = req.query.categoryId as string;
+
+  //     try {
+  //       console.log("hello ");
+  //       console.log(`controller: ${categoryId}`);
+  //       const response: ProductServiceResponse =
+  //         await productService.findProductsByCategory(categoryId);
+
+  //       return res.status(response.statusCode).send(response);
+  //     } catch (err) {
+  //       console.error("Find products by category error:", err);
+  //       return res.status(500).json({ message: "Internal server error" });
+  //     }
+  //   }
 }
 
 export default new ProductController();

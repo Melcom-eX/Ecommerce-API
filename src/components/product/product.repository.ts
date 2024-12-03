@@ -65,6 +65,14 @@ class ProductRepository {
     });
     return product as Product;
   }
+  // Find products by category
+  async findByCategory(categoryId: string): Promise<Product[]> {
+    return prisma.product.findMany({
+      where: {
+        categoryId,
+      },
+    });
+  }
 }
 
 export default new ProductRepository();
