@@ -123,7 +123,7 @@
 
   ### Upload Product Images
 
-  - **URL**: `/products/image/:id`
+  - **URL**: `/products/:id/image`
   - **Method**: `POST`
   - **Description**: Upload images for a specific product
   - **Required URL Parameters**:
