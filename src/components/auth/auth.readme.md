@@ -1,4 +1,4 @@
-# Auth API Documentation
+## Auth API Documentation
 
 This document outlines the authentication endpoints available in the auth component.
 
@@ -6,7 +6,7 @@ This document outlines the authentication endpoints available in the auth compon
 
 ### Register User
 
-- **URL**: `/auth/register`
+- **URL**: `/auth/signup`
 - **Method**: `POST`
 - **Description**: Register a new user
 - **Required Body Parameters**:
@@ -32,7 +32,16 @@ This document outlines the authentication endpoints available in the auth compon
     "message": "User registered successfully",
     "data": {
       "user": {
-        // User details excluding password
+        "id": "user_id",
+        "fullName": "User Full Name",
+        "username": "username",
+        "email": "user@example.com",
+        "phone": "1234567890",
+        "wallet": "wallet_id",
+        "dateOfBirth": "YYYY-MM-DD",
+        "profile": "profile_url",
+        "address": "user address",
+        "role": "user role"
       }
     }
   }
@@ -44,7 +53,7 @@ This document outlines the authentication endpoints available in the auth compon
 - **Method**: `POST`
 - **Description**: Authenticate existing user
 - **Required Body Parameters**:
-  - `email` (string): User's email
+  - `username` (string): User's username
   - `password` (string): User's password
 - **Success Response**:
   ```json
@@ -52,29 +61,89 @@ This document outlines the authentication endpoints available in the auth compon
     "statusCode": 200,
     "message": "Login successful",
     "data": {
-      "token": "JWT_TOKEN",
-      "user": {
-        // User details excluding password
-      }
-    }
+      "username": "User Full Name",
+      "id": "user_id"
+    },
+    "token": "jwt_token"
   }
   ```
 
-### Logout
+### Validate OTP
 
-- **URL**: `/auth/logout`
+- **URL**: `/auth/validate-otp/:id`
 - **Method**: `POST`
-- **Description**: Log out currently authenticated user
-- **Headers Required**:
-  - `Authorization`: Bearer token
+- **Description**: Validate OTP for user
+- **Required URL Parameters**:
+  - `id` (string): User's ID
+- **Required Body Parameters**:
+  - `OTP` (number): One-time password
 - **Success Response**:
   ```json
   {
     "statusCode": 200,
-    "message": "Logged out successfully"
+    "message": "OTP Validated successfully",
+    "status": "success",
+    "error": false
   }
   ```
 
-## Error Responses
+### Reset Password
 
-All endpoints may return the following error responses:
+- **URL**: `/auth/reset-password/:id`
+- **Method**: `POST`
+- **Description**: Send OTP to user's email for password reset
+- **Required URL Parameters**:
+  - `id` (string): User's ID
+- **Required Body Parameters**:
+  - `email` (string): User's email
+- **Success Response**:
+  ```json
+  {
+    "statusCode": 200,
+    "message": "OTP sent to User"
+  }
+  ```
+
+### Confirm Reset Password
+
+- **URL**: `/auth/confirm-reset-password/:id`
+- **Method**: `POST`
+- **Description**: Confirm OTP and reset user's password
+- **Required URL Parameters**:
+  - `id` (string): User's ID
+- **Required Body Parameters**:
+  - `OTP` (number): One-time password
+  - `newPassword` (string): New password
+- **Success Response**:
+  ```json
+  {
+    "statusCode": 200,
+    "message": "Password successfully updated"
+  }
+  ```
+
+## Files
+
+### auth.routes.ts
+
+Defines the routes for authentication-related operations, including signup, login, OTP validation, password reset, and password confirmation.
+
+### auth.controller.ts
+
+Contains the controller methods for handling authentication logic, such as user signup, login, OTP validation, password reset, and password confirmation.
+
+### auth.validation.ts
+
+Defines the validation schemas for the authentication endpoints, ensuring that the required fields are present and correctly formatted.
+
+### user.service.ts
+
+Contains the service methods for user-related operations, such as creating a user, validating OTP, updating password, and more.
+
+### user.repository.ts
+
+Defines the repository methods for interacting with the database, including finding, creating, updating, and deleting users, as well as finding OTPs.
+
+## Summary
+
+This documentation provides an overview of the authentication endpoints and their corresponding files, detailing the required parameters, validation rules, and success responses for each endpoint.

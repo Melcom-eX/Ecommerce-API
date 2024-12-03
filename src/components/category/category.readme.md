@@ -1,115 +1,133 @@
-# Category Component Endpoints
+## Category API Documentation
 
-This document provides an overview of the endpoints available in the Category component. Each endpoint is designed to handle specific category-related operations.
+This document outlines the category-related endpoints available in the category component.
 
 ## Endpoints
 
-### 1. Get All Categories
+### Get All Categories
 
-- **URL:** `/categories`
-- **Method:** `GET`
-- **Description:** Retrieves a list of all categories.
-- **Response:**
+- **URL**: `/categories`
+- **Method**: `GET`
+- **Description**: Retrieve all categories
+- **Success Response**:
   ```json
   {
+    "status": "success",
     "statusCode": 200,
     "data": [
       {
-        "id": "string",
-        "name": "string",
-        "description": "string"
-      },
-      ...
+        "id": "category_id",
+        "name": "Category Name",
+        "description": "Category Description"
+      }
     ]
   }
   ```
 
-### 2. Get Category
+### Get Category by ID
 
-- **URL:** `/category/{id}`
-- **Method:** `GET`
-- **Description:** Retrieves the details of a specific category by its ID.
-- **Response:**
+- **URL**: `/categories/:id`
+- **Method**: `GET`
+- **Description**: Retrieve a specific category by ID
+- **Required URL Parameters**:
+  - `id` (string): Category's ID
+- **Success Response**:
   ```json
   {
+    "status": "success",
     "statusCode": 200,
     "data": {
-      "id": "string",
-      "name": "string",
-      "description": "string"
+      "id": "category_id",
+      "name": "Category Name",
+      "description": "Category Description"
     }
   }
   ```
 
-### 3. Create Category
+### Create Category
 
-- **URL:** `/create-category`
-- **Method:** `POST`
-- **Description:** Creates a new category in the system.
-- **Request Body:**
+- **URL**: `/categories/create-category`
+- **Method**: `POST`
+- **Description**: Create a new category
+- **Required Body Parameters**:
+  - `name` (string): Category name
+  - `description` (string): Category description
+- **Validation**:
+  - Name must be a string between 2 and 100 characters
+  - Description must be a string between 10 and 500 characters
+- **Success Response**:
   ```json
   {
-    "name": "string",
-    "description": "string"
-  }
-  ```
-- **Response:**
-  ```json
-  {
+    "status": "success",
     "statusCode": 201,
-    "message": "Category created successfully",
     "data": {
-      "id": "string",
-      "name": "string",
-      "description": "string"
+      "id": "category_id",
+      "name": "Category Name",
+      "description": "Category Description"
     }
   }
   ```
 
-### 4. Update Category
+### Update Category
 
-- **URL:** `/update-category/{id}`
-- **Method:** `PUT`
-- **Description:** Updates the details of an existing category.
-- **Request Body:**
+- **URL**: `/categories/:id`
+- **Method**: `PUT`
+- **Description**: Update a category's information
+- **Required URL Parameters**:
+  - `id` (string): Category's ID
+- **Required Body Parameters**:
+  - `name` (string): Category name (optional)
+  - `description` (string): Category description (optional)
+- **Validation**:
+  - Name must be a string between 2 and 100 characters (if provided)
+  - Description must be a string between 10 and 500 characters (if provided)
+- **Success Response**:
   ```json
   {
-    "name": "string",
-    "description": "string"
-  }
-  ```
-- **Response:**
-  ```json
-  {
+    "status": "success",
     "statusCode": 200,
-    "message": "Category updated successfully",
     "data": {
-      "id": "string",
-      "name": "string",
-      "description": "string"
+      "id": "category_id",
+      "name": "Category Name",
+      "description": "Category Description"
     }
   }
   ```
 
-### 5. Delete Category
+### Delete Category
 
-- **URL:** `/delete-category/{id}`
-- **Method:** `DELETE`
-- **Description:** Deletes a category from the system.
-- **Response:**
+- **URL**: `/categories/:id`
+- **Method**: `DELETE`
+- **Description**: Delete a category by ID
+- **Required URL Parameters**:
+  - `id` (string): Category's ID
+- **Success Response**:
   ```json
   {
+    "status": "success",
     "statusCode": 200,
     "message": "Category deleted successfully"
   }
   ```
 
-## Error Responses
+## Files
 
-All endpoints may return the following error responses:
+### category.routes.ts
 
-- **400 Bad Request**: The request was invalid or cannot be served. The exact error should be explained in the error payload.
-- **401 Unauthorized**: The request requires user authentication.
-- **403 Forbidden**: The server understood the request, but it refuses to authorize it.
-- **404 Not Found**: The requested resource could not be found.
-- **500 Internal Server Error**: The server encountered an unexpected condition which prevented it from fulfilling the request.
+Defines the routes for category-related operations, including getting all categories, getting a category by ID, creating a category, updating a category, and deleting a category.
+
+### category.controller.ts
+
+Contains the controller methods for handling category logic, such as retrieving all categories, retrieving a category by ID, creating a category, updating a category, and deleting a category.
+
+### category.service.ts
+
+Contains the service methods for category-related operations, such as getting all categories, getting a category by ID, creating a category, updating a category, and deleting a category.
+
+### category.repository.ts
+
+Defines the repository methods for interacting with the database, including finding, creating, updating, and deleting categories.
+
+### category.validation.ts
+
+Defines the validation schemas for the category endpoints, ensuring that the required fields are present and correctly formatted.
