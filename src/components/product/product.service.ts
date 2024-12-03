@@ -3,6 +3,7 @@ import { ProductData, ProductServiceResponse } from "./product.response";
 import httpStatus from "http-status";
 import { createErrorResponse, Errors } from "../../error/error";
 import productRepository from "./product.repository";
+import cloudinary from "../../utils/cloudinary";
 
 const prisma = new PrismaClient();
 
@@ -143,6 +144,61 @@ class ProductService {
     } catch (error) {
       console.error("Find products by category error:", error);
       return Errors.defaultError;
+    }
+  }
+  async uploadImages(
+    id: string,
+    files: Express.Multer.File[]
+  ): Promise<{
+    status: string;
+    error: boolean;
+    statusCode: number;
+    message: string;
+    data?: { urls: string[] };
+  }> {
+    try {
+      // Upload all files to Cloudinary
+      const uploadPromises = files.map((file) =>
+        cloudinary.uploader.upload(file.path, {
+          folder: "images",
+          width: 500,
+          height: 500,
+          crop: "fill",
+        })
+      );
+
+      const results = await Promise.all(uploadPromises);
+      const imageUrls = results.map((result) => result.secure_url);
+
+      // Store the URLs in the database
+      const updatedUser = await productRepository.update(id, {
+        images: imageUrls,
+      });
+
+      if (!updatedUser) {
+        return {
+          status: "error",
+          error: true,
+          statusCode: httpStatus.BAD_REQUEST,
+          message: "Failed to update product images",
+        };
+      }
+
+      return {
+        status: "success",
+        error: false,
+        statusCode: httpStatus.OK,
+        message: "Product images uploaded and saved successfully",
+        data: {
+          urls: imageUrls,
+        },
+      };
+    } catch (error) {
+      console.error(error);
+      return createErrorResponse(
+        "Error uploading image",
+        httpStatus.INTERNAL_SERVER_ERROR
+      );
     }
   }
 }

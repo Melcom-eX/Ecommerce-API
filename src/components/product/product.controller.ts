@@ -91,19 +91,44 @@ class ProductController {
       return res.status(500).json({ message: "Internal server error" });
     }
   }
-  // Find products by category
-  //   async findProductsByCategory(req: Request, res: Response): Promise<Response> {
-  //     const categoryId = req.query.categoryId as string;
+  //upload user profile
+  async uploadImages(req: Request, res: Response): Promise<Response> {
+    try {
+      const { id } = req.params; // Extract the product ID from the request parameters
+      const files = req.files as Express.Multer.File[]; // Files uploaded via Multer middleware
 
+      if (!files || files.length === 0) {
+        return res.status(400).json({
+          status: "error",
+          message: "No files uploaded",
+        });
+      }
+
+      const response = await productService.uploadImages(id, files);
+
+      return res.status(response.statusCode).send(response);
+    } catch (err) {
+      console.error("Upload images error:", err);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
+  //   async uploadImages(req: Request, res: Response): Promise<Response> {
   //     try {
-  //       console.log("hello ");
-  //       console.log(`controller: ${categoryId}`);
-  //       const response: ProductServiceResponse =
-  //         await productService.findProductsByCategory(categoryId);
+  //       const { id } = req.params; // Extract the user ID from the request parameters
+  //       const file = req.file; // File uploaded via Multer middleware
+
+  //       if (!file) {
+  //         return res.status(400).json({
+  //           status: "error",
+  //           message: "No file uploaded",
+  //         });
+  //       }
+
+  //       const response = await productService.uploadImages(id, file);
 
   //       return res.status(response.statusCode).send(response);
   //     } catch (err) {
-  //       console.error("Find products by category error:", err);
+  //       console.error("Upload profile error:", err);
   //       return res.status(500).json({ message: "Internal server error" });
   //     }
   //   }

@@ -116,7 +116,7 @@ This document outlines the user-related endpoints available in the user componen
 
 ### Upload Profile
 
-- **URL**: `/users/upload-profile/:userId`
+- **URL**: `/users/profile/:userId`
 - **Method**: `POST`
 - **Description**: Upload a user's profile image
 - **Required URL Parameters**:

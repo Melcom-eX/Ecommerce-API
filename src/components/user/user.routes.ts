@@ -19,8 +19,7 @@ userRoutes.get(
   userController.getUser
 );
 userRoutes.post(
-  "/upload-profile/:userId", // Add `userId` as a route parameter
-  // validateSchema(uploadProfile),
+  "/profile/:userId", // Add `userId` as a route parameter
   protect,
   upload.single("profile"), // Use the named import
   userController.uploadProfile
