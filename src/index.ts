@@ -8,6 +8,7 @@ import userRoutes from "./components/user/user.routes";
 import authRoutes from "./components/auth/auth.routes";
 import categoryRoutes from "./components/category/category.routes";
 import productRoutes from "./components/product/product.routes";
+import cartRoutes from "./components/cart/cart.routes";
 
 // Load environment variables
 dotenv.config();
@@ -47,6 +48,7 @@ app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/categories", categoryRoutes);
 app.use("/api/v1/products", productRoutes);
+app.use("/api/v1/carts", cartRoutes);
 
 // Start server and connect to the database
 app.listen(port, () => {

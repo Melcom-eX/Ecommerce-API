@@ -4,7 +4,12 @@ import { CartItemServiceResponse, CartServiceResponse } from "./cart.response";
 import { createErrorResponse } from "../../error/error";
 
 class CartController {
-  // Create or get a cart for a user
+  // Add this new method for internal use
+  async createCartForUser(userId: string): Promise<CartServiceResponse> {
+    return await cartService.createCart(userId);
+  }
+
+  // Keep existing createCart method
   async createCart(req: Request, res: Response): Promise<Response> {
     const { userId } = req.body;
 
@@ -16,6 +21,17 @@ class CartController {
       return res.status(response.statusCode).send(response);
     } catch (err) {
       console.error("Create or get cart error:", err);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
+  // Get all carts
+  async getAllCarts(req: Request, res: Response): Promise<Response> {
+    try {
+      const response: CartServiceResponse = await cartService.getAllCarts();
+
+      return res.status(response.statusCode).send(response);
+    } catch (err) {
+      console.error("Get all carts error:", err);
       return res.status(500).json({ message: "Internal server error" });
     }
   }
@@ -87,7 +103,8 @@ class CartController {
 
   // Update a cart's items by overwriting all existing items
   async updateCartItems(req: Request, res: Response): Promise<Response> {
-    const { cartId, items } = req.body;
+    const { cartId } = req.params;
+    const { items } = req.body;
 
     try {
       const response: CartServiceResponse = await cartService.updateCartItems(
@@ -98,6 +115,21 @@ class CartController {
       return res.status(response.statusCode).send(response);
     } catch (err) {
       console.error("Update cart items error:", err);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
+  // Delete a cart and all its items
+  async deleteCart(req: Request, res: Response): Promise<Response> {
+    const { cartId } = req.params;
+
+    try {
+      const response: CartServiceResponse = await cartService.deleteCart(
+        cartId
+      );
+
+      return res.status(response.statusCode).send(response);
+    } catch (err) {
+      console.error("Delete cart error:", err);
       return res.status(500).json({ message: "Internal server error" });
     }
   }

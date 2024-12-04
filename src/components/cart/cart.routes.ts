@@ -6,29 +6,49 @@ import {
   createCartValidation,
   updateCartValidation,
   deleteCartValidation,
+  addCartItem,
+  removeCartItem,
+  clearCart,
 } from "./cart.validation";
 
 const cartRoutes = Router();
 
 cartRoutes.get("", protect, cartController.getAllCarts);
-cartRoutes.get("/:id", protect, cartController.getCart);
+cartRoutes.get("/:id", protect, cartController.getCartByUserId);
 cartRoutes.post(
-  "/create-cart",
+  "",
   validateSchema(createCartValidation),
   protect,
   cartController.createCart
 );
+cartRoutes.post(
+  "/item",
+  validateSchema(addCartItem),
+  protect,
+  cartController.addCartItem
+);
 cartRoutes.put(
-  "/:id",
+  "/:cartId",
   validateSchema(updateCartValidation),
   protect,
-  cartController.updateCart
+  cartController.updateCartItems
 );
 cartRoutes.delete(
-  "/:id",
-  validateSchema(deleteCartValidation),
+  "/:cartId",
+  // validateSchema(deleteCartValidation),
   protect,
   cartController.deleteCart
 );
-
+cartRoutes.delete(
+  "/item",
+  validateSchema(removeCartItem),
+  protect,
+  cartController.removeCartItem
+);
+cartRoutes.delete(
+  "",
+  validateSchema(clearCart),
+  protect,
+  cartController.clearCart
+);
 export default cartRoutes;
