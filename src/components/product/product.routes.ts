@@ -4,7 +4,6 @@ import productController from "./product.controller";
 import { validateSchema } from "../../middleware/ValidationMiddleware";
 import {
   createProductValidation,
-  deleteProductValidation,
   updateProductValidation,
 } from "./product.validation";
 import upload from "../../middleware/multer";
@@ -31,7 +30,7 @@ productRoutes.delete(
   productController.deleteProduct
 );
 productRoutes.post(
-  "/image/:id", // Add `userId` as a route parameter
+  "/:id/image", // Add `userId` as a route parameter
   protect,
   upload.array("images", 10), // Use multer's array method to handle multiple images
   productController.uploadImages
