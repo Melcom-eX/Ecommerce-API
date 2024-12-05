@@ -40,9 +40,9 @@ class CartRepository {
   }
 
   // Remove a product from the cart
-  async removeCartItem(cartId: string, productId: string) {
-    return prisma.cartItem.deleteMany({
-      where: { cartId, productId },
+  async removeCartItem(id: string) {
+    return prisma.cartItem.delete({
+      where: { id },
     });
   }
 
@@ -110,6 +110,14 @@ class CartRepository {
 
   // Delete a cart and all its items
   async deleteCart(cartId: string) {
+    // First, check if the cart exists
+    const cart = await prisma.cart.findUnique({
+      where: { id: cartId },
+    });
+
+    if (!cart) {
+      return null; // Or throw an error if you prefer
+    }
     // First, delete the cart items
     await prisma.cartItem.deleteMany({
       where: { cartId },

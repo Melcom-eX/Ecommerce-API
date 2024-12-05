@@ -95,18 +95,6 @@ model Review {
   updatedAt DateTime @updatedAt
 }
 
-// model Cart {
-//   id        String   @id @default(uuid())
-//   user      User     @relation(fields: [userId], references: [id])
-//   userId    String   @unique
-//   product   Product  @relation(fields: [productId], references: [id])
-//   productId String
-//   quantity  Int
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-//   order     Order?   @relation("CartOrder", fields: [orderId], references: [id])
-//   orderId   String? // Nullable because not all carts are linked to an order
-// }
 model Cart {
   id        String     @id @default(uuid())
   user      User       @relation(fields: [userId], references: [id])
@@ -127,6 +115,8 @@ model CartItem {
   quantity  Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@unique([cartId, productId])
 }
 
 enum OrderStatus {

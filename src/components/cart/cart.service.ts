@@ -70,12 +70,9 @@ class CartService {
     }
   }
 
-  async removeCartItem(
-    cartId: string,
-    productId: string
-  ): Promise<CartServiceResponse> {
+  async removeCartItem(id: string): Promise<CartServiceResponse> {
     try {
-      await cartRepository.removeCartItem(cartId, productId);
+      await cartRepository.removeCartItem(id);
 
       return {
         statusCode: httpStatus.OK,

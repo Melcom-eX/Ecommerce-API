@@ -4,9 +4,11 @@ This document outlines the user-related endpoints available in the user componen
 
 ## Endpoints
 
+### **prefix(url)** e.g localhost:4000/users`{endpoints}`
+
 ### Get All Users
 
-- **URL**: `/users`
+- **URL**: ``
 - **Method**: `GET`
 - **Description**: Retrieve all users (Admin only)
 - **Success Response**:
@@ -34,7 +36,7 @@ This document outlines the user-related endpoints available in the user componen
 
 ### Get User by ID
 
-- **URL**: `/users/:id`
+- **URL**: `/:id`
 - **Method**: `GET`
 - **Description**: Retrieve a specific user by ID
 - **Required URL Parameters**:
@@ -62,7 +64,7 @@ This document outlines the user-related endpoints available in the user componen
 
 ### Update User
 
-- **URL**: `/users/:id`
+- **URL**: `/:id`
 - **Method**: `PUT`
 - **Description**: Update a user's information
 - **Required URL Parameters**:
@@ -100,7 +102,7 @@ This document outlines the user-related endpoints available in the user componen
 
 ### Delete User
 
-- **URL**: `/users/:id`
+- **URL**: `/:id`
 - **Method**: `DELETE`
 - **Description**: Delete a user by ID (Admin only)
 - **Required URL Parameters**:
@@ -116,7 +118,7 @@ This document outlines the user-related endpoints available in the user componen
 
 ### Upload Profile
 
-- **URL**: `/users/profile/:userId`
+- **URL**: `/profile/:userId`
 - **Method**: `POST`
 - **Description**: Upload a user's profile image
 - **Required URL Parameters**:

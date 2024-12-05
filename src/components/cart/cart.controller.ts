@@ -56,12 +56,11 @@ class CartController {
 
   // Remove a product from the cart
   async removeCartItem(req: Request, res: Response): Promise<Response> {
-    const { cartId, productId } = req.body;
+    const { id } = req.params;
 
     try {
       const response: CartServiceResponse = await cartService.removeCartItem(
-        cartId,
-        productId
+        id
       );
 
       return res.status(response.statusCode).send(response);
@@ -87,7 +86,7 @@ class CartController {
 
   // Get a user's cart with products
   async getCartByUserId(req: Request, res: Response): Promise<Response> {
-    const { userId } = req.params;
+    const { userId } = req.params || req.user?.id;
 
     try {
       const response: CartServiceResponse = await cartService.getCartByUserId(

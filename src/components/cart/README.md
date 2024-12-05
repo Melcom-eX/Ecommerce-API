@@ -4,9 +4,11 @@ The Cart component is responsible for managing the shopping cart functionality i
 
 ## Endpoints
 
+### **prefix(url)** e.g localhost:4000/carts`{endpoints}`
+
 ### Get All Carts
 
-- **URL:** `/api/cart`
+- **URL:** ``
 - **Method:** `GET`
 - **Description:** Retrieve all carts.
 - **Protected:** Yes
@@ -14,7 +16,7 @@ The Cart component is responsible for managing the shopping cart functionality i
 
 ### Get Cart by User ID
 
-- **URL:** `/api/cart/:id`
+- **URL:** `/:id`
 - **Method:** `GET`
 - **Description:** Retrieve a cart by user ID.
 - **Protected:** Yes
@@ -22,7 +24,7 @@ The Cart component is responsible for managing the shopping cart functionality i
 
 ### Create Cart
 
-- **URL:** `/api/cart`
+- **URL:** ``
 - **Method:** `POST`
 - **Description:** Create a new cart.
 - **Protected:** Yes
@@ -31,7 +33,7 @@ The Cart component is responsible for managing the shopping cart functionality i
 
 ### Add Cart Item
 
-- **URL:** `/api/cart/item`
+- **URL:** `/item`
 - **Method:** `POST`
 - **Description:** Add an item to the cart.
 - **Protected:** Yes
@@ -64,7 +66,7 @@ The Cart component is responsible for managing the shopping cart functionality i
 
 ### Update Cart Items
 
-- **URL:** `/api/cart/:cartId`
+- **URL:** `/:cartId`
 - **Method:** `PUT`
 - **Description:** Update items in the cart.
 - **Protected:** Yes
@@ -104,7 +106,7 @@ The Cart component is responsible for managing the shopping cart functionality i
 
 ### Delete Cart
 
-- **URL:** `/api/cart/:cartId`
+- **URL:** `/:cartId`
 - **Method:** `DELETE`
 - **Description:** Delete a cart.
 - **Protected:** Yes
@@ -121,21 +123,12 @@ The Cart component is responsible for managing the shopping cart functionality i
 
 ### Remove Cart Item
 
-- **URL:** `/api/cart/item`
+- **URL:** `/item/:id`
 - **Method:** `DELETE`
 - **Description:** Remove an item from the cart.
 - **Protected:** Yes
 - **Validation Schema:** `removeCartItem`
 - **Controller Method:** `removeCartItem`
-
-- **Input:**
-
-  ```json
-  {
-    "cartId": "string (UUID)",
-    "productId": "string (UUID)"
-  }
-  ```
 
 - **Output:**
   ```json
@@ -152,7 +145,7 @@ The Cart component is responsible for managing the shopping cart functionality i
 
 ### Clear Cart
 
-- **URL:** `/api/cart`
+- **URL:** `/cart`
 - **Method:** `DELETE`
 - **Description:** Clear all items in the cart.
 - **Protected:** Yes

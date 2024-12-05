@@ -1,8 +1,10 @@
 ## Product Endpoints
 
+### **prefix(url)** e.g localhost:4000/products`{endpoints}`
+
 ### Get All Products
 
-- **URL**: `/products`
+- **URL**: ``**query(?categoryId=)**
 - **Method**: `GET`
 - **Description**: Retrieve all products or filter by category
 - **Query Parameters**:
@@ -32,7 +34,7 @@
 
 ### Get Product by ID
 
-- **URL**: `/products/:id`
+- **URL**: `/:id`
 - **Method**: `GET`
 - **Description**: Retrieve a specific product by ID
 - **Required URL Parameters**:
@@ -60,7 +62,7 @@
 
 ### Create Product
 
-- **URL**: `/products`
+- **URL**: ``
 - **Method**: `POST`
 - **Description**: Create a new product
 - **Required Body Parameters**:
@@ -102,7 +104,7 @@
 
 ### Update Product
 
-- **URL**: `/products/:id`
+- **URL**: `/:id`
 - **Method**: `PUT`
 - **Description**: Update a product's information
 - **Required URL Parameters**:
@@ -121,9 +123,15 @@
   - Description must be a string (if provided)
   - Price must be a positive number (if provided)
 
+### Delete Product
+
+- **URL**: `/:id`
+- **Method**: `DELETE`
+- **Description**: Delete a product's information
+
   ### Upload Product Images
 
-  - **URL**: `/products/:id/image`
+  - **URL**: `/:id/image`
   - **Method**: `POST`
   - **Description**: Upload images for a specific product
   - **Required URL Parameters**:

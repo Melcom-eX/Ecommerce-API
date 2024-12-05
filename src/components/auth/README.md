@@ -4,9 +4,11 @@ This document outlines the authentication endpoints available in the auth compon
 
 ## Endpoints
 
+### **prefix(url)** e.g localhost:4000/auth`{endpoints}`
+
 ### Register User
 
-- **URL**: `/auth/signup`
+- **URL**: `/signup`
 - **Method**: `POST`
 - **Description**: Register a new user
 - **Required Body Parameters**:
@@ -49,7 +51,7 @@ This document outlines the authentication endpoints available in the auth compon
 
 ### Login
 
-- **URL**: `/auth/login`
+- **URL**: `/login`
 - **Method**: `POST`
 - **Description**: Authenticate existing user
 - **Required Body Parameters**:
@@ -70,7 +72,7 @@ This document outlines the authentication endpoints available in the auth compon
 
 ### Validate OTP
 
-- **URL**: `/auth/validate-otp/:id`
+- **URL**: `/validate-otp/:id`
 - **Method**: `POST`
 - **Description**: Validate OTP for user
 - **Required URL Parameters**:
@@ -89,7 +91,7 @@ This document outlines the authentication endpoints available in the auth compon
 
 ### Reset Password
 
-- **URL**: `/auth/reset-password/:id`
+- **URL**: `/reset-password/:id`
 - **Method**: `POST`
 - **Description**: Send OTP to user's email for password reset
 - **Required URL Parameters**:
@@ -106,7 +108,7 @@ This document outlines the authentication endpoints available in the auth compon
 
 ### Confirm Reset Password
 
-- **URL**: `/auth/confirm-reset-password/:id`
+- **URL**: `/confirm-reset-password/:id`
 - **Method**: `POST`
 - **Description**: Confirm OTP and reset user's password
 - **Required URL Parameters**:

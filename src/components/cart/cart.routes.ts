@@ -14,7 +14,7 @@ import {
 const cartRoutes = Router();
 
 cartRoutes.get("", protect, cartController.getAllCarts);
-cartRoutes.get("/:id", protect, cartController.getCartByUserId);
+cartRoutes.get("/:userId", protect, cartController.getCartByUserId);
 cartRoutes.post(
   "",
   validateSchema(createCartValidation),
@@ -40,8 +40,8 @@ cartRoutes.delete(
   cartController.deleteCart
 );
 cartRoutes.delete(
-  "/item",
-  validateSchema(removeCartItem),
+  "/item/:id",
+  // validateSchema(removeCartItem),
   protect,
   cartController.removeCartItem
 );
