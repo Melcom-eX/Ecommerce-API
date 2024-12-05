@@ -4,9 +4,11 @@ This document outlines the category-related endpoints available in the category 
 
 ## Endpoints
 
+### **prefix(url)** e.g localhost:4000/categories`{endpoints}`
+
 ### Get All Categories
 
-- **URL**: `/categories`
+- **URL**: ``
 - **Method**: `GET`
 - **Description**: Retrieve all categories
 - **Success Response**:
@@ -26,7 +28,7 @@ This document outlines the category-related endpoints available in the category 
 
 ### Get Category by ID
 
-- **URL**: `/categories/:id`
+- **URL**: `/:id`
 - **Method**: `GET`
 - **Description**: Retrieve a specific category by ID
 - **Required URL Parameters**:
@@ -46,7 +48,7 @@ This document outlines the category-related endpoints available in the category 
 
 ### Create Category
 
-- **URL**: `/categories/create-category`
+- **URL**: ``
 - **Method**: `POST`
 - **Description**: Create a new category
 - **Required Body Parameters**:
@@ -70,7 +72,7 @@ This document outlines the category-related endpoints available in the category 
 
 ### Update Category
 
-- **URL**: `/categories/:id`
+- **URL**: `/:id`
 - **Method**: `PUT`
 - **Description**: Update a category's information
 - **Required URL Parameters**:
@@ -96,7 +98,7 @@ This document outlines the category-related endpoints available in the category 
 
 ### Delete Category
 
-- **URL**: `/categories/:id`
+- **URL**: `/:id`
 - **Method**: `DELETE`
 - **Description**: Delete a category by ID
 - **Required URL Parameters**:

@@ -3,7 +3,7 @@ import userService from "../user/user.service"; // Ensure the userService is exp
 import emailService from "../../utils/email"; // Ensure the emailService is exported correctly
 import { sendOTPToUser } from "../../utils/otp";
 import { CreateUserResponse, UserServiceResponse } from "../user/user.response";
-// import logger from "../utils/logger";
+import cartController from "../cart/cart.controller";
 
 class AuthController {
   async login(req: Request, res: Response): Promise<Response> {
@@ -48,6 +48,7 @@ class AuthController {
       }
 
       const userId = (response as CreateUserResponse).data.id;
+      await cartController.createCartForUser(userId); // create a cart for a user when making the user
 
       // Await the OTP generation and sending process
       const otp = await sendOTPToUser(userId); // Now resolves to a string

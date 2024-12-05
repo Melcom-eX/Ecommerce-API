@@ -11,7 +11,7 @@ const categoryRoutes = Router();
 categoryRoutes.get("", protect, categoryController.getAllCategories);
 categoryRoutes.get("/:id", protect, categoryController.getCategory);
 categoryRoutes.post(
-  "/create-category",
+  "",
   validateSchema(createCategoryValidation),
   isAdmin,
   categoryController.createCategory
