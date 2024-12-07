@@ -36,6 +36,8 @@ model User {
   orders        Order[]
   reviews       Review[]
   cart          Cart?
+
+  @@index([id, username, createdAt, email])
 }
 
 // Enum for user roles
@@ -60,6 +62,8 @@ model Product {
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   cartItems   CartItem[]
+
+  @@index([id, name, description, createdAt, sellerId])
 }
 
 model Category {
@@ -69,6 +73,8 @@ model Category {
   products    Product[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+
+  @@index([id, name, description, createdAt])
 }
 
 model Order {
@@ -81,6 +87,8 @@ model Order {
   shippingAddress String
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
+
+  @@index([id, userId, status, createdAt])
 }
 
 model Review {
@@ -93,6 +101,8 @@ model Review {
   productId String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([id, rating, productId, createdAt])
 }
 
 model Cart {
@@ -104,6 +114,8 @@ model Cart {
   orderId   String? // Nullable because not all carts are linked to an order
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+
+  @@index([id, userId, orderId, createdAt])
 }
 
 model CartItem {
