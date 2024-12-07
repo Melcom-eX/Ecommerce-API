@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc && cp -R ./src/views ./dist/",
+    "dev": "tsc && cp -R ./src/views ./dist/ && nodemon dist/index.js",
     "start": "tsc && node dist/index.js",
     "prismaMigrate": "npx prisma migrate dev --name model",
     "prismaGenerate": "npx prisma generate"
