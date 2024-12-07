@@ -3,6 +3,7 @@ import cors from "cors";
 import morgan from "morgan";
 import helmet from "helmet";
 import dotenv from "dotenv";
+import cron from "node-cron";
 import rateLimit from "express-rate-limit";
 import userRoutes from "./components/user/user.routes";
 import authRoutes from "./components/auth/auth.routes";
@@ -49,6 +50,11 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/categories", categoryRoutes);
 app.use("/api/v1/products", productRoutes);
 app.use("/api/v1/carts", cartRoutes);
+
+//cronjob for the server to not sleep
+cron.schedule("* * * * *", () => {
+  console.log("This message logs every 60 seconds");
+});
 
 // Start server and connect to the database
 app.listen(port, () => {
