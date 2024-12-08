@@ -1,9 +1,8 @@
-jest.mock("../components/user/user.service");
-jest.mock("../components/user/user.repository");
+jest.mock("../../components/user/user.service");
+jest.mock("../../components/user/user.repository");
 
 import userService from "../../components/user/user.service";
 import { UserDocument } from "../../components/user/user.response";
-import { Role } from "@prisma/client";
 
 describe("User Service Tests", () => {
   let userId: string;
@@ -25,7 +24,7 @@ describe("User Service Tests", () => {
       dateOfBirth: new Date(),
       profile: "test-profile-url",
       address: "123 Test St",
-      role: Role.USER,
+      role: "USER",
       active: true,
       isBlocked: false,
       isVerified: true,

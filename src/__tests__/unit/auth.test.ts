@@ -1,6 +1,6 @@
-jest.mock("../components/user/user.service");
-jest.mock("../utils/email");
-jest.mock("../utils/otp");
+jest.mock("../../components/user/user.service");
+jest.mock("../../utils/email");
+jest.mock("../../utils/otp");
 
 import userService from "../../components/user/user.service";
 import emailService from "../../utils/email";

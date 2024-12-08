@@ -13,6 +13,11 @@ const config: Config = {
     "^.+\\.(ts|tsx)$": "ts-jest",
   },
   testPathIgnorePatterns: ["/node_modules/", "/dist/"],
+  testTimeout: 10000,
+  moduleNameMapper: {
+    "^@components/(.*)$": "<rootDir>/src/components/$1",
+  },
+  roots: ["<rootDir>/src"],
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
