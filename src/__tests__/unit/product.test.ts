@@ -1,4 +1,3 @@
-import { Request, Response } from "express";
 import productService from "../../components/product/product.service";
 import { Product } from "@prisma/client";
 import httpStatus from "http-status";
@@ -47,22 +46,8 @@ const mockProducts: Product[] = [
 const mockProduct = mockProducts[0];
 
 describe("Product Service Tests", () => {
-  let req: Partial<Request>;
-  let res: Partial<Response>;
-  let statusMock: jest.Mock;
-  let sendMock: jest.Mock;
-  let jsonMock: jest.Mock;
-
   beforeEach(() => {
     jest.clearAllMocks();
-    statusMock = jest.fn().mockReturnThis();
-    sendMock = jest.fn().mockReturnThis();
-    jsonMock = jest.fn().mockReturnThis();
-    res = {
-      status: statusMock,
-      send: sendMock,
-      json: jsonMock,
-    };
   });
 
   describe("createProduct", () => {
@@ -84,7 +69,7 @@ describe("Product Service Tests", () => {
         data: { ...mockProducts[0], ...newProduct },
       });
 
-      const result: ProductServiceResponse = await productService.createProduct(
+      const result = await productService.createProduct(
         newProduct.name!,
         newProduct.description!,
         newProduct.price!,

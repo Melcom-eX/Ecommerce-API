@@ -62,6 +62,7 @@ class CategoryService {
       return {
         status: "success",
         statusCode: httpStatus.CREATED,
+        message: "Category created successfully",
         data: category,
       };
     } catch (error) {
