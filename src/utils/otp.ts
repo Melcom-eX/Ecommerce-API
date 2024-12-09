@@ -12,7 +12,7 @@ export const sendOTPToUser = async (userId: string): Promise<string> => {
   });
 
   // Assuming you send it via email/SMS here
-  console.log(`OTP sent to user: ${otp}`);
+  // console.log(`OTP sent to user: ${otp}`);
 
   // Return the OTP string
   return otp;
