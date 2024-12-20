@@ -8,6 +8,18 @@ import {
 } from "./product.validation";
 import upload from "../../middleware/multer";
 const productRoutes = Router();
+
+/**
+ * @swagger
+ * /api/v1/product:
+ *   get:
+ *     summary: Retrieve all users
+ *     description: Returns a list of users.
+ *     responses:
+ *       200:
+ *         description: A list of users.
+ */
+
 productRoutes.get("", protect, productController.getAllProducts);
 productRoutes.get("/:id", protect, productController.getProduct);
 

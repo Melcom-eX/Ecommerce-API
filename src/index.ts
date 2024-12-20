@@ -4,7 +4,13 @@ import morgan from "morgan";
 import helmet from "helmet";
 import dotenv from "dotenv";
 import cron from "node-cron";
+import path from "path";
 import rateLimit from "express-rate-limit";
+const swaggerui = require("swagger-ui-express");
+const YAML = require("yamljs");
+const swaggerDocument = YAML.load(
+  path.resolve(__dirname, ".././src/swagger.yaml")
+);
 import userRoutes from "./components/user/user.routes";
 import authRoutes from "./components/auth/auth.routes";
 import categoryRoutes from "./components/category/category.routes";
@@ -56,15 +62,9 @@ cron.schedule("* * * * *", () => {
   console.log("This message logs every 60 seconds");
 });
 
+app.use("/api/v1/docs", swaggerui.serve, swaggerui.setup(swaggerDocument));
+
 // Start server and connect to the database
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
 });
-
-// export const startServer = () => {
-//   return app.listen(port, () => {
-//     console.log(`Server started on port ${port}`);
-//   });
-// };
-
-// export default app;

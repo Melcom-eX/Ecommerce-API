@@ -10,7 +10,7 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": true
   },
-  "include": ["src/**/*.ts", "types.d.ts"],
+  "include": ["src/**/*.ts", "swagger.yaml", "types.d.ts"],
   "exclude": ["node_modules"],
   "types": ["jest", "node"]
 }
