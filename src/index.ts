@@ -4,9 +4,13 @@ import morgan from "morgan";
 import helmet from "helmet";
 import dotenv from "dotenv";
 import cron from "node-cron";
+import path from "path";
 import rateLimit from "express-rate-limit";
-const swaggerjsdoc = require("swagger-jsdoc");
 const swaggerui = require("swagger-ui-express");
+const YAML = require("yamljs");
+const swaggerDocument = YAML.load(
+  path.resolve(__dirname, ".././src/swagger.yaml")
+);
 import userRoutes from "./components/user/user.routes";
 import authRoutes from "./components/auth/auth.routes";
 import categoryRoutes from "./components/category/category.routes";
@@ -58,26 +62,7 @@ cron.schedule("* * * * *", () => {
   console.log("This message logs every 60 seconds");
 });
 
-const options = {
-  definition: {
-    openapi: "3.0.0",
-    info: {
-      title: "Ecommerce API",
-      version: "1.0.0",
-      description: "API documentation for the Ecommerce backend",
-    },
-    servers: [
-      {
-        url: `http://localhost:${port}`,
-        description: "Development Server",
-      },
-    ],
-  },
-  apis: ["./components/**/*.routes.ts"], // Adjust path for your routes
-};
-
-const spacs = swaggerjsdoc(options);
-app.use("/api/v1/docs", swaggerui.serve, swaggerui.setup(spacs));
+app.use("/api/v1/docs", swaggerui.serve, swaggerui.setup(swaggerDocument));
 
 // Start server and connect to the database
 app.listen(port, () => {

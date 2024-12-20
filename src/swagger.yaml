@@ -1,0 +1,787 @@
+openapi: "3.0.0"
+info:
+  title: "Ecommerce API"
+  version: "1.0.0"
+  description: "API documentation for the Ecommerce backend"
+
+servers:
+  - url: http://localhost:4000
+    description: Local server
+
+paths:
+  tags:
+    - name: "Auth"
+      description: "Authentication endpoints"
+
+    - name: "User"
+      description: "User endpoints"
+    - name: "Product"
+      description: "Product endpoints"
+
+  /auth/signup:
+    post:
+      summary: "Register User"
+      description: "Register a new user"
+      operationId: "registerUser"
+      tags: ["Auth"]
+      requestBody:
+        description: "User registration details"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fullName:
+                  type: string
+                username:
+                  type: string
+                password:
+                  type: string
+                  minLength: 6
+                email:
+                  type: string
+                  format: email
+                phone:
+                  type: string
+                  pattern: "^[+]?[0-9]{10,15}$"
+                dateOfBirth:
+                  type: string
+                  format: date
+                address:
+                  type: string
+              required:
+                - fullName
+                - username
+                - password
+                - email
+                - phone
+                - dateOfBirth
+                - address
+      responses:
+        "201":
+          description: "User registered successfully"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                          fullName:
+                            type: string
+                          username:
+                            type: string
+                          email:
+                            type: string
+                          phone:
+                            type: string
+                          wallet:
+                            type: string
+                          dateOfBirth:
+                            type: string
+                            format: date
+                          profile:
+                            type: string
+                          address:
+                            type: string
+                          role:
+                            type: string
+
+  /auth/login:
+    post:
+      summary: "Login"
+      description: "Authenticate existing user"
+      operationId: "loginUser"
+      tags:
+        - "Auth"
+      requestBody:
+        description: "User login credentials"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+              required:
+                - username
+                - password
+      responses:
+        "200":
+          description: "Login successful"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      username:
+                        type: string
+                      id:
+                        type: string
+                  token:
+                    type: string
+
+  /auth/validate-otp/{id}:
+    post:
+      summary: "Validate OTP"
+      description: "Validate OTP for user"
+      operationId: "validateOTP"
+      tags:
+        - "Auth"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: "User's ID"
+          schema:
+            type: string
+      requestBody:
+        description: "One-time password (OTP)"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                OTP:
+                  type: integer
+      responses:
+        "200":
+          description: "OTP Validated successfully"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                  message:
+                    type: string
+                  status:
+                    type: string
+                  error:
+                    type: boolean
+
+  /auth/reset-password/{id}:
+    post:
+      summary: "Send OTP for Password Reset"
+      description: "Send OTP to user's email for password reset"
+      operationId: "sendResetOTP"
+      tags:
+        - "Auth"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: "User's ID"
+          schema:
+            type: string
+      requestBody:
+        description: "User's email for password reset"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+              required:
+                - email
+      responses:
+        "200":
+          description: "OTP sent to user for password reset"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                  message:
+                    type: string
+
+  /auth/confirm-reset-password/{id}:
+    post:
+      summary: "Confirm Reset Password"
+      description: "Confirm OTP and reset user's password"
+      operationId: "confirmResetPassword"
+      tags:
+        - "Auth"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: "User's ID"
+          schema:
+            type: string
+      requestBody:
+        description: "OTP and new password"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                OTP:
+                  type: integer
+                newPassword:
+                  type: string
+              required:tags:
+                #   - name: "User"
+                #     description: "User endpoints"
+                - OTP
+                - newPassword- name: "User"
+
+  /users:
+    get:
+      summary: "Get All Users"
+      description: "Retrieve all users (Admin only)"
+      tags:
+        - Users
+      responses:
+        "200":
+          description: "Users retrieved successfully"
+          content:
+            application/json:
+              example:
+                status: "success"
+                statusCode: 200
+                message: "Users retrieved successfully"
+                data:
+                  - id: "user_id"
+                    fullName: "User Full Name"
+                    username: "username"
+                    email: "user@example.com"
+                    phone: "1234567890"
+                    wallet: "wallet_id"
+                    dateOfBirth: "YYYY-MM-DD"
+                    profile: "profile_url"
+                    address: "user address"
+                    role: "user role"
+
+  /users/{id}:
+    get:
+      summary: "Get User by ID"
+      description: "Retrieve a specific user by ID"
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: "User's ID"
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "User retrieved successfully"
+          content:
+            application/json:
+              example:
+                status: "success"
+                statusCode: 200
+                message: "User retrieved successfully"
+                data:
+                  id: "user_id"
+                  fullName: "User Full Name"
+                  username: "username"
+                  email: "user@example.com"
+                  phone: "1234567890"
+                  wallet: "wallet_id"
+                  dateOfBirth: "YYYY-MM-DD"
+                  profile: "profile_url"
+                  address: "user address"
+                  role: "user role"
+
+    put:
+      summary: "Update User"
+      description: "Update a user's information"
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: "User's ID"
+          schema:
+            type: string
+      requestBody:
+        description: "User information to update"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fullName:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                dateOfBirth:
+                  type: string
+                  format: date
+                phoneNumber:
+                  type: string
+                major:
+                  type: string
+                role:
+                  type: string
+      responses:
+        "200":
+          description: "User updated successfully"
+          content:
+            application/json:
+              example:
+                status: "success"
+                statusCode: 200
+                message: "User updated successfully"
+                data:
+                  id: "user_id"
+                  fullName: "User Full Name"
+                  username: "username"
+                  email: "user@example.com"
+                  phone: "1234567890"
+                  wallet: "wallet_id"
+                  dateOfBirth: "YYYY-MM-DD"
+                  profile: "profile_url"
+                  address: "user address"
+                  role: "user role"
+
+    delete:
+      summary: "Delete User"
+      description: "Delete a user by ID (Admin only)"
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: "User's ID"
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "User deleted successfully"
+          content:
+            application/json:
+              example:
+                status: "success"
+                statusCode: 200
+                message: "User deleted successfully"
+
+  /users/profile/{userId}:
+    post:
+      summary: "Upload Profile"
+      description: "Upload a user's profile image"
+      tags:
+        - Users
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: "User's ID"
+          schema:
+            type: string
+      requestBody:
+        description: "Profile image file"
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                profile:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: "Profile image uploaded and saved successfully"
+          content:
+            application/json:
+              example:
+                status: "success"
+                statusCode: 200
+                message: "Profile image uploaded and saved successfully"
+                data:
+                  url: "profile_image_url"
+
+  /products:
+    get:
+      summary: Get All Products
+      description: Retrieve all products or filter by category
+      tags: [Product]
+      parameters:
+        - name: categoryId
+          in: query
+          description: Filter products by category ID
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+        description: Successfully retrieved products
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                statusCode:
+                  type: integer
+                message:
+                  type: string
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      price:
+                        type: number
+                        format: float
+                      stock:
+                        type: integer
+                      images:
+                        type: array
+                        items:
+                          type: string
+                      categoryId:
+                        type: string
+                      sellerId:
+                        type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+
+    post:
+      summary: Create Product
+      description: Create a new product
+      tags: [Product]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                price:
+                  type: number
+                  format: float
+                stock:
+                  type: integer
+                images:
+                  type: array
+                items:
+                  type: string
+                categoryId:
+                  type: string
+                sellerId:
+                  type: string
+      responses:
+      "201":
+        description: Successfully created product
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                statusCode:
+                  type: integer
+                message:
+                  type: string
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    price:
+                      type: number
+                      format: float
+                    stock:
+                      type: integer
+                    images:
+                      type: array
+                      items:
+                        type: string
+                    categoryId:
+                      type: string
+                    sellerId:
+                      type: string
+                    createdAt:
+                      type: string
+                      format: date-time
+                    updatedAt:
+                      type: string
+                      format: date-time
+
+  /products/{id}:
+    get:
+      summary: Get Product by ID
+      description: Retrieve a specific product by ID
+      tags: [Product]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successfully retrieved product
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  statusCode:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      price:
+                        type: number
+                        format: float
+                      stock:
+                        type: integer
+                      images:
+                        type: array
+                      items:
+                        type: string
+                      categoryId:
+                        type: string
+                      sellerId:
+                        type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+
+    put:
+      summary: Update Product
+      description: Update a product's information
+      tags: [Product]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                price:
+                  type: number
+                  format: float
+                stock:
+                  type: integer
+                images:
+                  type: array
+                items:
+                  type: string
+                categoryId:
+                  type: string
+                sellerId:
+                t ype: string
+      responses:
+        "200":
+          description: Successfully updated product
+
+    delete:
+      summary: Delete Product
+      description: Delete a product's information
+      tags: [Product]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successfully deleted product
+
+  /products/{id}/image:
+    post:
+      summary: Upload Product Images
+      description: Upload images for a specific product
+      tags: [Product]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                images:
+                  type: array
+                items:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Successfully uploaded product images
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  statusCode:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      urls:
+                        type: array
+                      items:
+                        type: string
+        "400":
+          description: No files uploaded
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        fullName:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        wallet:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+        profile:
+          type: string
+        address:
+          type: string
+        role:
+          type: string
+
+    Products:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+          format: float
+        stock:
+          type: integer
+        images:
+          type: array
+          items:
+            type: string
+        categoryId:
+          type: string
+        sellerId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
