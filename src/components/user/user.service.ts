@@ -16,6 +16,11 @@ import { logger } from "../../utils/logger";
 import { generateWalletId } from "../../utils/wallet";
 import cloudinary from "../../utils/cloudinary";
 
+/**
+this is the service layer for the user component. It contains the business logic for the admin component.
+ 
+ */
+
 class UserService {
   async loginUser(
     username: string,

@@ -8,6 +8,11 @@ import { createErrorResponse, Errors } from "../../error/error";
 import categoryRepository from "./category.repository";
 const prisma = new PrismaClient();
 
+/**
+this is the service layer for the category component. It contains the business logic for the admin component.
+ 
+ */
+
 class CategoryService {
   // Get all categories
   async getAllCategories(): Promise<

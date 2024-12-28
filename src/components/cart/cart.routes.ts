@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { protect } from "../../middleware/authorize";
+import { isAdmin, protect } from "../../middleware/authorize";
 import cartController from "./cart.controller";
 import { validateSchema } from "../../middleware/ValidationMiddleware";
 import {
@@ -13,18 +13,7 @@ import {
 
 const cartRoutes = Router();
 
-/**
- * @swagger
- * /api/v1/cart:
- *   get:
- *     summary: Retrieve all users
- *     description: Returns a list of users.
- *     responses:
- *       200:
- *         description: A list of users.
- */
-
-cartRoutes.get("", protect, cartController.getAllCarts);
+cartRoutes.get("", isAdmin, cartController.getAllCarts);
 cartRoutes.get("/:userId", protect, cartController.getCartByUserId);
 cartRoutes.post(
   "",

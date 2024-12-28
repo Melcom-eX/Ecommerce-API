@@ -5,6 +5,11 @@ import { createErrorResponse, Errors } from "../../error/error";
 import productRepository from "./product.repository";
 import cloudinary from "../../utils/cloudinary";
 
+/**
+this is the service layer for the product component. It contains the business logic for the admin component.
+ 
+ */
+
 const prisma = new PrismaClient();
 
 class ProductService {

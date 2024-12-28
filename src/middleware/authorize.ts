@@ -55,6 +55,13 @@ const protect = async (req: Request, res: Response, next: NextFunction) => {
           .json({ message: "Access denied. User not verified." });
       }
 
+      // Check if the user is blocked
+      if (!req.user.isBlocked) {
+        return res
+          .status(403)
+          .json({ message: "Access denied. User blocked." });
+      }
+
       // Proceed to the next middleware
       next();
     } catch (error) {
@@ -186,6 +193,13 @@ const prod = async (req: Request, res: Response, next: NextFunction) => {
         return res
           .status(403)
           .json({ message: "Access denied. User not verified." });
+      }
+
+      // Check if the user is blocked
+      if (!user.isBlocked) {
+        return res
+          .status(403)
+          .json({ message: "Access denied. User blocked." });
       }
 
       // Check if the user is an admin or seller

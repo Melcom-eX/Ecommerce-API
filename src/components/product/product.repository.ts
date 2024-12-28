@@ -21,57 +21,99 @@ class ProductRepository {
     categoryId: string;
     sellerId: string;
   }): Promise<Product> {
-    const product = await prisma.product.create({
-      data: {
-        name,
-        description,
-        price,
-        stock,
-        images,
-        categoryId,
-        sellerId,
-      },
-    });
-    return product as Product;
+    try {
+      const product = await prisma.product.create({
+        data: {
+          name,
+          description,
+          price,
+          stock,
+          images,
+          categoryId,
+          sellerId,
+        },
+      });
+      return product as Product;
+    } catch (error) {
+      console.error("Error creating a product", error);
+      throw new Error("Error creating a product");
+    }
   }
 
   // Find all products
   async findAll(): Promise<Product[]> {
-    const product = await prisma.product.findMany();
-    return product as Product[];
+    try {
+      const product = await prisma.product.findMany({
+        where: { isApproved: true },
+      });
+      return product as Product[];
+    } catch (error) {
+      console.error("Error finding all products", error);
+      throw new Error("Error finding all products");
+    }
+  }
+
+  async findAllAdmin(): Promise<Product[]> {
+    try {
+      const product = await prisma.product.findMany();
+      return product as Product[];
+    } catch (error) {
+      console.error("Error finding all products", error);
+      throw new Error("Error finding all products");
+    }
   }
 
   // Find a product by id
   async findById(id: string): Promise<Product | null> {
-    const product = await prisma.product.findUnique({
-      where: { id },
-    });
-    return product as Product | null;
+    try {
+      const product = await prisma.product.findUnique({
+        where: { id },
+      });
+      return product as Product | null;
+    } catch (error) {
+      console.error("Error finding a product by id", error);
+      throw new Error("Error finding a product by id");
+    }
   }
 
   // Update a product by id
   async update(id: string, productData: Partial<Product>): Promise<Product> {
-    const product = await prisma.product.update({
-      where: { id },
-      data: productData,
-    });
-    return product as Product;
+    try {
+      const product = await prisma.product.update({
+        where: { id },
+        data: productData,
+      });
+      return product as Product;
+    } catch (error) {
+      console.error("Error updating a product", error);
+      throw new Error("Error updating a product");
+    }
   }
 
   // Delete a product by id
   async delete(id: string): Promise<Product> {
-    const product = await prisma.product.delete({
-      where: { id },
-    });
-    return product as Product;
+    try {
+      const product = await prisma.product.delete({
+        where: { id },
+      });
+      return product as Product;
+    } catch (error) {
+      console.error("Error deleting a product", error);
+      throw new Error("Error deleting a product");
+    }
   }
   // Find products by category
   async findByCategory(categoryId: string): Promise<Product[]> {
-    return prisma.product.findMany({
-      where: {
-        categoryId,
-      },
-    });
+    try {
+      return prisma.product.findMany({
+        where: {
+          categoryId,
+        },
+      });
+    } catch (error) {
+      console.error("Error finding products by category", error);
+      throw new Error("Error finding products by category");
+    }
   }
 }
 

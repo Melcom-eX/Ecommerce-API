@@ -9,17 +9,6 @@ import {
 } from "./category.validation";
 const categoryRoutes = Router();
 
-/**
- * @swagger
- * /api/v1/category:
- *   get:
- *     summary: Retrieve all users
- *     description: Returns a list of users.
- *     responses:
- *       200:
- *         description: A list of users.
- */
-
 categoryRoutes.get("", protect, categoryController.getAllCategories);
 categoryRoutes.get("/:id", protect, categoryController.getCategory);
 categoryRoutes.post(

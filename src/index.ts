@@ -16,6 +16,7 @@ import authRoutes from "./components/auth/auth.routes";
 import categoryRoutes from "./components/category/category.routes";
 import productRoutes from "./components/product/product.routes";
 import cartRoutes from "./components/cart/cart.routes";
+import adminRoutes from "./components/admin/admin.routes";
 
 // Load environment variables
 dotenv.config();
@@ -56,11 +57,12 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/categories", categoryRoutes);
 app.use("/api/v1/products", productRoutes);
 app.use("/api/v1/carts", cartRoutes);
+app.use("/api/v1/admin", adminRoutes);
 
 //cronjob for the server to not sleep
-cron.schedule("* * * * *", () => {
-  console.log("This message logs every 60 seconds");
-});
+// cron.schedule("* * * * *", () => {
+//   console.log("This message logs every 60 seconds");
+// });
 
 app.use("/api/v1/docs", swaggerui.serve, swaggerui.setup(swaggerDocument));
 
