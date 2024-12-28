@@ -3,6 +3,11 @@ import cartRepository from "./cart.repository";
 import { CartItemServiceResponse, CartServiceResponse } from "./cart.response";
 import { Errors } from "../../error/error";
 
+/**
+this is the service layer for the cart component. It contains the business logic for the admin component.
+ 
+ */
+
 class CartService {
   // Create a new cart
   async createCart(userId: string): Promise<CartServiceResponse> {

@@ -8,7 +8,10 @@ import { UserServiceResponse } from "./user.response";
 class UserController {
   // Delete user method
   async deleteUser(req: Request, res: Response): Promise<Response> {
-    const { id } = req.params;
+    const id = req.user?.id;
+    if (!id) {
+      return res.status(400).json({ message: "User ID is missing" });
+    }
 
     try {
       const response: UserServiceResponse = await userService.deleteUser(id);

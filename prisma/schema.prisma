@@ -55,6 +55,7 @@ model Product {
   price       Float
   stock       Int
   images      String[]
+  isApproved  Boolean    @default(false)
   category    Category   @relation(fields: [categoryId], references: [id])
   categoryId  String
   seller      User       @relation("SellerProducts", fields: [sellerId], references: [id])
@@ -90,6 +91,14 @@ model Order {
   updatedAt       DateTime    @updatedAt
 
   @@index([id, userId, status, createdAt])
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
 }
 
 model Review {
@@ -130,12 +139,4 @@ model CartItem {
   updatedAt DateTime @updatedAt
 
   @@unique([cartId, productId])
-}
-
-enum OrderStatus {
-  PENDING
-  PROCESSING
-  SHIPPED
-  DELIVERED
-  CANCELLED
 }

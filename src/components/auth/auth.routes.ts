@@ -11,17 +11,6 @@ import { validateSchema } from "../../middleware/ValidationMiddleware";
 import { authorizeChange, protect } from "../../middleware/authorize";
 const authRoutes = Router();
 
-/**
- * @swagger
- * /api/v1/auth:
- *   get:
- *     summary: Retrieve all users
- *     description: Returns a list of users.
- *     responses:
- *       200:
- *         description: A list of users.
- */
-
 authRoutes.post(
   "/signup",
   validateSchema(register), // Use the named import

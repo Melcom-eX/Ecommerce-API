@@ -8,9 +8,10 @@
     "skipLibCheck": true,
     "sourceMap": false,
     "forceConsistentCasingInFileNames": true,
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "typeRoots": ["./types", "./node_modules/@types"]
   },
-  "include": ["src/**/*.ts", "swagger.yaml", "types.d.ts"],
+  "include": ["src/**/*.ts", "swagger.yaml", "types.d.ts", "types"],
   "exclude": ["node_modules"],
   "types": ["jest", "node"]
 }
