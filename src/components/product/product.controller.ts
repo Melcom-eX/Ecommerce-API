@@ -112,26 +112,6 @@ class ProductController {
       return res.status(500).json({ message: "Internal server error" });
     }
   }
-  //   async uploadImages(req: Request, res: Response): Promise<Response> {
-  //     try {
-  //       const { id } = req.params; // Extract the user ID from the request parameters
-  //       const file = req.file; // File uploaded via Multer middleware
-
-  //       if (!file) {
-  //         return res.status(400).json({
-  //           status: "error",
-  //           message: "No file uploaded",
-  //         });
-  //       }
-
-  //       const response = await productService.uploadImages(id, file);
-
-  //       return res.status(response.statusCode).send(response);
-  //     } catch (err) {
-  //       console.error("Upload profile error:", err);
-  //       return res.status(500).json({ message: "Internal server error" });
-  //     }
-  //   }
 }
 
 export default new ProductController();
