@@ -10,8 +10,6 @@ this is the service layer for the product component. It contains the business lo
  
  */
 
-const prisma = new PrismaClient();
-
 class ProductService {
   // Create a new product
   async createProduct(
@@ -49,7 +47,7 @@ class ProductService {
   // Get all products
   async getAllProducts(): Promise<ProductServiceResponse> {
     try {
-      const products: Product[] = await prisma.product.findMany();
+      const products: Product[] = await productRepository.findAll();
 
       return {
         status: "success",
@@ -66,9 +64,7 @@ class ProductService {
   // Get a specific product by id
   async getProduct(id: string): Promise<ProductServiceResponse> {
     try {
-      const product: Product | null = await prisma.product.findUnique({
-        where: { id },
-      });
+      const product: Product | null = await productRepository.findById(id);
 
       if (!product) {
         return createErrorResponse("Product not found", httpStatus.NOT_FOUND);
@@ -92,10 +88,10 @@ class ProductService {
     productData: Partial<ProductData>
   ): Promise<ProductServiceResponse> {
     try {
-      const product: Product | null = await prisma.product.update({
-        where: { id },
-        data: productData,
-      });
+      const product: Product | null = await productRepository.update(
+        id,
+        productData
+      );
 
       return {
         status: "success",
@@ -112,10 +108,7 @@ class ProductService {
   // Delete a product by id
   async deleteProduct(id: string): Promise<ProductServiceResponse> {
     try {
-      await prisma.product.delete({
-        where: { id },
-      });
-
+      await productRepository.delete(id);
       return {
         status: "success",
         statusCode: httpStatus.OK,
