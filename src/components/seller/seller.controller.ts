@@ -1,0 +1,35 @@
+// src/controllers/seller.controller.ts
+import { Request, Response } from 'express';
+import { sellerService } from './seller.service';
+import { CreateSellerDto } from './seller.validation';
+
+class SellerController {
+  async createSeller(req: Request, res: Response) {
+    try {
+      const userId = req.user?.id;
+      if (!userId) {
+        return res.status(401).json({
+          status: false,
+          message: 'User not authenticated',
+          data: null
+        });
+      }
+
+      const seller = await sellerService.createSeller(userId, req.body as CreateSellerDto);
+      
+      return res.status(201).json({
+        status: true,
+        message: 'Seller account created successfully',
+        data: seller
+      });
+    } catch (error: any) {
+      return res.status(error.status || 500).json({
+        status: false,
+        message: error.message || 'Internal server error',
+        data: null
+      });
+    }
+  }
+}
+
+export const sellerController = new SellerController();

@@ -37,7 +37,7 @@ model User {
   orders        Order[]
   reviews       Review[]
   cart          Cart?
-
+  seller        Seller?
   @@index([id, username, createdAt, email])
 }
 
@@ -48,6 +48,35 @@ enum Role {
   ADMIN
 }
 
+  model Seller {
+  id              String    @id @default(uuid())
+  user            User      @relation(fields: [userId], references: [id])
+  userId          String    @unique
+  businessName    String    // Store/Business name
+  description     String?   // Business description
+  status          SellerStatus @default(PENDING)
+  businessAddress String    // Physical business address
+  taxId           String?   // Tax identification number
+  bankAccount     String?   // Bank account information
+  businessPhone   String    // Business contact number
+  businessEmail   String    // Business email
+  logo            String?   // Business logo URL
+  documents       String[]  // Array of verification document URLs
+  rating          Float     @default(0)
+  totalSales      Int      @default(0)
+  isVerified      Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([id, userId, businessName, status, createdAt])
+}
+
+enum SellerStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SUSPENDED
+}
 model Product {
   id          String     @id @default(uuid())
   name        String
