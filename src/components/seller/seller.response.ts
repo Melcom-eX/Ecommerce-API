@@ -1,11 +1,11 @@
 export interface SellerResponse {
     id: string;
     businessName: string;
-    description?: string;
+    description: string | null;
     businessAddress: string;
     businessPhone: string;
     businessEmail: string;
-    logo?: string;
+    logo?: string | null;
     rating: number;
     totalSales: number;
     isVerified: boolean;

@@ -33,7 +33,7 @@ export const createSellerSchema = Joi.object({
 
 export interface CreateSellerDto {
     businessName: string;
-    description?: string;
+    description?: string | null;
     businessAddress: string;
     taxId?: string;
     bankAccount?: string;

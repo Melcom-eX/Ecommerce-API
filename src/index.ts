@@ -18,7 +18,7 @@ import productRoutes from "./components/product/product.routes";
 import cartRoutes from "./components/cart/cart.routes";
 import adminRoutes from "./components/admin/admin.routes";
 import reviewRoutes from "./components/review/review.routes";
-
+import sellerRoutes from "./components/seller/seller.routes";
 // Load environment variables
 dotenv.config();
 
@@ -60,6 +60,7 @@ app.use("/api/v1/products", productRoutes);
 app.use("/api/v1/carts", cartRoutes);
 app.use("/api/v1/admin", adminRoutes);
 app.use("/api/v1/reviews", reviewRoutes);
+app.use("/api/vi/seller", sellerRoutes);
 
 //cronjob for the server to not sleep
 // cron.schedule("* * * * *", () => {

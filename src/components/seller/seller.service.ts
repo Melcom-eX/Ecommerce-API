@@ -20,7 +20,7 @@ class SellerService {
         throw createError(404, 'User not found');
       }
 
-      if (user.seller) {
+      if (user.role === 'SELLER') {
         throw createError(400, 'User is already a seller');
       }
 
