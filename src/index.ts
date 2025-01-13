@@ -60,7 +60,7 @@ app.use("/api/v1/products", productRoutes);
 app.use("/api/v1/carts", cartRoutes);
 app.use("/api/v1/admin", adminRoutes);
 app.use("/api/v1/reviews", reviewRoutes);
-app.use("/api/vi/seller", sellerRoutes);
+app.use("/api/v1/seller", sellerRoutes);
 
 //cronjob for the server to not sleep
 // cron.schedule("* * * * *", () => {

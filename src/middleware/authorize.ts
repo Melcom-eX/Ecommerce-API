@@ -56,7 +56,7 @@ const protect = async (req: Request, res: Response, next: NextFunction) => {
       }
 
       // Check if the user is blocked
-      if (!req.user.isBlocked) {
+      if (req.user.isBlocked) {
         return res
           .status(403)
           .json({ message: "Access denied. User blocked." });
