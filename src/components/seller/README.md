@@ -17,6 +17,7 @@ This document outlines the seller management endpoints available in the seller c
   - `businessAddress` (string): Business address
   - `businessPhone` (string): Business phone number
   - `businessEmail` (string): Valid business email address
+  - `sellerType` (string): between fastfood or marketplace
 - **Optional Body Parameters**:
   - `description` (string): Business description
   - `taxId` (string): Tax identification number
@@ -50,23 +51,25 @@ This document outlines the seller management endpoints available in the seller c
 ## Response Types
 
 ### SellerResponse Interface
+
 ```typescript
 export interface SellerResponse {
-    id: string;
-    businessName: string;
-    description: string | null;
-    businessAddress: string;
-    businessPhone: string;
-    businessEmail: string;
-    logo?: string | null;
-    rating: number;
-    totalSales: number;
-    isVerified: boolean;
-    createdAt: Date;
+  id: string;
+  businessName: string;
+  description: string | null;
+  businessAddress: string;
+  businessPhone: string;
+  businessEmail: string;
+  logo?: string | null;
+  rating: number;
+  totalSales: number;
+  isVerified: boolean;
+  createdAt: Date;
 }
 ```
 
 This interface defines the shape of the seller data returned by the API:
+
 - `id`: Unique identifier for the seller
 - `businessName`: Name of the business
 - `description`: Optional business description

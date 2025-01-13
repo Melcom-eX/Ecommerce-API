@@ -9,7 +9,7 @@ reviewRoutes.get("", protect, reviewController.getAllReviews);
 reviewRoutes.post(
   "",
   validateSchema(reviewSchema),
-  prod,
+  protect,
   reviewController.createReview
 );
 

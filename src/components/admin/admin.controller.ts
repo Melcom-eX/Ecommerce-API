@@ -4,7 +4,6 @@ import adminService from "./admin.service";
 class AdminController {
   async blockUser(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-
     try {
       const response = await adminService.blockUser(id);
       return res.status(response.statusCode).send(response);
