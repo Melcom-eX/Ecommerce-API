@@ -37,5 +37,15 @@ interface ApproveProduct {
     isApproved: boolean;
   };
 }
+interface ApproveSeller {
+  status: string;
+  error: boolean;
+  statusCode: number;
+  message: string;
+  data: {
+    id: string;
+    isVerified: boolean;
+  };
+}
 
-export { BlockUser, UnblockUser, DeleteUser, ApproveProduct };
+export { BlockUser, UnblockUser, DeleteUser, ApproveProduct, ApproveSeller };

@@ -3,6 +3,7 @@ import httpStatus from "http-status";
 import adminRepository from "./admin.repository";
 import {
   ApproveProduct,
+  ApproveSeller,
   BlockUser,
   DeleteUser,
   UnblockUser,
@@ -90,6 +91,28 @@ class AdminService {
         data: {
           id: product.id,
           isApproved: product.isApproved,
+        },
+      };
+    } catch (error) {
+      console.error(error);
+      return Errors.defaultError;
+    }
+  }
+
+  async approveSeller(
+    id: string
+  ): Promise<ApproveSeller | typeof Errors.doesNotExist> {
+    try {
+      const seller = await adminRepository.approveSeller(id);
+      if (!seller) return Errors.doesNotExist;
+      return {
+        status: "success",
+        error: false,
+        statusCode: httpStatus.OK,
+        message: "Seller verified successfully",
+        data: {
+          id: seller.id,
+          isVerified: seller.isVerified,
         },
       };
     } catch (error) {

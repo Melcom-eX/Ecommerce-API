@@ -49,6 +49,18 @@ class AdminController {
     }
   }
 
+  async approveSeller(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+
+    try {
+      const response = await adminService.approveSeller(id);
+      return res.status(response.statusCode).send(response);
+    } catch (err) {
+      console.error("Approve seller error:", err);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
+
   async getAllProducts(req: Request, res: Response): Promise<Response> {
     try {
       const response = await adminService.getAllProducts();
