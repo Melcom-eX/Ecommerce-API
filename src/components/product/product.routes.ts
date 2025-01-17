@@ -10,6 +10,7 @@ import upload from "../../middleware/multer";
 const productRoutes = Router();
 
 productRoutes.get("", protect, productController.getAllProducts);
+productRoutes.get("/range", protect, productController.filterProductsByPrice);
 productRoutes.get("/:id", protect, productController.getProduct);
 
 productRoutes.post(

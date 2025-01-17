@@ -112,6 +112,32 @@ class ProductController {
       return res.status(500).json({ message: "Internal server error" });
     }
   }
+
+  // Filter products by price range
+  async filterProductsByPrice(req: Request, res: Response): Promise<Response> {
+    try {
+      const { minPrice, maxPrice } = req.query;
+
+      // Validate query parameters
+      if (!minPrice || !maxPrice) {
+        return res.status(400).json({
+          status: "error",
+          message: "Both minPrice and maxPrice are required",
+        });
+      }
+
+      const response: ProductServiceResponse =
+        await productService.filterProductsByPrice(
+          parseFloat(minPrice as string),
+          parseFloat(maxPrice as string)
+        );
+
+      return res.status(response.statusCode).send(response);
+    } catch (err) {
+      console.error("Filter products by price error:", err);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
 }
 
 export default new ProductController();
