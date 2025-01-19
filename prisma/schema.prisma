@@ -87,8 +87,7 @@ model Product {
   id          String     @id @default(uuid())
   name        String
   description String
-  price       Decimal
-  costPrice   Decimal
+  price       Int
   stock       Int
   images      String[]
   isApproved  Boolean    @default(false)
@@ -121,7 +120,7 @@ model Order {
   userId          String
   cartItems       Cart[]       @relation("CartOrder")
   status          OrderStatus  @default(PENDING)
-  totalAmount     Decimal
+  totalAmount     Int
   shippingAddress String
   transaction     Transaction? @relation("OrderTransaction")
   transactionId   String?
@@ -187,14 +186,13 @@ model Transaction {
   userId          String
   seller          Seller            @relation(fields: [sellerId], references: [id])
   sellerId        String
-  amount          Decimal
+  amount          Int
   status          TransactionStatus @default(PENDING)
   paymentMethod   PaymentMethod     @default(CREDIT_CARD)
   transactionType TransactionType   @default(PURCHASE)
   referenceId     String?           @unique
   description     String?
   createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
 
   @@index([id, userId, sellerId, status, createdAt])
 }
