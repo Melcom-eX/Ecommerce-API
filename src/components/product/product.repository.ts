@@ -115,6 +115,27 @@ class ProductRepository {
       throw new Error("Error finding products by category");
     }
   }
+
+  // Filter products by price range
+  async filterProductsByPrice(
+    minPrice: number,
+    maxPrice: number
+  ): Promise<Product[]> {
+    try {
+      const result = await prisma.product.findMany({
+        where: {
+          price: {
+            gte: minPrice, // Greater than or equal to
+            lte: maxPrice, // Less than or equal to
+          },
+        },
+      });
+      return result;
+    } catch (error) {
+      console.error("Error finding products by price range", error);
+      throw new Error("Error finding products by price range");
+    }
+  }
 }
 
 export default new ProductRepository();

@@ -11,6 +11,7 @@ adminRoutes.post(
   isAdmin,
   adminController.approveProduct
 );
+adminRoutes.post("/approve-seller/:id", isAdmin, adminController.approveSeller);
 adminRoutes.get("/products", isAdmin, adminController.getAllProducts);
 
 export default adminRoutes;

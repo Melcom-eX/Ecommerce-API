@@ -1,4 +1,4 @@
-import { PrismaClient, Product, User } from "@prisma/client";
+import { PrismaClient, Product, Seller, User } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -36,6 +36,18 @@ class AdminRepository {
         data: { isApproved: true },
       });
       return product as Product | null;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+  async approveSeller(id: string): Promise<Seller | null> {
+    try {
+      const seller = await prisma.seller.update({
+        where: { id },
+        data: { isVerified: true },
+      });
+      return seller as Seller | null;
     } catch (error) {
       console.log(error);
       return null;

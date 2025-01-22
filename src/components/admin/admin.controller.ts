@@ -4,7 +4,6 @@ import adminService from "./admin.service";
 class AdminController {
   async blockUser(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-
     try {
       const response = await adminService.blockUser(id);
       return res.status(response.statusCode).send(response);
@@ -46,6 +45,18 @@ class AdminController {
       return res.status(response.statusCode).send(response);
     } catch (err) {
       console.error("Approve product error:", err);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
+
+  async approveSeller(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+
+    try {
+      const response = await adminService.approveSeller(id);
+      return res.status(response.statusCode).send(response);
+    } catch (err) {
+      console.error("Approve seller error:", err);
       return res.status(500).json({ message: "Internal server error" });
     }
   }

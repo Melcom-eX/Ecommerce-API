@@ -124,7 +124,7 @@ class ProductService {
     categoryId: string
   ): Promise<ProductServiceResponse> {
     try {
-      console.log(`category: ${categoryId}`);
+      // console.log(`category: ${categoryId}`);
       const products: Product[] = await productRepository.findByCategory(
         categoryId
       );
@@ -195,6 +195,30 @@ class ProductService {
       console.error(error);
       return createErrorResponse(
         "Error uploading image",
+        httpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+  async filterProductsByPrice(
+    minPrice: number,
+    maxPrice: number
+  ): Promise<ProductServiceResponse> {
+    try {
+      const products = await productRepository.filterProductsByPrice(
+        minPrice,
+        maxPrice
+      );
+
+      return {
+        statusCode: 200,
+        status: "success",
+        message: "Products filtered by price range",
+        data: products,
+      };
+    } catch (error) {
+      console.error("Error filtering products by price:", error);
+      return createErrorResponse(
+        "Error filtering products by price",
         httpStatus.INTERNAL_SERVER_ERROR
       );
     }

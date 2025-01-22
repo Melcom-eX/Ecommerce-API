@@ -1,9 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider      = "prisma-client-js"
   binaryTargets = ["native", "rhel-openssl-3.0.x"]
@@ -15,44 +12,82 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(uuid())
+  id            String        @id @default(uuid())
   fullName      String
-  username      String    @unique
+  username      String        @unique
   password      String
-  email         String    @unique
-  phone         String    @unique
-  wallet        Int       @unique
+  email         String        @unique
+  phone         String        @unique
+  wallet        Int           @unique
   dateOfBirth   DateTime
   profile       String?
-  balance       Int       @default(0)
-  createdAt     DateTime  @default(now())
+  balance       Int           @default(0)
+  createdAt     DateTime      @default(now())
   address       String?
-  active        Boolean   @default(true)
-  isBlocked     Boolean   @default(false)
-  isVerified    Boolean   @default(false)
+  active        Boolean       @default(true)
+  isBlocked     Boolean       @default(false)
+  isVerified    Boolean       @default(false)
   otp           String?
   otpExpiration DateTime?
-  role          Role      @default(USER)
-  products      Product[] @relation("SellerProducts")
+  role          Role          @default(USER)
+  products      Product[]     @relation("SellerProducts")
   orders        Order[]
   reviews       Review[]
   cart          Cart?
+  seller        Seller?
+  transactions  Transaction[]
 
   @@index([id, username, createdAt, email])
 }
 
-// Enum for user roles
 enum Role {
   USER
   SELLER
   ADMIN
 }
 
+model Seller {
+  id              String        @id @default(uuid())
+  user            User          @relation(fields: [userId], references: [id])
+  userId          String        @unique
+  businessName    String // Store/Business name
+  description     String? // Business description
+  status          SellerStatus  @default(PENDING)
+  sellerType      SellerType    @default(MARKETPLACE)
+  businessAddress String // Physical business address
+  taxId           String? // Tax identification number
+  bankAccount     String? // Bank account information
+  businessPhone   String // Business contact number
+  businessEmail   String // Business email
+  logo            String? // Business logo URL
+  documents       String[] // Array of verification document URLs
+  rating          Float         @default(0)
+  totalSales      Int           @default(0)
+  isVerified      Boolean       @default(false)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  transactions    Transaction[]
+
+  @@index([id, userId, businessName, status, createdAt])
+}
+
+enum SellerType {
+  FOODSECTOR
+  MARKETPLACE
+}
+
+enum SellerStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SUSPENDED
+}
+
 model Product {
   id          String     @id @default(uuid())
   name        String
   description String
-  price       Float
+  price       Int
   stock       Int
   images      String[]
   isApproved  Boolean    @default(false)
@@ -80,15 +115,17 @@ model Category {
 }
 
 model Order {
-  id              String      @id @default(uuid())
-  user            User        @relation(fields: [userId], references: [id])
+  id              String       @id @default(uuid())
+  user            User         @relation(fields: [userId], references: [id])
   userId          String
-  cartItems       Cart[]      @relation("CartOrder") // Reference cart items for this order
-  status          OrderStatus @default(PENDING)
-  totalAmount     Float
+  cartItems       Cart[]       @relation("CartOrder")
+  status          OrderStatus  @default(PENDING)
+  totalAmount     Int
   shippingAddress String
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
+  transaction     Transaction? @relation("OrderTransaction")
+  transactionId   String?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
 
   @@index([id, userId, status, createdAt])
 }
@@ -121,7 +158,7 @@ model Cart {
   userId    String     @unique
   products  CartItem[]
   order     Order?     @relation("CartOrder", fields: [orderId], references: [id])
-  orderId   String? // Nullable because not all carts are linked to an order
+  orderId   String?
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
 
@@ -139,4 +176,46 @@ model CartItem {
   updatedAt DateTime @updatedAt
 
   @@unique([cartId, productId])
+}
+
+model Transaction {
+  id              String            @id @default(uuid())
+  user            User              @relation(fields: [userId], references: [id])
+  order           Order?            @relation("OrderTransaction", fields: [orderId], references: [id])
+  orderId         String?           @unique
+  userId          String
+  seller          Seller            @relation(fields: [sellerId], references: [id])
+  sellerId        String
+  amount          Int
+  status          TransactionStatus @default(PENDING)
+  paymentMethod   PaymentMethod     @default(CREDIT_CARD)
+  transactionType TransactionType   @default(PURCHASE)
+  referenceId     String?           @unique
+  description     String?
+  createdAt       DateTime          @default(now())
+
+  @@index([id, userId, sellerId, status, createdAt])
+}
+
+enum TransactionStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  REFUNDED
+}
+
+enum PaymentMethod {
+  CREDIT_CARD
+  DEBIT_CARD
+  PAYPAL
+  BANK_TRANSFER
+  WALLET
+  CASH
+}
+
+enum TransactionType {
+  PURCHASE
+  REFUND
+  WITHDRAWAL
+  DEPOSIT
 }
