@@ -1,14 +1,14 @@
 // src/controllers/__tests__/seller.controller.test.ts
-import { Request, Response } from 'express';
-import { sellerController } from '../../components/seller/seller.controller';
-import { sellerService } from '../../components/seller/seller.service';
-import { CreateSellerDto} from '../../components/seller/seller.validation';
-import { SellerResponse } from '../../components/seller/seller.response';
+import { Request, Response } from "express";
+import { sellerController } from "../../components/seller/seller.controller";
+import { sellerService } from "../../components/seller/seller.service";
+import { CreateSellerDto } from "../../components/seller/seller.validation";
+import { SellerResponse } from "../../components/seller/seller.response";
 
 // Mock the seller service
-jest.mock('../seller.service');
+jest.mock("../../components/seller/seller.service");
 
-describe('SellerController', () => {
+describe("SellerController", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let mockResponse: {
@@ -29,59 +29,66 @@ describe('SellerController', () => {
     res = mockResponse as unknown as Partial<Response>;
   });
 
-  describe('createSeller', () => {
+  describe("createSeller", () => {
     const mockSellerData: CreateSellerDto = {
-      businessName: 'Test Business',
-      description: 'Test Description',
-      businessAddress: '123 Test St',
-      taxId: 'TEST123',
-      bankAccount: 'TEST456',
-      businessPhone: '1234567890',
-      businessEmail: 'test@business.com',
-      logo: 'test-logo.jpg'
+      businessName: "Test Business",
+      description: "Test Description",
+      businessAddress: "123 Test St",
+      taxId: "TEST123",
+      bankAccount: "TEST456",
+      businessPhone: "1234567890",
+      businessEmail: "test@business.com",
+      logo: "test-logo.jpg",
+      sellerType: "MARKETPLACE",
     };
 
     const mockSellerResponse: SellerResponse = {
-      id: 'test-seller-id',
-      businessName: 'Test Business',
-      description: 'Test Description',
-      businessAddress: '123 Test St',
-      businessPhone: '1234567890',
-      businessEmail: 'test@business.com',
-      logo: 'test-logo.jpg',
+      id: "test-seller-id",
+      businessName: "Test Business",
+      description: "Test Description",
+      businessAddress: "123 Test St",
+      businessPhone: "1234567890",
+      businessEmail: "test@business.com",
+      logo: "test-logo.jpg",
       rating: 0,
       totalSales: 0,
       isVerified: false,
-      createdAt: new Date()
+      createdAt: new Date(),
+      sellerType: "MARKETPLACE",
     };
 
-    it('should successfully create a seller account', async () => {
+    it("should successfully create a seller account", async () => {
       // Arrange
       req = {
-        user: { id: 'test-user-id' },
-        body: mockSellerData
+        user: { id: "test-user-id" },
+        body: mockSellerData,
       };
 
-      (sellerService.createSeller as jest.Mock).mockResolvedValue(mockSellerResponse);
+      (sellerService.createSeller as jest.Mock).mockResolvedValue(
+        mockSellerResponse
+      );
 
       // Act
       await sellerController.createSeller(req as Request, res as Response);
 
       // Assert
-      expect(sellerService.createSeller).toHaveBeenCalledWith('test-user-id', mockSellerData);
+      expect(sellerService.createSeller).toHaveBeenCalledWith(
+        "test-user-id",
+        mockSellerData
+      );
       expect(mockResponse.status).toHaveBeenCalledWith(201);
       expect(mockResponse.json).toHaveBeenCalledWith({
         status: true,
-        message: 'Seller account created successfully',
-        data: mockSellerResponse
+        message: "Seller account created successfully",
+        data: mockSellerResponse,
       });
     });
 
-    it('should return 401 if user is not authenticated', async () => {
+    it("should return 401 if user is not authenticated", async () => {
       // Arrange
       req = {
         user: undefined,
-        body: mockSellerData
+        body: mockSellerData,
       };
 
       // Act
@@ -92,20 +99,20 @@ describe('SellerController', () => {
       expect(mockResponse.status).toHaveBeenCalledWith(401);
       expect(mockResponse.json).toHaveBeenCalledWith({
         status: false,
-        message: 'User not authenticated',
-        data: null
+        message: "User not authenticated",
+        data: null,
       });
     });
 
-    it('should handle service errors appropriately', async () => {
+    it("should handle service errors appropriately", async () => {
       // Arrange
       req = {
-        user: { id: 'test-user-id' },
-        body: mockSellerData
+        user: { id: "test-user-id" },
+        body: mockSellerData,
       };
 
-      const mockError = new Error('User already has a seller account');
-      Object.defineProperty(mockError, 'status', { value: 400 });
+      const mockError = new Error("User already has a seller account");
+      Object.defineProperty(mockError, "status", { value: 400 });
       (sellerService.createSeller as jest.Mock).mockRejectedValue(mockError);
 
       // Act
@@ -115,16 +122,16 @@ describe('SellerController', () => {
       expect(mockResponse.status).toHaveBeenCalledWith(400);
       expect(mockResponse.json).toHaveBeenCalledWith({
         status: false,
-        message: 'User already has a seller account',
-        data: null
+        message: "User already has a seller account",
+        data: null,
       });
     });
 
-    it('should handle unknown errors with 500 status', async () => {
+    it("should handle unknown errors with 500 status", async () => {
       // Arrange
       req = {
-        user: { id: 'test-user-id' },
-        body: mockSellerData
+        user: { id: "test-user-id" },
+        body: mockSellerData,
       };
 
       (sellerService.createSeller as jest.Mock).mockRejectedValue(new Error());
@@ -136,28 +143,28 @@ describe('SellerController', () => {
       expect(mockResponse.status).toHaveBeenCalledWith(500);
       expect(mockResponse.json).toHaveBeenCalledWith({
         status: false,
-        message: 'Internal server error',
-        data: null
+        message: "Internal server error",
+        data: null,
       });
     });
 
-    it('should validate required fields in the request body', async () => {
+    it("should validate required fields in the request body", async () => {
       // Arrange
       const invalidSellerData = {
         // Missing required fields
-        businessName: 'Test Business',
+        businessName: "Test Business",
         // Missing businessAddress
         // Missing businessPhone
         // Missing businessEmail
       };
 
       req = {
-        user: { id: 'test-user-id' },
-        body: invalidSellerData
+        user: { id: "test-user-id" },
+        body: invalidSellerData,
       };
 
-      const mockError = new Error('Validation error');
-      Object.defineProperty(mockError, 'status', { value: 400 });
+      const mockError = new Error("Validation error");
+      Object.defineProperty(mockError, "status", { value: 400 });
       (sellerService.createSeller as jest.Mock).mockRejectedValue(mockError);
 
       // Act
@@ -167,54 +174,61 @@ describe('SellerController', () => {
       expect(mockResponse.status).toHaveBeenCalledWith(400);
       expect(mockResponse.json).toHaveBeenCalledWith({
         status: false,
-        message: 'Validation error',
-        data: null
+        message: "Validation error",
+        data: null,
       });
     });
   });
 
   // Additional tests for optional fields
-  describe('createSeller with optional fields', () => {
-    it('should create seller without optional fields', async () => {
+  describe("createSeller with optional fields", () => {
+    it("should create seller without optional fields", async () => {
       // Arrange
       const minimalSellerData = {
-        businessName: 'Test Business',
-        businessAddress: '123 Test St',
-        businessPhone: '1234567890',
-        businessEmail: 'test@business.com'
+        businessName: "Test Business",
+        businessAddress: "123 Test St",
+        businessPhone: "1234567890",
+        businessEmail: "test@business.com",
+        sellerType: "MARKETPLACE",
       };
 
       const minimalSellerResponse = {
-        id: 'test-seller-id',
-        businessName: 'Test Business',
+        id: "test-seller-id",
+        businessName: "Test Business",
         description: null,
-        businessAddress: '123 Test St',
-        businessPhone: '1234567890',
-        businessEmail: 'test@business.com',
+        businessAddress: "123 Test St",
+        businessPhone: "1234567890",
+        businessEmail: "test@business.com",
         logo: null,
         rating: 0,
         totalSales: 0,
         isVerified: false,
-        createdAt: new Date()
+        createdAt: new Date(),
+        sellerType: "MARKETPLACE",
       };
 
       req = {
-        user: { id: 'test-user-id' },
-        body: minimalSellerData
+        user: { id: "test-user-id" },
+        body: minimalSellerData,
       };
 
-      (sellerService.createSeller as jest.Mock).mockResolvedValue(minimalSellerResponse);
+      (sellerService.createSeller as jest.Mock).mockResolvedValue(
+        minimalSellerResponse
+      );
 
       // Act
       await sellerController.createSeller(req as Request, res as Response);
 
       // Assert
-      expect(sellerService.createSeller).toHaveBeenCalledWith('test-user-id', minimalSellerData);
+      expect(sellerService.createSeller).toHaveBeenCalledWith(
+        "test-user-id",
+        minimalSellerData
+      );
       expect(mockResponse.status).toHaveBeenCalledWith(201);
       expect(mockResponse.json).toHaveBeenCalledWith({
         status: true,
-        message: 'Seller account created successfully',
-        data: minimalSellerResponse
+        message: "Seller account created successfully",
+        data: minimalSellerResponse,
       });
     });
   });
