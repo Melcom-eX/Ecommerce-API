@@ -51,7 +51,7 @@ class TransactionService {
         statusCode: httpStatus.OK,
         error: false,
         status: "success",
-        message: "transactions retireved succesfully",
+        message: "transactions retireved successfully",
         data: data,
       };
     } catch (error) {
