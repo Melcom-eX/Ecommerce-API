@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn src/index.ts",
-    "start": "tsc && node dist/index.js",
+    "start": "tsc &&cp -R ./src/views ./dist/ && node dist/index.js",
     "prismaMigrate": "npx prisma migrate dev --name model",
     "prismaGenerate": "npx prisma generate",
     "test": "jest"
