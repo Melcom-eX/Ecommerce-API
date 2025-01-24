@@ -76,7 +76,7 @@ class EmailService {
         to: email,
         subject: data.subject,
         html: emailTemplate({
-          PlatformName: "Student information system",
+          PlatformName: "Pickit",
           Username: data.username,
           title: "Welcome Email",
           OTP: data.OTP,
