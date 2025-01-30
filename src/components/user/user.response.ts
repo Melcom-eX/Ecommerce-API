@@ -38,7 +38,7 @@ type LoginResponse = {
   status: string;
   error: boolean;
   statusCode: number;
-  data: { username: string; id: string };
+  data: { email: string; id: string };
   token?: string;
 };
 type User = {
@@ -51,14 +51,8 @@ type CreateUserResponse = {
   statusCode: number;
   data: {
     id: string;
-    fullName: string;
     username: string;
     email: string;
-    dateOfBirth: Date;
-    phone: string;
-    wallet: number;
-    profile?: string;
-    address: string;
     role: string;
   };
 };

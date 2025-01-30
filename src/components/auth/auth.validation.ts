@@ -2,11 +2,6 @@ import Joi from "joi";
 
 // Register validator schema
 export const register = Joi.object({
-  fullName: Joi.string().required().messages({
-    "string.base": "Full Name must be a string",
-    "string.empty": "Full Name is required",
-    "any.required": "Full Name is a required field",
-  }),
   username: Joi.string().required().messages({
     "string.base": "User Name must be a string",
     "string.empty": "User Name is required",
@@ -24,37 +19,15 @@ export const register = Joi.object({
     "any.required": "Email is a required field",
     "string.email": "Email must be a valid email address",
   }),
-  phone: Joi.string()
-    .pattern(/^[+]?[0-9]{10,15}$/)
-    .required()
-    .messages({
-      "string.base": "Phone string must be a string",
-      "string.empty": "Phone string is required",
-      "any.required": "Phone string is a required field",
-    }),
-  dateOfBirth: Joi.date().required().messages({
-    "date.base": "Date of Birth must be a valid date",
-    "any.required": "Date of Birth is a required field",
-  }),
-  photo: Joi.string().optional().messages({
-    "string.base": "photo must be a string",
-  }),
-  address: Joi.string().required().messages({
-    "string.base": "address must be a string",
-    "string.empty": "address is required",
-    "any.required": "address is a required field",
-  }),
-  role: Joi.string().optional().messages({
-    "string.base": "Role must be a string",
-  }),
 });
 
 // Login validator schema
 export const login = Joi.object({
-  username: Joi.string().required().messages({
-    "string.base": "User Name must be a string",
-    "string.empty": "User Name is required",
-    "any.required": "User Name is a required field",
+  email: Joi.string().email().required().messages({
+    "string.base": "Email must be a string",
+    "string.empty": "Email is required",
+    "any.required": "Email is a required field",
+    "string.email": "Email must be a valid email address",
   }),
   password: Joi.string().required().messages({
     "string.base": "Password must be a string",

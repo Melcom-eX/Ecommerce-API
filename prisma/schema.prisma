@@ -2,24 +2,25 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider      = "prisma-client-js"
-  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+  provider = "prisma-client-js"
+  // binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
   id            String        @id @default(uuid())
-  fullName      String
+  fullName      String?
   username      String        @unique
   password      String
   email         String        @unique
-  phone         String        @unique
+  phone         String?       @unique
   wallet        Int           @unique
-  dateOfBirth   DateTime
+  dateOfBirth   DateTime?
   profile       String?
   balance       Int           @default(0)
   createdAt     DateTime      @default(now())

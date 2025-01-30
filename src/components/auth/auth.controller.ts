@@ -7,9 +7,9 @@ import cartController from "../cart/cart.controller";
 
 class AuthController {
   async login(req: Request, res: Response): Promise<Response> {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
     try {
-      const response = await userService.loginUser(username, password);
+      const response = await userService.loginUser(email, password);
       return res.status(response.statusCode).send(response);
     } catch (err) {
       console.error("Login error:", err);
@@ -18,30 +18,10 @@ class AuthController {
   }
 
   async signup(req: Request, res: Response): Promise<Response> {
-    const {
-      fullName,
-      username,
-      password,
-      email,
-      phone,
-      dateOfBirth,
-      profile,
-      address,
-      role,
-    } = req.body;
+    const { username, password, email } = req.body;
 
     try {
-      const response = await userService.createUser(
-        fullName,
-        username,
-        password,
-        email,
-        new Date(dateOfBirth),
-        phone,
-        profile,
-        address,
-        role
-      );
+      const response = await userService.createUser(username, password, email);
 
       if (response.error) {
         return res.status(response.statusCode).json(response);
@@ -60,7 +40,7 @@ class AuthController {
       // Prepare the email data
       const data = {
         subject: "Pickit validation",
-        username: fullName,
+        username: username,
         OTP: otp, // This is now a string
       };
 
@@ -96,6 +76,30 @@ class AuthController {
     }
   }
 
+  async resendOTP(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const { email } = req.body;
+    try {
+      const otp = await sendOTPToUser(id); // Generate OTP
+
+      if (!otp) {
+        return res.status(500).json({ message: "Failed to send OTP" });
+      }
+
+      const data = {
+        subject: "Resent OTP",
+        username: email,
+        OTP: otp, // Send OTP to the user's email
+      };
+
+      await emailService.sendEmailWithTemplate(email, data); // Send email with OTP
+
+      return res.status(200).json({ message: "OTP sent to User" });
+    } catch (error) {
+      console.error("Reset Password OTP error:", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
   async ResetPassword(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
     const { email } = req.body;
