@@ -38,7 +38,7 @@ export const updateUserValidation = Joi.object({
   dateOfBirth: Joi.date().optional().messages({
     "date.base": "Date of Birth must be a valid date",
   }),
-  address: Joi.date().optional().messages({
+  address: Joi.string().optional().messages({
     "date.base": "Date of Birth must be a valid date",
   }),
   phone: Joi.string().optional().messages({
