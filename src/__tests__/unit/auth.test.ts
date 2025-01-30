@@ -32,7 +32,7 @@ describe("Auth Controller Tests", () => {
     it("should login a user", async () => {
       req = {
         body: {
-          username: "testuser",
+          email: "testuser@gmail.com",
           password: "testpassword",
         },
       };
@@ -41,7 +41,7 @@ describe("Auth Controller Tests", () => {
         status: "success",
         error: false,
         statusCode: 200,
-        data: { username: "testuser", id: "test-user-id" },
+        data: { email: "testuser@gmail.com", id: "test-user-id" },
         token: "test-token",
       });
 
@@ -52,7 +52,7 @@ describe("Auth Controller Tests", () => {
         status: "success",
         error: false,
         statusCode: 200,
-        data: { username: "testuser", id: "test-user-id" },
+        data: { email: "testuser@gmail.com", id: "test-user-id" },
         token: "test-token",
       });
     });
@@ -62,15 +62,9 @@ describe("Auth Controller Tests", () => {
     it("should signup a user", async () => {
       req = {
         body: {
-          fullName: "Test User",
           username: "testuser",
           password: "testpassword",
           email: "testuser@example.com",
-          phone: "1234567890",
-          dateOfBirth: "2000-01-01",
-          profile: "test-profile-url",
-          address: "123 Test St",
-          role: "USER",
         },
       };
 
