@@ -1,4 +1,4 @@
-name: Ecommerce API Continuous Integration
+name: Pickit backend Continuous Integration
 
 on:
   pull_request:
