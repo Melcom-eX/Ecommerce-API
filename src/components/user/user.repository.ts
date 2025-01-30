@@ -58,40 +58,22 @@ class UserRepository {
 
   // Create a new user
   async createUser({
-    fullName,
     username,
     password,
     email,
-    dateOfBirth,
-    phone,
     wallet,
-    profile,
-    address,
-    role,
   }: {
-    fullName: string;
     username: string;
     password: string;
     email: string;
-    dateOfBirth: Date;
-    phone: string;
     wallet: number;
-    profile?: string;
-    address: string;
-    role?: Role;
   }): Promise<UserDocument> {
     const user = await prisma.user.create({
       data: {
-        fullName,
         username,
         password,
         email,
-        dateOfBirth,
-        phone,
         wallet,
-        profile,
-        address,
-        role,
       },
     });
 
@@ -107,6 +89,23 @@ class UserRepository {
       where: { id },
       data: {
         ...updatedUser,
+      },
+      select: {
+        id: true,
+        fullName: true,
+        username: true,
+        email: true,
+        phone: true,
+        wallet: true,
+        dateOfBirth: true,
+        profile: true,
+        balance: true,
+        createdAt: true,
+        address: true,
+        active: true,
+        isBlocked: true,
+        isVerified: true,
+        role: true,
       },
     });
     return updated as UserDocument;

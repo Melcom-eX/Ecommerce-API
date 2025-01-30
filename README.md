@@ -4,6 +4,8 @@
 
 This project is a backend application built using TypeScript and Express.js, designed to provide a robust API for managing users, products, and categories. It utilizes Prisma as an ORM for database interactions, ensuring type safety and ease of use.
 
+**Live API URL:**https://ecommerce-api-production-5b59.up.railway.app/
+
 ## Key Components
 
 ### 1. **Controllers**

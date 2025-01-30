@@ -27,6 +27,7 @@ authRoutes.post(
   validateSchema(validateOTP),
   authController.validateOTP
 );
+authRoutes.post("/resend-otp/:id", authController.resendOTP);
 authRoutes.post(
   "/reset-password/:id",
   validateSchema(ResetPassword),

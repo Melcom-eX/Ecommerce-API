@@ -28,11 +28,6 @@ export const uploadProfile = Joi.object({
 
 // updateUserValidation validator schema
 export const updateUserValidation = Joi.object({
-  id: Joi.string().required().messages({
-    "string.base": "ID must be a string",
-    "string.empty": "ID is required",
-    "any.required": "ID is a required field",
-  }),
   fullName: Joi.string().optional().messages({
     "string.base": "Full Name must be a string",
   }),
@@ -43,7 +38,10 @@ export const updateUserValidation = Joi.object({
   dateOfBirth: Joi.date().optional().messages({
     "date.base": "Date of Birth must be a valid date",
   }),
-  phoneNumber: Joi.string().optional().messages({
+  address: Joi.date().optional().messages({
+    "date.base": "Date of Birth must be a valid date",
+  }),
+  phone: Joi.string().optional().messages({
     "string.base": "Phone Number must be a string",
   }),
   major: Joi.string().optional().messages({
