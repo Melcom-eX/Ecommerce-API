@@ -117,10 +117,28 @@ This document outlines the authentication endpoints available in the auth compon
   - `OTP` (number): One-time password
   - `newPassword` (string): New password
 - **Success Response**:
+
   ```json
   {
     "statusCode": 200,
     "message": "Password successfully updated"
+  }
+  ```
+
+  ### Subscibe for newsletter
+
+- **URL**: `/newsletter`
+- **Method**: `POST`
+- **Description**: Send an email to users that registred for a news letter and add's there email to a table
+- **Required Body Parameters**:
+  - `email` (string): Email string
+- **Success Response**:
+  ```json
+  {
+    "status": "success",
+    "error": false,
+    "statusCode": 200,
+    "message": "News letter sent"
   }
   ```
 
