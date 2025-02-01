@@ -403,7 +403,7 @@ class UserService {
         status: "success",
         error: false,
         statusCode: httpStatus.OK,
-        message: "News letter sent to",
+        message: "News letter sent",
       };
     } catch (error) {
       console.error("Newsletter error:", error);
