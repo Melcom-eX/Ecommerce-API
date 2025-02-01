@@ -9,6 +9,7 @@ dotenv.config();
 class EmailService {
   private transporter: nodemailer.Transporter;
   private welcomeTemplatePath: string;
+  private newsLetterPath: string;
   private resetPasswordTemplatePath: string;
 
   constructor() {
@@ -23,6 +24,7 @@ class EmailService {
     });
 
     this.welcomeTemplatePath = path.join(__dirname, "../views/validate.hbs");
+    this.newsLetterPath = path.join(__dirname, "../views/newsletter.hbs");
     this.resetPasswordTemplatePath = path.join(
       __dirname,
       "../views/forgetPassword.hbs"
@@ -124,6 +126,30 @@ class EmailService {
         console.error(
           "Unknown error occurred while sending reset password email"
         );
+      }
+    }
+  }
+
+  //method to send newletter email
+  public async sendNewsLetterEmail(email: string): Promise<void> {
+    try {
+      // Read and compile the reset password template
+      const templateSource = await this.readTemplateFile(this.newsLetterPath);
+      const emailTemplate = handlebars.compile(templateSource);
+
+      const info = await this.transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: email,
+        subject: "Newsletter",
+        html: emailTemplate({}),
+      });
+
+      console.log(`News letter email sent: ${info.response}`);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error(`Error sending newsletter email: ${error.message}`);
+      } else {
+        console.error("Unknown error occurred while sending newsletter email");
       }
     }
   }

@@ -47,6 +47,11 @@ enum Role {
   ADMIN
 }
 
+model email {
+  id    String @id @default(uuid())
+  email String @unique
+}
+
 model Seller {
   id              String        @id @default(uuid())
   user            User          @relation(fields: [userId], references: [id])
