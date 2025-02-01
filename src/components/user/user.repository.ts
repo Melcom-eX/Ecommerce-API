@@ -139,6 +139,15 @@ class UserRepository {
     });
     return user as UserDocument | null;
   }
+
+  async newsLetter(email: string): Promise<any> {
+    const user = await prisma.email.create({
+      data: {
+        email,
+      },
+    });
+    return user;
+  }
 }
 
 export default new UserRepository();

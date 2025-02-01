@@ -382,6 +382,34 @@ class UserService {
       };
     }
   }
+
+  async sendNewsLetter(email: string): Promise<{
+    status: string;
+    error: boolean;
+    statusCode: number;
+    message: string;
+  }> {
+    try {
+      const data = await userRepository.newsLetter(email);
+      if (!data) {
+        return {
+          status: "error",
+          error: true,
+          statusCode: httpStatus.BAD_REQUEST,
+          message: "Failed to send newsletter",
+        };
+      }
+      return {
+        status: "success",
+        error: false,
+        statusCode: httpStatus.OK,
+        message: "News letter sent to",
+      };
+    } catch (error) {
+      console.error("Newsletter error:", error);
+      return Errors.defaultError;
+    }
+  }
 }
 
 export default new UserService();

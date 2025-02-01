@@ -149,6 +149,21 @@ class AuthController {
       return res.status(500).json({ message: "Internal server error" });
     }
   }
+
+  async newsletter(req: Request, res: Response): Promise<Response> {
+    const { email } = req.body;
+    try {
+      const data = await userService.sendNewsLetter(email);
+      if (!data) {
+        return res.status(500).json({ message: "Failed to send Newsletter" });
+      }
+      await emailService.sendNewsLetterEmail(email);
+      return res.status(data.statusCode).send(data);
+    } catch (error) {
+      console.error("Newsletter error:", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
 }
 
 export default new AuthController(); // Use ES module syntax to export

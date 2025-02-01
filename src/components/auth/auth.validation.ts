@@ -36,6 +36,15 @@ export const login = Joi.object({
   }),
 });
 
+export const newsletter = Joi.object({
+  email: Joi.string().email().required().messages({
+    "string.base": "Email must be a string",
+    "string.empty": "Email is required",
+    "any.required": "Email is a required field",
+    "string.email": "Email must be a valid email address",
+  }),
+});
+
 // validateOTP validator schema
 export const validateOTP = Joi.object({
   OTP: Joi.number().required().messages({
