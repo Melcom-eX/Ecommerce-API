@@ -140,7 +140,7 @@ class EmailService {
       const info = await this.transporter.sendMail({
         from: process.env.EMAIL_USER,
         to: email,
-        subject: "Newsletter",
+        subject: "Pickit Newsletter",
         html: emailTemplate({}),
       });
 
