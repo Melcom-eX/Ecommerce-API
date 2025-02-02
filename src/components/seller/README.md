@@ -4,7 +4,7 @@ This document outlines the seller management endpoints available in the seller c
 
 ## Endpoints
 
-### **prefix(url)** e.g localhost:4000/create`{endpoints}`
+### **prefix(url)** e.g localhost:4000/api/v1/seller`{endpoints}`
 
 ### Create Seller Account
 

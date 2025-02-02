@@ -4,7 +4,7 @@ This document outlines the category-related endpoints available in the category 
 
 ## Endpoints
 
-### **prefix(url)** e.g localhost:4000/categories`{endpoints}`
+### **prefix(url)** e.g localhost:4000/api/v1/categories`{endpoints}`
 
 ### Get All Categories
 
