@@ -4,7 +4,7 @@ This document outlines the admin endpoints available in the admin component.
 
 ## Endpoints
 
-### **prefix(url)** e.g localhost:4000/admin`{endpoints}`
+### **prefix(url)** e.g localhost:4000/api/v1/admin`{endpoints}`
 
 ### Block a User
 

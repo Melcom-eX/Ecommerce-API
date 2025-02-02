@@ -4,7 +4,7 @@ The Cart component is responsible for managing the shopping cart functionality i
 
 ## Endpoints
 
-### **prefix(url)** e.g localhost:4000/carts`{endpoints}`
+### **prefix(url)** e.g localhost:4000/api/v1/carts`{endpoints}`
 
 ### Get All Carts
 

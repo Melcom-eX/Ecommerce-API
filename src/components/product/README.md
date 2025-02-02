@@ -1,6 +1,6 @@
 ## Product Endpoints
 
-### **prefix(url)** e.g localhost:4000/products`{endpoints}`
+### **prefix(url)** e.g localhost:4000/api/v1/products`{endpoints}`
 
 ### Get All Products
 

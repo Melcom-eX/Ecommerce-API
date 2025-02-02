@@ -4,7 +4,7 @@ This document outlines the user-related endpoints available in the user componen
 
 ## Endpoints
 
-### **prefix(url)** e.g localhost:4000/users`{endpoints}`
+### **prefix(url)** e.g localhost:4000/api/v1/users`{endpoints}`
 
 ### Get All Users
 

@@ -4,7 +4,7 @@ This document outlines the authentication endpoints available in the auth compon
 
 ## Endpoints
 
-### **prefix(url)** e.g localhost:4000/auth`{endpoints}`
+### **prefix(url)** e.g localhost:4000/api/v1/auth`{endpoints}`
 
 ### Register User
 
