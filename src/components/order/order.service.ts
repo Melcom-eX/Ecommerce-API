@@ -2,12 +2,12 @@ import httpStatus from "http-status";
 import { Errors } from "../../error/error";
 import { orderRepository } from "./order.repository";
 import { OrderDeleteResponse, OrderResponse } from "./order.response";
-import { Order } from "@prisma/client";
+import { Order, OrderStatus } from "@prisma/client";
 
 class OrderService {
   async createOrder(
     userId: string,
-    cartItems: string,
+    cartItems: string[],
     shippingAddress: string,
     totalAmount: number
   ): Promise<OrderResponse | typeof Errors.defaultError> {
@@ -76,7 +76,7 @@ class OrderService {
 
   async updateOrder(
     orderId: string,
-    status: string,
+    status: OrderStatus,
     shippingAddress: string
   ): Promise<OrderResponse | typeof Errors.defaultError> {
     try {
