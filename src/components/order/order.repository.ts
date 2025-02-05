@@ -1,10 +1,10 @@
-import { PrismaClient } from "@prisma/client";
+import { OrderStatus, PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 class OrderRepository {
   async createOrder(
     userId: string,
-    cartItems: string,
+    cartItems: string[],
     shippingAddress: string,
     totalAmount: number
   ) {
@@ -32,7 +32,11 @@ class OrderRepository {
   async getOrders() {
     return await prisma.order.findMany();
   }
-  async updateOrder(orderId: string, status: string, shippingAddress: string) {
+  async updateOrder(
+    orderId: string,
+    status: OrderStatus,
+    shippingAddress: string
+  ) {
     return await prisma.order.update({
       where: { id: orderId },
       data: {

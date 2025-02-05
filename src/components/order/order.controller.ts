@@ -11,7 +11,7 @@ class OrderController {
         shippingAddress,
         totalAmount
       );
-      return res.status(201).json(order);
+      return res.status(order.statusCode).json(order);
     } catch (error) {
       console.error("Create order error:", error);
       return res.status(500).json({ message: "Internal server error" });
@@ -24,7 +24,7 @@ class OrderController {
 
       const order = await orderService.getOrder(id);
 
-      return res.status(200).json(order);
+      return res.status(order.statusCode).json(order);
     } catch (error) {
       console.error("Get order error:", error);
       return res.status(500).json({ message: "Internal server error" });
@@ -38,7 +38,7 @@ class OrderController {
 
       const order = await orderService.updateOrder(id, status, shippingAddress);
 
-      return res.status(200).json(order);
+      return res.status(order.statusCode).json(order);
     } catch (error) {
       console.error("Update order error:", error);
       return res.status(500).json({ message: "Internal server error" });
@@ -51,7 +51,7 @@ class OrderController {
 
       const order = await orderService.deleteOrder(id);
 
-      return res.status(204).json(order);
+      return res.status(order.statusCode).json(order);
     } catch (error) {
       console.error("Delete order error:", error);
       return res.status(500).json({ message: "Internal server error" });
