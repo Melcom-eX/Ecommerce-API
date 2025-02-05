@@ -35,14 +35,7 @@ const limiter = rateLimit({
 });
 
 // Middleware setup
-app.use(
-  cors({
-    origin: "*", // Your frontend URL, default to *
-    methods: "*",
-    allowedHeaders: "Content-Type,Authorization",
-    credentials: true,
-  })
-);
+app.use(cors());
 app.use(express.json());
 app.use(helmet());
 app.use(limiter);
