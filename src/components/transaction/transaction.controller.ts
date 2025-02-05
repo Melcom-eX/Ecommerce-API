@@ -21,7 +21,7 @@ class TransactionController {
 
       return res.status(transaction.statusCode).send(transaction);
     } catch (error) {
-      console.error("Delete user error:", error);
+      console.error("Create transaction error:", error);
       return res.status(500).json({ message: "Internal server error" });
     }
   }
