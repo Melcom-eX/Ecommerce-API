@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 
 export const sendOTPToUser = async (userId: string): Promise<string> => {
   const otp = generateOTP(6);
-  const expirationTime = new Date(Date.now() + 5 * 60 * 1000); // OTP valid for 5 minutes
+  const expirationTime = new Date(Date.now() + 20 * 60 * 1000); // OTP valid for 5 minutes
 
   // Save OTP to database with expiration time
   await prisma.user.update({
@@ -11,8 +11,7 @@ export const sendOTPToUser = async (userId: string): Promise<string> => {
     data: { otp, otpExpiration: expirationTime },
   });
 
-  // Assuming you send it via email/SMS here
-  // console.log(`OTP sent to user: ${otp}`);
+
 
   // Return the OTP string
   return otp;
