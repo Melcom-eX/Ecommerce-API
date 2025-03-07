@@ -28,7 +28,6 @@ class AuthController {
       }
 
       const userId = (response as CreateUserResponse).data.id;
-      await cartController.createCartForUser(userId); // create a cart for a user when making the user
 
       // Await the OTP generation and sending process
       const otp = await sendOTPToUser(userId); // Now resolves to a string

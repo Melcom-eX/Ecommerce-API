@@ -32,7 +32,8 @@ model User {
   role          Role          @default(USER)
   orders        Order[]
   reviews       Review[]
-  cart          Cart?
+  cart          Cart?         @relation(fields: [cartId], references: [id])
+  cartId        String?       @unique
   seller        Seller?
   transactions  Transaction[]
 
@@ -159,8 +160,8 @@ model Review {
 
 model Cart {
   id        String     @id @default(uuid())
-  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String     @unique
+  user      User?
+  userId    String?    @unique
   products  CartItem[]
   order     Order?     @relation("CartOrder", fields: [orderId], references: [id], onDelete: SetNull)
   orderId   String?

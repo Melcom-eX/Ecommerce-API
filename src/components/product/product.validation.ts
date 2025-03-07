@@ -54,9 +54,6 @@ export const updateProductValidation = Joi.object({
   categoryId: Joi.string().uuid().optional().messages({
     "string.guid": "Category ID must be a valid UUID",
   }),
-  sellerId: Joi.string().uuid().optional().messages({
-    "string.guid": "Seller ID must be a valid UUID",
-  }),
 });
 
 // Validation schema for deleting a product
