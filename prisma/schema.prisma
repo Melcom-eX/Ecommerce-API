@@ -30,7 +30,6 @@ model User {
   otp           String?
   otpExpiration DateTime?
   role          Role          @default(USER)
-  products      Product[]     @relation("SellerProducts")
   orders        Order[]
   reviews       Review[]
   cart          Cart?
@@ -72,6 +71,7 @@ model Seller {
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
   transactions    Transaction[]
+  products        Product[]     @relation("SellerProducts")
 
   @@index([id, userId, businessName, status, createdAt])
 }
@@ -98,7 +98,7 @@ model Product {
   isApproved  Boolean    @default(false)
   category    Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId  String
-  seller      User       @relation("SellerProducts", fields: [sellerId], references: [id], onDelete: Cascade)
+  seller      Seller     @relation("SellerProducts", fields: [sellerId], references: [id], onDelete: Cascade)
   sellerId    String
   reviews     Review[]
   createdAt   DateTime   @default(now())

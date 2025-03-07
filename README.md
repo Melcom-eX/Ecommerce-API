@@ -47,6 +47,26 @@ Routes define the endpoints of the API and map them to the appropriate controlle
 - **auth.routes.ts**: Contains routes related to authentication.
 - **user.routes.ts**: Contains routes for user management.
 
+### routes for admins
+
+- **category.routes.ts**: Contains routes for category management.
+  - `POST /api/v1/categories`: Requires `isAdmin` middleware.
+  - `PUT /api/v1/categories/:id`: Requires `isAdmin` middleware.
+  - `DELETE /api/v1/categories/:id`: Requires `isAdmin` middleware.
+- **admin.routes.ts**: Contains routes for admin operations.
+  - `POST /api/v1/admin/block-user/:id`: Requires `isAdmin` middleware.
+  - `POST /api/v1/admin/unblock-user/:id`: Requires `isAdmin` middleware.
+  - `DELETE /api/v1/admin/delete-user/:id`: Requires `isAdmin` middleware.
+  - `POST /api/v1/admin/approve-product/:id`: Requires `isAdmin` middleware.
+  - `POST /api/v1/admin/approve-seller/:id`: Requires `isAdmin` middleware.
+  - `GET /api/v1/admin/products`: Requires `isAdmin` middleware.
+- **transaction.routes.ts**: Contains routes for transaction management.
+  - `GET /api/v1/transactions`: Requires `isAdmin` middleware.
+- **cart.routes.ts**: Contains routes for cart management.
+  - `GET /api/v1/carts`: Requires `isAdmin` middleware.
+- **review.routes.ts**: Contains routes for review management.
+  - `GET /api/v1/reviews`: Requires `isAdmin` middleware.
+
 ### 7. **Error Handling**
 
 The application includes a centralized error handling mechanism to manage and respond to errors consistently.

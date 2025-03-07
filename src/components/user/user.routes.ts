@@ -31,7 +31,7 @@ userRoutes.put(
   userController.updateUser
 );
 userRoutes.delete(
-  "/:id",
+  "",
   validateSchema(deleteUserValidation),
   isAdmin,
   userController.deleteUser

@@ -4,7 +4,7 @@ import httpStatus from "http-status";
 import { createErrorResponse, Errors } from "../../error/error";
 import productRepository from "./product.repository";
 import cloudinary from "../../utils/cloudinary";
-
+const prisma = new PrismaClient();
 /**
 this is the service layer for the product component. It contains the business logic for the admin component.
  
@@ -22,6 +22,14 @@ class ProductService {
     sellerId: string
   ): Promise<ProductServiceResponse> {
     try {
+      const seller = await prisma.seller.findUnique({
+        where: { id: sellerId },
+      });
+
+      if (!seller) {
+        throw new Error("Seller not found");
+      }
+
       const product: Product = await productRepository.create({
         name,
         description,

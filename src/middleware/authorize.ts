@@ -196,7 +196,7 @@ const prod = async (req: Request, res: Response, next: NextFunction) => {
       }
 
       // Check if the user is blocked
-      if (!user.isBlocked) {
+      if (user.isBlocked) {
         return res
           .status(403)
           .json({ message: "Access denied. User blocked." });
