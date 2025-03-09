@@ -76,22 +76,30 @@ class CartRepository {
     });
   }
 
-  // Update a cart's items by overwriting all existing items
+  // Update a cart's items
   async updateCartItems(
     cartId: string,
     items: { productId: string; quantity: number }[]
   ) {
-    // Remove existing items
-    await prisma.cartItem.deleteMany({ where: { cartId } });
+    for (const item of items) {
+      await prisma.cartItem.upsert({
+        where: {
+          cartId_productId: {
+            cartId,
+            productId: item.productId,
+          },
+        },
+        update: {
+          quantity: item.quantity, // Update quantity if the item exists
+        },
+        create: {
+          cartId,
+          productId: item.productId,
+          quantity: item.quantity, // Create a new item if it doesn't exist
+        },
+      });
+    }
 
-    // Add the new items
-    await prisma.cartItem.createMany({
-      data: items.map((item) => ({
-        cartId,
-        productId: item.productId,
-        quantity: item.quantity,
-      })),
-    });
     const cart = await this.getCartById(cartId);
     return cart;
   }

@@ -32,10 +32,21 @@ class ReviewRepository {
   }
 
   // Find all reviews
-  async findAll(): Promise<Review[]> {
+  async findAll(productId: string): Promise<Review[]> {
     try {
-      const review = await prisma.review.findMany();
-      return review as Review[];
+      const reviews = await prisma.review.findMany({
+        where: { productId },
+        select: {
+          id: true,
+          productId: true,
+          userId: true,
+          rating: true,
+          comment: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      });
+      return reviews as Review[];
     } catch (error) {
       console.error("Error finding all reviews", error);
       throw new Error("Error finding all reviews");

@@ -5,7 +5,8 @@ class ReviewController {
   // Create a new review
   async createReview(req: Request, res: Response): Promise<Response> {
     try {
-      const { productId, userId, rating, comment } = req.body;
+      const userId = req.user?.id as string;
+      const { productId, rating, comment } = req.body;
       const response: ReviewServiceResponse = await reviewService.createReview({
         productId,
         userId,
@@ -21,9 +22,12 @@ class ReviewController {
   }
 
   // Get all reviews
-  async getAllReviews(req: Request, res: Response): Promise<Response> {
+  async getAllProductsReviews(req: Request, res: Response): Promise<Response> {
     try {
-      const response: ReviewServiceResponse = await reviewService.findAll();
+      const productId = req.params.productId;
+      const response: ReviewServiceResponse = await reviewService.findAll(
+        productId
+      );
 
       return res.status(response.statusCode).send(response);
     } catch (err) {

@@ -35,6 +35,7 @@ const protect = async (req: Request, res: Response, next: NextFunction) => {
           isBlocked: true,
           isVerified: true,
           role: true, // Ensure this field is true
+          cartId: true,
         },
       });
 
