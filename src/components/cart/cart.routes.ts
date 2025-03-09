@@ -4,11 +4,11 @@ import cartController from "./cart.controller";
 import { validateSchema } from "../../middleware/ValidationMiddleware";
 import {
   createCartValidation,
-  updateCartValidation,
   deleteCartValidation,
   addCartItem,
   removeCartItem,
   clearCart,
+  updateCartItemsValidation,
 } from "./cart.validation";
 
 const cartRoutes = Router();
@@ -29,7 +29,7 @@ cartRoutes.post(
 );
 cartRoutes.put(
   "/:cartId",
-  validateSchema(updateCartValidation),
+  validateSchema(updateCartItemsValidation),
   protect,
   cartController.updateCartItems
 );

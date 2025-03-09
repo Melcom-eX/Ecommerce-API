@@ -16,7 +16,9 @@ interface UserDocument extends PrismaUser {
   isVerified: boolean;
   role: Role;
   createdAt: Date;
+  cart: string;
 }
+
 interface UserUpdateInput {
   fullName?: string;
   username?: string;
@@ -32,6 +34,7 @@ interface UserUpdateInput {
   isBlocked?: boolean;
   isVerified?: boolean;
   role?: Role;
+  cartId?: string;
 }
 
 type LoginResponse = {

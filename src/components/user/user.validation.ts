@@ -44,6 +44,9 @@ export const updateUserValidation = Joi.object({
   phone: Joi.string().optional().messages({
     "string.base": "Phone Number must be a string",
   }),
+  cartId: Joi.string().uuid().optional().messages({
+    "string.guid": "User ID must be a valid UUID",
+  }),
   role: Joi.string().optional().messages({
     "string.base": "Role must be a string",
   }),

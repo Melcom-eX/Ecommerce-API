@@ -2,6 +2,7 @@ import httpStatus from "http-status";
 import cartRepository from "./cart.repository";
 import { CartItemServiceResponse, CartServiceResponse } from "./cart.response";
 import { Errors } from "../../error/error";
+import userService from "../user/user.service";
 
 /**
 this is the service layer for the cart component. It contains the business logic for the admin component.
@@ -23,6 +24,9 @@ class CartService {
       }
 
       const newCart = await cartRepository.createCart(userId);
+
+      // Update the user with the new cartId
+      await userService.updateUser(userId, { cartId: newCart.id });
       return {
         statusCode: httpStatus.CREATED,
         status: "success",
