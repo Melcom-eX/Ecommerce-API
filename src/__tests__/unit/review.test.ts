@@ -79,6 +79,12 @@ describe("Review Service Tests", () => {
 
   describe("getReviews", () => {
     it("should get all reviews", async () => {
+      const review = {
+        productId: "1",
+        userId: "1",
+        rating: 5,
+        comment: "Great product",
+      };
       (reviewService.findAll as jest.Mock).mockResolvedValue({
         status: "success",
         error: false,
@@ -86,7 +92,7 @@ describe("Review Service Tests", () => {
         message: "Reviews retrieved successfully",
         data: mockReviews,
       });
-      const response = await reviewService.findAll();
+      const response = await reviewService.findAll(review.productId);
       expect(response).toEqual({
         status: "success",
         error: false,

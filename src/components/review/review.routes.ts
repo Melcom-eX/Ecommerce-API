@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { isAdmin, prod, protect } from "../../middleware/authorize";
+import { protect } from "../../middleware/authorize";
 import reviewController from "./review.controller";
 import {
   validateParams,
@@ -10,14 +10,14 @@ const reviewRoutes = Router();
 
 reviewRoutes.get(
   "/:productId",
-  validateParams(productIdSchema),
   protect,
+  validateParams(productIdSchema),
   reviewController.getAllProductsReviews
 );
 reviewRoutes.post(
   "",
-  validateSchema(reviewSchema),
   protect,
+  validateSchema(reviewSchema),
   reviewController.createReview
 );
 

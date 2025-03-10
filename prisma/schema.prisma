@@ -124,7 +124,8 @@ model Order {
   id              String       @id @default(uuid())
   user            User         @relation(fields: [userId], references: [id])
   userId          String
-  cartItems       Cart[]       @relation("CartOrder")
+  cart            Cart?        @relation("CartOrder", fields: [cartId], references: [id])
+  cartId          String?      @unique
   status          OrderStatus  @default(PENDING)
   totalAmount     Int
   shippingAddress String
@@ -162,9 +163,9 @@ model Cart {
   id        String     @id @default(uuid())
   user      User?      @relation(fields: [userId], references: [id], onDelete: SetNull)
   userId    String?    @unique
-  products  CartItem[]
-  order     Order?     @relation("CartOrder", fields: [orderId], references: [id])
-  orderId   String?
+  cartItems CartItem[]
+  order     Order?     @relation("CartOrder")
+  orderId   String?    @unique
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
 

@@ -4,10 +4,10 @@ import { orderService } from "./order.service";
 class OrderController {
   async createOrder(req: Request, res: Response): Promise<Response> {
     try {
-      const { userId, cartItems, shippingAddress, totalAmount } = req.body;
+      const { userId, cartId, shippingAddress, totalAmount } = req.body;
       const order = await orderService.createOrder(
         userId,
-        cartItems,
+        cartId,
         shippingAddress,
         totalAmount
       );
@@ -30,13 +30,22 @@ class OrderController {
       return res.status(500).json({ message: "Internal server error" });
     }
   }
+  async getOrders(req: Request, res: Response): Promise<Response> {
+    try {
+      const orders = await orderService.getOrders();
+      return res.status(orders.statusCode).json(orders);
+    } catch (error) {
+      console.error("Get orders error:", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
 
   async updateOrder(req: Request, res: Response): Promise<Response> {
     try {
       const { id } = req.params;
-      const { status, shippingAddress } = req.body;
+      const { status } = req.body;
 
-      const order = await orderService.updateOrder(id, status, shippingAddress);
+      const order = await orderService.updateOrder(id, status);
 
       return res.status(order.statusCode).json(order);
     } catch (error) {
