@@ -33,6 +33,8 @@ describe("User Service Tests", () => {
       password: "test-password",
       otp: null,
       otpExpiration: null,
+      cart: "test-cart-id",
+      cartId: "test-cart-id",
     };
   });
 

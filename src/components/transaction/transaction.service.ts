@@ -2,29 +2,37 @@ import httpStatus from "http-status";
 import { transactionRepository } from "./transaction.repository";
 import { TransactionResponse } from "./transaction.response";
 import { TransactionDTO } from "./transaction.validation";
-import { Transaction } from "@prisma/client";
+import {
+  PaymentMethod,
+  Transaction,
+  TransactionStatus,
+  TransactionType,
+} from "@prisma/client";
 import { Errors } from "../../error/error";
 
 class TransactionService {
   async createTransaction(
     userId: string,
-    dto: TransactionDTO
+    orderId: string,
+    sellerId: string,
+    amount: number,
+    status: TransactionStatus,
+    paymentMethod: PaymentMethod,
+    transactionType: TransactionType,
+    referenceId: string,
+    description: string
   ): Promise<TransactionResponse> {
     try {
-      const transactionData = {
-        user: userId,
-        orderId: dto.orderId,
-        sellerId: dto.sellerId,
-        amount: dto.amount,
-        status: dto.status,
-        paymentMethod: dto.paymentMethod,
-        transactionType: dto.transactionType,
-        referenceId: dto.referenceId,
-        description: dto.description,
-      };
-
       const data = await transactionRepository.createTransaction(
-        transactionData
+        userId,
+        orderId,
+        sellerId,
+        amount,
+        status,
+        paymentMethod,
+        transactionType,
+        referenceId,
+        description
       );
       return {
         statusCode: httpStatus.CREATED,

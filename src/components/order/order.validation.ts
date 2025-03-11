@@ -25,7 +25,7 @@ export const createOrderSchema = Joi.object({
 
 export const orderIdSchema = Joi.object({
   orderId: Joi.string().uuid().required().messages({
-    "string.guid": "Invalid Product ID format",
+    "string.guid": "Invalid Order ID format",
     "any.required": "Product ID is required",
   }),
 });

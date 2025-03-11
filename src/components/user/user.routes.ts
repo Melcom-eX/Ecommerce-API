@@ -11,7 +11,7 @@ import {
 import upload from "../../middleware/multer";
 const userRoutes = Router();
 
-userRoutes.get("", protect, isAdmin, userController.getAllUsers);
+userRoutes.get("", isAdmin, userController.getAllUsers);
 userRoutes.get(
   "/:id",
   // validateSchema(getUserValidation),

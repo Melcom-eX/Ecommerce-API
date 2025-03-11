@@ -64,7 +64,7 @@ app.use("/api/v1/admin", adminRoutes);
 app.use("/api/v1/reviews", reviewRoutes);
 app.use("/api/v1/seller", sellerRoutes);
 app.use("/api/v1/transactions", transactionRoutes);
-app.use("/api/v1/transactions", orderRoutes);
+app.use("/api/v1/orders", orderRoutes);
 
 //cronjob for the server to not sleep
 // cron.schedule("* * * * *", () => {
@@ -73,7 +73,4 @@ app.use("/api/v1/transactions", orderRoutes);
 
 app.use("/api/v1/docs", swaggerui.serve, swaggerui.setup(swaggerDocument));
 
-// Start server and connect to the database
-app.listen(port, () => {
-  console.log(`Server started on port ${port}`);
-});
+export default app;

@@ -20,9 +20,9 @@ class OrderController {
 
   async getOrder(req: Request, res: Response): Promise<Response> {
     try {
-      const { id } = req.params;
+      const { orderId } = req.params;
 
-      const order = await orderService.getOrder(id);
+      const order = await orderService.getOrder(orderId);
 
       return res.status(order.statusCode).json(order);
     } catch (error) {
@@ -42,10 +42,10 @@ class OrderController {
 
   async updateOrder(req: Request, res: Response): Promise<Response> {
     try {
-      const { id } = req.params;
+      const { orderId } = req.params;
       const { status } = req.body;
 
-      const order = await orderService.updateOrder(id, status);
+      const order = await orderService.updateOrder(orderId, status);
 
       return res.status(order.statusCode).json(order);
     } catch (error) {
@@ -56,9 +56,9 @@ class OrderController {
 
   async deleteOrder(req: Request, res: Response): Promise<Response> {
     try {
-      const { id } = req.params;
+      const { orderId } = req.params;
 
-      const order = await orderService.deleteOrder(id);
+      const order = await orderService.deleteOrder(orderId);
 
       return res.status(order.statusCode).json(order);
     } catch (error) {

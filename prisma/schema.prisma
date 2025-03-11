@@ -188,9 +188,9 @@ model CartItem {
 model Transaction {
   id              String            @id @default(uuid())
   user            User              @relation(fields: [userId], references: [id])
+  userId          String
   order           Order?            @relation("OrderTransaction", fields: [orderId], references: [id])
   orderId         String?           @unique
-  userId          String
   seller          Seller            @relation(fields: [sellerId], references: [id])
   sellerId        String
   amount          Int

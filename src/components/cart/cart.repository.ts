@@ -7,7 +7,7 @@ class CartRepository {
     // Create a new cart if it doesn't exist
     const cart = await prisma.cart.create({
       data: { userId },
-      include: { products: true },
+      include: { cartItems: true },
     });
 
     return cart;
@@ -58,7 +58,7 @@ class CartRepository {
     return prisma.cart.findUnique({
       where: { userId },
       include: {
-        products: {
+        cartItems: {
           include: { product: true }, // Include product details
         },
       },
@@ -69,7 +69,7 @@ class CartRepository {
   async getAllCarts() {
     return prisma.cart.findMany({
       include: {
-        products: {
+        cartItems: {
           include: { product: true }, // Include product details
         },
       },
@@ -109,7 +109,7 @@ class CartRepository {
     return prisma.cart.findUnique({
       where: { id: cartId },
       include: {
-        products: {
+        cartItems: {
           include: { product: true }, // Include product details
         },
       },

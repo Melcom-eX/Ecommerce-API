@@ -14,9 +14,26 @@ class TransactionController {
           data: null,
         });
       }
+      const {
+        orderId,
+        sellerId,
+        amount,
+        status,
+        paymentMethod,
+        transactionType,
+        referenceId,
+        description,
+      } = req.body;
       const transaction = await transactionService.createTransaction(
         userId,
-        req.body as TransactionDTO
+        orderId,
+        sellerId,
+        amount,
+        status,
+        paymentMethod,
+        transactionType,
+        referenceId,
+        description
       );
 
       return res.status(transaction.statusCode).send(transaction);
@@ -38,8 +55,10 @@ class TransactionController {
 
   async getTransaction(req: Request, res: Response): Promise<Response> {
     try {
-      const { id } = req.params;
-      const transaction = await transactionService.getTransaction(id);
+      const { transactionId } = req.params;
+      const transaction = await transactionService.getTransaction(
+        transactionId
+      );
       return res.status(transaction.statusCode).send(transaction);
     } catch (error) {
       console.error("Error creating transaction:", error);

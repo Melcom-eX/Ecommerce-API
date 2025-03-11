@@ -3,7 +3,11 @@ const jwt = require("jsonwebtoken");
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-const protect = async (req: Request, res: Response, next: NextFunction) => {
+export const protect = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   let token;
 
   if (
@@ -74,7 +78,11 @@ const protect = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
+export const isAdmin = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   let token;
 
   if (
@@ -145,7 +153,7 @@ const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
     return res.status(401).json({ message: "No token provided" });
   }
 };
-const prod = async (req: Request, res: Response, next: NextFunction) => {
+export const prod = async (req: Request, res: Response, next: NextFunction) => {
   let token;
 
   if (
@@ -226,7 +234,7 @@ const prod = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const authorizeChange = async (
+export const authorizeChange = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -297,5 +305,3 @@ const authorizeChange = async (
     return res.status(401).json({ message: "No token provided" });
   }
 };
-
-export { protect, isAdmin, authorizeChange, prod };
