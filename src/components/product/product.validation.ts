@@ -71,3 +71,10 @@ export const categoryQueryValidation = Joi.object({
     "string.guid": "Category ID must be a valid UUID",
   }),
 });
+
+export const productIdSchema = Joi.object({
+  id: Joi.string().uuid().required().messages({
+    "string.guid": "Invalid Order ID format",
+    "any.required": "Product ID is required",
+  }),
+});

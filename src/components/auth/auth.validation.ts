@@ -86,3 +86,10 @@ export const confirmResetPassword = Joi.object({
     "any.required": "newPassword is a required field",
   }),
 });
+
+export const authIdSchema = Joi.object({
+  id: Joi.string().uuid().required().messages({
+    "string.guid": "Invalid Order ID format",
+    "any.required": "Product ID is required",
+  }),
+});

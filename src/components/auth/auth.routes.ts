@@ -1,6 +1,7 @@
 import { Router } from "express";
 import authController from "./auth.controller";
 import {
+  authIdSchema,
   confirmResetPassword,
   login,
   newsletter,
@@ -8,7 +9,10 @@ import {
   ResetPassword,
   validateOTP,
 } from "./auth.validation";
-import { validateSchema } from "../../middleware/ValidationMiddleware";
+import {
+  validateSchema,
+  validateParams,
+} from "../../middleware/ValidationMiddleware";
 import { authorizeChange, protect } from "../../middleware/authorize";
 const authRoutes = Router();
 
@@ -29,20 +33,23 @@ authRoutes.post(
 );
 authRoutes.post(
   "/validate-otp/:id",
+  validateParams(authIdSchema),
   validateSchema(validateOTP),
   authController.validateOTP
 );
 authRoutes.post("/resend-otp/:id", authController.resendOTP);
 authRoutes.post(
   "/reset-password/:id",
-  validateSchema(ResetPassword),
   authorizeChange,
+  validateParams(authIdSchema),
+  validateSchema(ResetPassword),
   authController.ResetPassword
 );
 authRoutes.post(
   "/confirm-reset-password/:id",
-  validateSchema(confirmResetPassword),
   authorizeChange,
+  validateParams(authIdSchema),
+  validateSchema(confirmResetPassword),
   authController.confirmResetPassword
 );
 export default authRoutes;

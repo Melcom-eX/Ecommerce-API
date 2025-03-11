@@ -31,7 +31,7 @@ class UserController {
   //upload user profile
   async uploadProfile(req: Request, res: Response): Promise<Response> {
     try {
-      const { userId } = req.params; // Extract the user ID from the request parameters
+      const { id } = req.params; // Extract the user ID from the request parameters
       const file = req.file; // File uploaded via Multer middleware
 
       if (!file) {
@@ -41,7 +41,7 @@ class UserController {
         });
       }
 
-      const response = await userService.uploadProfile(userId, file);
+      const response = await userService.uploadProfile(id, file);
 
       return res.status(response.statusCode).send(response);
     } catch (err) {

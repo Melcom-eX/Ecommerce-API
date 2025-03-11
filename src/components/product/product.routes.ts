@@ -1,9 +1,13 @@
 import { Router } from "express";
 import { isAdmin, prod, protect } from "../../middleware/authorize";
 import productController from "./product.controller";
-import { validateSchema } from "../../middleware/ValidationMiddleware";
+import {
+  validateSchema,
+  validateParams,
+} from "../../middleware/ValidationMiddleware";
 import {
   createProductValidation,
+  productIdSchema,
   updateProductValidation,
 } from "./product.validation";
 import upload from "../../middleware/multer";
@@ -11,29 +15,36 @@ const productRoutes = Router();
 
 productRoutes.get("", protect, productController.getAllProducts);
 productRoutes.get("/range", protect, productController.filterProductsByPrice);
-productRoutes.get("/:id", protect, productController.getProduct);
+productRoutes.get(
+  "/:id",
+  protect,
+  validateParams(productIdSchema),
+  productController.getProduct
+);
 
 productRoutes.post(
   "",
-  validateSchema(createProductValidation),
   prod,
+  validateSchema(createProductValidation),
   productController.createProduct
 );
 productRoutes.put(
   "/:id",
-  validateSchema(updateProductValidation),
   prod,
+  validateParams(productIdSchema),
+  validateSchema(updateProductValidation),
   productController.updateProduct
 );
 productRoutes.delete(
   "/:id",
-  //   validateSchema(deleteProductValidation),
   prod,
+  validateParams(productIdSchema),
   productController.deleteProduct
 );
 productRoutes.post(
   "/:id/image", // Add `userId` as a route parameter
   prod,
+  validateParams(productIdSchema),
   upload.array("images", 10), // Use multer's array method to handle multiple images
   productController.uploadImages
 );

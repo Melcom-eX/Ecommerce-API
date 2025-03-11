@@ -51,3 +51,10 @@ export const updateUserValidation = Joi.object({
     "string.base": "Role must be a string",
   }),
 });
+
+export const userIdSchema = Joi.object({
+  id: Joi.string().uuid().required().messages({
+    "string.guid": "Invalid Order ID format",
+    "any.required": "Product ID is required",
+  }),
+});

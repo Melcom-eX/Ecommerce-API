@@ -72,10 +72,10 @@ class CartController {
 
   // Clear all products in a cart
   async clearCart(req: Request, res: Response): Promise<Response> {
-    const { cartId } = req.body;
+    const { id } = req.body;
 
     try {
-      const response: CartServiceResponse = await cartService.clearCart(cartId);
+      const response: CartServiceResponse = await cartService.clearCart(id);
 
       return res.status(response.statusCode).send(response);
     } catch (err) {
@@ -86,11 +86,11 @@ class CartController {
 
   // Get a user's cart with products
   async getCartByUserId(req: Request, res: Response): Promise<Response> {
-    const { userId } = req.params || req.user?.id;
+    const { id } = req.params || req.user?.id;
 
     try {
       const response: CartServiceResponse = await cartService.getCartByUserId(
-        userId
+        id
       );
 
       return res.status(response.statusCode).send(response);
@@ -102,12 +102,12 @@ class CartController {
 
   // Update a cart's items by overwriting all existing items
   async updateCartItems(req: Request, res: Response): Promise<Response> {
-    const { cartId } = req.params;
+    const { id } = req.params;
     const { items } = req.body;
 
     try {
       const response: CartServiceResponse = await cartService.updateCartItems(
-        cartId,
+        id,
         items
       );
 
@@ -119,12 +119,10 @@ class CartController {
   }
   // Delete a cart and all its items
   async deleteCart(req: Request, res: Response): Promise<Response> {
-    const { cartId } = req.params;
+    const { id } = req.params;
 
     try {
-      const response: CartServiceResponse = await cartService.deleteCart(
-        cartId
-      );
+      const response: CartServiceResponse = await cartService.deleteCart(id);
 
       return res.status(response.statusCode).send(response);
     } catch (err) {
