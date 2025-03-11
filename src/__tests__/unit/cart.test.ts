@@ -151,7 +151,7 @@ describe("Cart Service Tests", () => {
         message: "Cart retrieved successfully",
         data: mockCart,
       });
-      const result = await cartService.getCartByUserId(mockCart.userId);
+      const result = await cartService.getCartByUserId(mockCart.userId ?? "");
       expect(result).toEqual({
         statusCode: httpStatus.OK,
         status: "success",

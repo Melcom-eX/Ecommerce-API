@@ -7,14 +7,14 @@ import { Order, OrderStatus } from "@prisma/client";
 class OrderService {
   async createOrder(
     userId: string,
-    cartItems: string[],
+    cartId: string,
     shippingAddress: string,
     totalAmount: number
   ): Promise<OrderResponse | typeof Errors.defaultError> {
     try {
       const order = await orderRepository.createOrder(
         userId,
-        cartItems,
+        cartId,
         shippingAddress,
         totalAmount
       );
@@ -76,15 +76,10 @@ class OrderService {
 
   async updateOrder(
     orderId: string,
-    status: OrderStatus,
-    shippingAddress: string
+    status: OrderStatus
   ): Promise<OrderResponse | typeof Errors.defaultError> {
     try {
-      const order = await orderRepository.updateOrder(
-        orderId,
-        status,
-        shippingAddress
-      );
+      const order = await orderRepository.updateOrder(orderId, status);
       return {
         statusCode: httpStatus.OK,
         error: false,

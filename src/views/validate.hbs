@@ -3,7 +3,6 @@
   xmlns:v="urn:schemas-microsoft-com:vml"
   xmlns:o="urn:schemas-microsoft-com:office:office"
 >
-
   <head>
     <title>{{title}}</title>
     <!--[if !mso]><!-- -->
@@ -21,71 +20,83 @@
     </style>
     <!--[if !mso]><!-->
     <style type="text/css">
-      @media only screen and (max-width:480px) { @-ms-viewport { width: 320px; }
-      @viewport { width: 320px; } }
+      @media only screen and (max-width: 480px) { @-ms-viewport { width: 320px;
+      } @viewport { width: 320px; } }
     </style>
     <!--<![endif]-->
   </head>
 
   <body>
-
-    <div style="background-color:#f9f9f9;">
-      <div style="background:#fff;Margin:0px auto;max-width:600px;">
+    <div style="background-color: #f9f9f9">
+      <div style="background: #fff; margin: 0px auto; max-width: 600px">
         <table
           align="center"
           border="0"
           cellpadding="0"
           cellspacing="0"
           role="presentation"
-          style="background:#fff;width:100%;"
+          style="background: #fff; width: 100%"
         >
           <tbody>
             <tr>
-              <td style="padding:20px;text-align:center;">
+              <td style="padding: 20px; text-align: center">
                 <img
                   src="https://res.cloudinary.com/dfagjkyui/image/upload/v1738431285/pickit_logo_sdtlj4.png"
                   alt="[Platform Name] Logo"
-                  style="width: 100px; margin-bottom: 20px;"
+                  style="
+                    width: 100px;
+                    margin-bottom: 20px;
+                    border: 2px solid red;
+                    border-radius: 100px;
+                  "
                 />
 
                 <h2
-                  style="font-family: Arial, sans-serif; font-size: 24px; color: #333;"
+                  style="
+                    font-family: Arial, sans-serif;
+                    font-size: 24px;
+                    color: #333;
+                  "
                 >
                   Welcome to
                   {{PlatformName}},
                   {{Username}}!
                 </h2>
-                <p style="font-size: 16px; color: #555;">Hi {{Username}},</p>
-                <p style="font-size: 16px; color: #555;">
+                <p style="font-size: 16px; color: #555">Hi {{Username}},</p>
+                <p style="font-size: 16px; color: #555">
                   We're excited to have you on board! Get ready to explore all
                   the amazing features
                   {{PlatformName}}
                   has to offer.
                 </p>
-                <p style="font-size: 16px; color: #555;">
+                <p style="font-size: 16px; color: #555">
                   Your OTP for account verification is:
-
                 </p>
 
                 <div
-                  style="display: flex; justify-content: center; align-items: center; width: 100%; font-size: larger;"
+                  style="
+                    display: flex;
+                    justify-content: center;
+                    text-align: center;
+                    width: 100%;
+                    font-size: larger;
+                  "
                 >
-                  <p> <strong>{{OTP}}</strong></p>
+                  <p><strong>{{OTP}}</strong></p>
                 </div>
-                <p style="font-size: 16px; color: #555;">
+                <p style="font-size: 16px; color: #555">
                   Please enter this code in the verification section to complete
                   your signup process.
                 </p>
-
               </td>
             </tr>
             <tr>
-              <td style="text-align:center; padding:40px 20px;">
-                <p style="font-size: 14px; color: #888;">If you have any
-                  questions, feel free to
+              <td style="text-align: center; padding: 40px 20px">
+                <p style="font-size: 14px; color: #888">
+                  If you have any questions, feel free to
                   <a
                     href="mailto:support@example.com"
-                    style="color:#2F67F6;"
+                    style="color: #2f67f6"
                   >contact us</a>. We're here to help!
                 </p>
               </td>
@@ -93,33 +104,6 @@
           </tbody>
         </table>
       </div>
-
-      <div style="Margin:0px auto;max-width:600px;">
-        <table
-          align="center"
-          border="0"
-          cellpadding="0"
-          cellspacing="0"
-          role="presentation"
-          style="width:100%;"
-        >
-          <tbody>
-            <tr>
-              <td style="text-align:center;padding:20px;">
-                <p style="font-size:12px;color:#575757;">[Company Name], 123
-                  Main St, Anytown, USA</p>
-                <p style="font-size:12px;color:#575757;"><a
-                    href="[Unsubscribe Link]"
-                    style="color:#575757;"
-                  >Unsubscribe</a>
-                  from our emails</p>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
     </div>
-
   </body>
-
 </html>

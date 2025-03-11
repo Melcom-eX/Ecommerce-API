@@ -40,9 +40,9 @@ class ReviewService {
   }
 
   // Find all reviews
-  async findAll(): Promise<ReviewServiceResponse> {
+  async findAll(productId: string): Promise<ReviewServiceResponse> {
     try {
-      const review: Review[] = await reviewRepository.findAll();
+      const review: Review[] = await reviewRepository.findAll(productId);
       return {
         status: "success",
         statusCode: 200,

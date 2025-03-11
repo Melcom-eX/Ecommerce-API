@@ -44,10 +44,17 @@ export const updateUserValidation = Joi.object({
   phone: Joi.string().optional().messages({
     "string.base": "Phone Number must be a string",
   }),
-  major: Joi.string().optional().messages({
-    "string.base": "Major must be a string",
+  cartId: Joi.string().uuid().optional().messages({
+    "string.guid": "User ID must be a valid UUID",
   }),
   role: Joi.string().optional().messages({
     "string.base": "Role must be a string",
+  }),
+});
+
+export const userIdSchema = Joi.object({
+  id: Joi.string().uuid().required().messages({
+    "string.guid": "Invalid Order ID format",
+    "any.required": "Product ID is required",
   }),
 });

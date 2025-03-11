@@ -30,10 +30,10 @@ model User {
   otp           String?
   otpExpiration DateTime?
   role          Role          @default(USER)
-  products      Product[]     @relation("SellerProducts")
   orders        Order[]
   reviews       Review[]
   cart          Cart?
+  cartId        String?
   seller        Seller?
   transactions  Transaction[]
 
@@ -72,6 +72,7 @@ model Seller {
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
   transactions    Transaction[]
+  products        Product[]     @relation("SellerProducts")
 
   @@index([id, userId, businessName, status, createdAt])
 }
@@ -98,7 +99,7 @@ model Product {
   isApproved  Boolean    @default(false)
   category    Category   @relation(fields: [categoryId], references: [id])
   categoryId  String
-  seller      User       @relation("SellerProducts", fields: [sellerId], references: [id])
+  seller      Seller     @relation("SellerProducts", fields: [sellerId], references: [id])
   sellerId    String
   reviews     Review[]
   createdAt   DateTime   @default(now())
@@ -123,7 +124,8 @@ model Order {
   id              String       @id @default(uuid())
   user            User         @relation(fields: [userId], references: [id])
   userId          String
-  cartItems       Cart[]       @relation("CartOrder")
+  cart            Cart?        @relation("CartOrder", fields: [cartId], references: [id])
+  cartId          String?      @unique
   status          OrderStatus  @default(PENDING)
   totalAmount     Int
   shippingAddress String
@@ -159,11 +161,11 @@ model Review {
 
 model Cart {
   id        String     @id @default(uuid())
-  user      User       @relation(fields: [userId], references: [id])
-  userId    String     @unique
-  products  CartItem[]
-  order     Order?     @relation("CartOrder", fields: [orderId], references: [id])
-  orderId   String?
+  user      User?      @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId    String?    @unique
+  cartItems CartItem[]
+  order     Order?     @relation("CartOrder")
+  orderId   String?    @unique
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
 
@@ -186,9 +188,9 @@ model CartItem {
 model Transaction {
   id              String            @id @default(uuid())
   user            User              @relation(fields: [userId], references: [id])
+  userId          String
   order           Order?            @relation("OrderTransaction", fields: [orderId], references: [id])
   orderId         String?           @unique
-  userId          String
   seller          Seller            @relation(fields: [sellerId], references: [id])
   sellerId        String
   amount          Int

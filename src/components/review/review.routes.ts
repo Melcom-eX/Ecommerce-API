@@ -1,15 +1,23 @@
 import { Router } from "express";
-import { isAdmin, prod, protect } from "../../middleware/authorize";
+import { protect } from "../../middleware/authorize";
 import reviewController from "./review.controller";
-import { validateSchema } from "../../middleware/ValidationMiddleware";
-import { reviewSchema } from "./review.validation";
+import {
+  validateParams,
+  validateSchema,
+} from "../../middleware/ValidationMiddleware";
+import { productIdSchema, reviewSchema } from "./review.validation";
 const reviewRoutes = Router();
 
-reviewRoutes.get("", protect, reviewController.getAllReviews);
+reviewRoutes.get(
+  "/:productId",
+  protect,
+  validateParams(productIdSchema),
+  reviewController.getAllProductsReviews
+);
 reviewRoutes.post(
   "",
-  validateSchema(reviewSchema),
   protect,
+  validateSchema(reviewSchema),
   reviewController.createReview
 );
 

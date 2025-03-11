@@ -1,48 +1,60 @@
 import { Router } from "express";
 import { isAdmin, protect } from "../../middleware/authorize";
 import cartController from "./cart.controller";
-import { validateSchema } from "../../middleware/ValidationMiddleware";
+import {
+  validateSchema,
+  validateParams,
+} from "../../middleware/ValidationMiddleware";
 import {
   createCartValidation,
-  updateCartValidation,
   deleteCartValidation,
   addCartItem,
   removeCartItem,
   clearCart,
+  updateCartItemsValidation,
+  cartIdSchema,
 } from "./cart.validation";
 
 const cartRoutes = Router();
 
 cartRoutes.get("", isAdmin, cartController.getAllCarts);
-cartRoutes.get("/:userId", protect, cartController.getCartByUserId);
+cartRoutes.get(
+  "/:id",
+  protect,
+  validateParams(cartIdSchema),
+  cartController.getCartByUserId
+);
 cartRoutes.post(
   "",
-  validateSchema(createCartValidation),
   protect,
+  validateParams(cartIdSchema),
+  validateSchema(createCartValidation),
   cartController.createCart
 );
 cartRoutes.post(
   "/item",
-  validateSchema(addCartItem),
   protect,
+  validateParams(cartIdSchema),
+  validateSchema(addCartItem),
   cartController.addCartItem
 );
 cartRoutes.put(
-  "/:cartId",
-  validateSchema(updateCartValidation),
+  "/:id",
   protect,
+  validateParams(cartIdSchema),
+  validateSchema(updateCartItemsValidation),
   cartController.updateCartItems
 );
 cartRoutes.delete(
-  "/:cartId",
-  // validateSchema(deleteCartValidation),
+  "/:id",
   protect,
+  validateParams(cartIdSchema),
   cartController.deleteCart
 );
 cartRoutes.delete(
   "/item/:id",
-  // validateSchema(removeCartItem),
   protect,
+  validateParams(cartIdSchema),
   cartController.removeCartItem
 );
 cartRoutes.delete(

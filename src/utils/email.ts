@@ -17,6 +17,7 @@ class EmailService {
       host: process.env.EMAIL_PROVIDER,
       port: Number(process.env.SERVICE_PORT),
       secure: false,
+      service: "gmail",
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,

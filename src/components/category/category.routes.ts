@@ -1,8 +1,12 @@
 import { Router } from "express";
 import { isAdmin, protect } from "../../middleware/authorize";
 import categoryController from "./category.controller";
-import { validateSchema } from "../../middleware/ValidationMiddleware";
 import {
+  validateSchema,
+  validateParams,
+} from "../../middleware/ValidationMiddleware";
+import {
+  categoryIdSchema,
   createCategoryValidation,
   deleteCategoryValidation,
   updateCategoryValidation,
@@ -10,23 +14,30 @@ import {
 const categoryRoutes = Router();
 
 categoryRoutes.get("", protect, categoryController.getAllCategories);
-categoryRoutes.get("/:id", protect, categoryController.getCategory);
+categoryRoutes.get(
+  "/:id",
+  protect,
+  validateParams(categoryIdSchema),
+  categoryController.getCategory
+);
 categoryRoutes.post(
   "",
-  validateSchema(createCategoryValidation),
   isAdmin,
+  validateSchema(createCategoryValidation),
   categoryController.createCategory
 );
 categoryRoutes.put(
   "/:id",
-  validateSchema(updateCategoryValidation),
   isAdmin,
+  validateParams(categoryIdSchema),
+  validateSchema(updateCategoryValidation),
   categoryController.updateCategory
 );
 categoryRoutes.delete(
   "/:id",
-  validateSchema(deleteCategoryValidation),
   isAdmin,
+  validateParams(categoryIdSchema),
+  validateSchema(deleteCategoryValidation),
   categoryController.deleteCategory
 );
 

@@ -103,8 +103,11 @@ class UserService {
         },
       };
     } catch (error) {
-      console.error(error);
-
+      if ((error as any).code === "P2002") {
+        console.error("Username already exists!");
+      } else {
+        console.error("Error creating user:", error);
+      }
       return Errors.defaultError;
     }
   }

@@ -108,6 +108,7 @@ class ProductRepository {
       return prisma.product.findMany({
         where: {
           categoryId,
+          isApproved: true,
         },
       });
     } catch (error) {

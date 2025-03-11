@@ -2,8 +2,6 @@ import Joi from "joi";
 
 // Joi validation schema for Transaction
 export const transactionValidationSchema = Joi.object({
-  id: Joi.string().uuid().required(), // UUID format for id
-  userId: Joi.string().uuid().required(), // UUID format for userId
   orderId: Joi.string().uuid().optional().allow(null), // Nullable UUID format for orderId
   sellerId: Joi.string().uuid().required(), // UUID format for sellerId
   amount: Joi.number().positive().required(), // Positive decimal value
@@ -18,10 +16,13 @@ export const transactionValidationSchema = Joi.object({
     .default("PURCHASE"),
   referenceId: Joi.string().optional().allow(null), // Nullable unique string
   description: Joi.string().max(255).optional().allow(null), // Optional description with max length
-  createdAt: Joi.date().default(() => new Date()),
-  updatedAt: Joi.date().default(() => new Date()),
 });
-
+export const transactionIdSchema = Joi.object({
+  transactionId: Joi.string().uuid().required().messages({
+    "string.guid": "Invalid Order ID format",
+    "any.required": "Transaction ID is required",
+  }),
+});
 // Transaction DTO (Data Transfer Object)
 export type TransactionDTO = {
   orderId?: string | null; // Nullable Order ID

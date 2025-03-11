@@ -1,11 +1,10 @@
 import { transactionService } from "../../components/transaction/transaction.service";
-import { Transaction } from "@prisma/client";
+import {
+  PaymentMethod,
+  TransactionStatus,
+  TransactionType,
+} from "@prisma/client";
 import httpStatus from "http-status";
-
-// Define the allowed transaction statuses
-type TransactionStatus = "PENDING" | "FAILED" | "COMPLETED";
-type PaymentMethod = "CREDIT_CARD" | "PAYPAL";
-type TransactionType = "PURCHASE" | "REFUND";
 
 // Define the DTO interface
 interface TransactionDTO {
@@ -37,9 +36,9 @@ const mockTransactions: TransactionDTO[] = [
     orderId: "abc12345-def6-7890-ghij-klmnopqrstuv",
     sellerId: "98765432-1abc-4def-5678-90fedcba4321",
     amount: 5000,
-    status: "PENDING", // Changed from SUCCESS to PENDING to match DTO
-    paymentMethod: "CREDIT_CARD",
-    transactionType: "PURCHASE",
+    status: TransactionStatus.PENDING, // Changed from SUCCESS to PENDING to match DTO
+    paymentMethod: PaymentMethod.CREDIT_CARD,
+    transactionType: TransactionType.PURCHASE,
     referenceId: "TXN-001-2025",
     description: "Payment for order #12345",
     createdAt: new Date("2025-01-18T10:00:00Z"),
@@ -50,9 +49,9 @@ const mockTransactions: TransactionDTO[] = [
     orderId: null,
     sellerId: "12345abc-6def-7890-4321-fedcba987654",
     amount: 12000,
-    status: "COMPLETED", // Changed from SUCCESS to COMPLETED to match DTO
-    paymentMethod: "PAYPAL",
-    transactionType: "REFUND",
+    status: TransactionStatus.SUCCESS, // Changed from SUCCESS to COMPLETED to match DTO
+    paymentMethod: PaymentMethod.CREDIT_CARD,
+    transactionType: TransactionType.REFUND,
     referenceId: "TXN-002-2025",
     description: "Refund for order #67890",
     createdAt: new Date("2025-01-17T15:30:00Z"),
@@ -81,8 +80,15 @@ describe("Transaction Service Tests", () => {
       );
 
       const result = await transactionService.createTransaction(
-        mockTransaction.userId,
-        mockTransaction
+        mockTransaction.userId!,
+        mockTransaction.orderId!,
+        mockTransaction.sellerId!,
+        mockTransaction.amount!,
+        mockTransaction.status!,
+        mockTransaction.paymentMethod!,
+        mockTransaction.transactionType!,
+        mockTransaction.referenceId!,
+        mockTransaction.description!
       );
 
       expect(result).toEqual({

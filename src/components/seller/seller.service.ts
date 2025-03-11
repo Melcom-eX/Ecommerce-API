@@ -1,5 +1,5 @@
 // src/services/seller.service.ts
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Seller } from "@prisma/client";
 import { CreateSellerDto } from "./seller.validation";
 import createError from "http-errors";
 import { SellerResponse } from "./seller.response";
@@ -73,6 +73,12 @@ class SellerService {
       console.error("Error creating seller:", error);
       throw error;
     }
+  }
+  async findById(id: string): Promise<any> {
+    const seller = prisma.seller.findUnique({
+      where: { id },
+    });
+    return seller;
   }
 }
 

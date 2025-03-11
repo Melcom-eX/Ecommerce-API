@@ -24,6 +24,7 @@ class UserRepository {
         isBlocked: true,
         isVerified: true,
         role: true,
+        cartId: true,
         // Exclude password
       },
     });
@@ -50,6 +51,7 @@ class UserRepository {
         isBlocked: true,
         isVerified: true,
         role: true,
+        cartId: true,
         // Exclude password
       },
     });
