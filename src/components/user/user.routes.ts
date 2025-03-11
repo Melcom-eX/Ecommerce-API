@@ -7,9 +7,7 @@ import {
 } from "../../middleware/ValidationMiddleware";
 import {
   deleteUserValidation,
-  getUserValidation,
   updateUserValidation,
-  uploadProfile,
   userIdSchema,
 } from "./user.validation";
 import upload from "../../middleware/multer";

@@ -73,4 +73,6 @@ app.use("/api/v1/orders", orderRoutes);
 
 app.use("/api/v1/docs", swaggerui.serve, swaggerui.setup(swaggerDocument));
 
-export default app;
+app.listen(port, () => {
+  console.log(`Server started on port ${port}`);
+});

@@ -3,7 +3,17 @@ jest.mock("../../components/user/user.repository");
 
 import userService from "../../components/user/user.service";
 import { UserDocument } from "../../components/user/user.response";
+import { NextFunction } from "express";
+jest.mock("../../middleware/authorize", () => ({
+  isAdmin: jest.fn((req: Request, res: Response, next: NextFunction) => next()), // Auto-call next()
+  protect: jest.fn((req: Request, res: Response, next: NextFunction) => next()),
+}));
 
+jest.mock("../../middleware/multer", () => ({
+  single: jest.fn(
+    () => (req: Request, res: Response, next: NextFunction) => next()
+  ), // Mock multer
+}));
 describe("User Service Tests", () => {
   let userId: string;
   let user: UserDocument;
