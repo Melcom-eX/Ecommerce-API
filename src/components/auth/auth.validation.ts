@@ -76,6 +76,9 @@ export const confirmResetPassword = Joi.object({
     "any.required": "ID is a required field",
   }),
   OTP: Joi.number().required().messages({
+
+
+    
     "number.base": "OTP must be a number",
     "number.empty": "OTP is required",
     "any.required": "OTP is a required field",
