@@ -22,9 +22,9 @@ class SellerService {
         throw createError(404, "User not found");
       }
 
-      if (user.role === "SELLER") {
-        throw createError(400, "User is already a seller");
-      }
+      // if (user.role === "SELLER") {
+      //   throw createError(400, "User is already a seller");
+      // }
 
       // Use transaction to ensure both operations succeed or fail together
       const seller = await prisma.$transaction(async (tx) => {
