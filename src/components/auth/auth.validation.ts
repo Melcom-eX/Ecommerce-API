@@ -19,6 +19,9 @@ export const register = Joi.object({
     "any.required": "Email is a required field",
     "string.email": "Email must be a valid email address",
   }),
+  role: Joi.string().optional().messages({
+    "string.base": "role Name must be a string",
+  }),
 });
 
 // Login validator schema
@@ -76,9 +79,6 @@ export const confirmResetPassword = Joi.object({
     "any.required": "ID is a required field",
   }),
   OTP: Joi.number().required().messages({
-
-
-    
     "number.base": "OTP must be a number",
     "number.empty": "OTP is required",
     "any.required": "OTP is a required field",
