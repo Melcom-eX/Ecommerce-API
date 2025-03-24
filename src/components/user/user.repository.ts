@@ -63,11 +63,13 @@ class UserRepository {
     username,
     password,
     email,
+    role,
     wallet,
   }: {
     username: string;
     password: string;
     email: string;
+    role: Role;
     wallet: number;
   }): Promise<UserDocument> {
     const user = await prisma.user.create({
@@ -75,6 +77,7 @@ class UserRepository {
         username,
         password,
         email,
+        role,
         wallet,
       },
     });
