@@ -69,7 +69,8 @@ class UserService {
   async createUser(
     username: string,
     password: string,
-    email: string
+    email: string,
+    role: Role
   ): Promise<
     CreateUserResponse | typeof Errors.noDuplicate | typeof Errors.defaultError
   > {
@@ -85,6 +86,7 @@ class UserService {
         username,
         password: hashedPassword,
         email,
+        role,
         wallet,
       });
 

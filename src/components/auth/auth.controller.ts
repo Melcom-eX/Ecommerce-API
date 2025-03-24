@@ -18,10 +18,15 @@ class AuthController {
   }
 
   async signup(req: Request, res: Response): Promise<Response> {
-    const { username, password, email } = req.body;
+    const { username, password, email, role } = req.body;
 
     try {
-      const response = await userService.createUser(username, password, email);
+      const response = await userService.createUser(
+        username,
+        password,
+        email,
+        role
+      );
 
       if (response.error) {
         return res.status(response.statusCode).json(response);
