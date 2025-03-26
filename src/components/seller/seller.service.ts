@@ -76,9 +76,13 @@ class SellerService {
   }
   async findById(id: string): Promise<any> {
     const seller = prisma.seller.findUnique({
-      where: { id },
+      where: { userId: id },
     });
     return seller;
+  }
+  async findAll(): Promise<Seller[]> {
+    const sellers = prisma.seller.findMany();
+    return sellers;
   }
 }
 
