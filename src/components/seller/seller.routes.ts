@@ -1,7 +1,7 @@
 // src/routes/seller.routes.ts
 import express from "express";
 import { sellerController } from "./seller.controller";
-import { protect } from "../../middleware/authorize";
+import { isAdmin, protect } from "../../middleware/authorize";
 import { validateSchema } from "../../middleware/ValidationMiddleware";
 import { createSellerSchema } from "./seller.validation";
 
@@ -13,5 +13,7 @@ sellerRoutes.post(
   protect, // Ensures user is authenticated and verified
   sellerController.createSeller
 );
+sellerRoutes.get("/:id", isAdmin, sellerController.getSellerById);
+sellerRoutes.get("", isAdmin, sellerController.getAllSellers);
 
 export default sellerRoutes;
