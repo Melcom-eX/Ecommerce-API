@@ -52,7 +52,6 @@ describe("SellerController", () => {
       logo: "test-logo.jpg",
       rating: 0,
       totalSales: 0,
-      isVerified: false,
       createdAt: new Date(),
       sellerType: "MARKETPLACE",
     };

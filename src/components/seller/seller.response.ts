@@ -9,6 +9,5 @@ export interface SellerResponse {
   logo?: string | null;
   rating: number;
   totalSales: number;
-  isVerified: boolean;
   createdAt: Date;
 }

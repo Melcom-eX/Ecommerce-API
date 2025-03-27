@@ -66,7 +66,6 @@ class SellerService {
         logo: seller.logo,
         rating: seller.rating,
         totalSales: seller.totalSales,
-        isVerified: seller.isVerified,
         createdAt: seller.createdAt,
       };
     } catch (error) {

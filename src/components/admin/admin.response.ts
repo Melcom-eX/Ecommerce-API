@@ -44,7 +44,7 @@ interface ApproveSeller {
   message: string;
   data: {
     id: string;
-    isVerified: boolean;
+    status: string;
   };
 }
 
