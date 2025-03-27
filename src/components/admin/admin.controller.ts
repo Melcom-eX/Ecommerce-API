@@ -51,9 +51,10 @@ class AdminController {
 
   async approveSeller(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
+    const { status } = req.body;
 
     try {
-      const response = await adminService.approveSeller(id);
+      const response = await adminService.approveSeller(id, status);
       return res.status(response.statusCode).send(response);
     } catch (err) {
       console.error("Approve seller error:", err);

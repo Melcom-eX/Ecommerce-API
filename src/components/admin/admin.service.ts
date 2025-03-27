@@ -11,7 +11,7 @@ import {
 import userRepository from "../user/user.repository";
 import productRepository from "../product/product.repository";
 import { ProductServiceResponse } from "../product/product.response";
-import { Product } from "@prisma/client";
+import { Product, SellerStatus } from "@prisma/client";
 
 /**
 this is the service layer for the admin component. It contains the business logic for the admin component.
@@ -100,10 +100,11 @@ class AdminService {
   }
 
   async approveSeller(
-    id: string
+    id: string,
+    status: SellerStatus
   ): Promise<ApproveSeller | typeof Errors.doesNotExist> {
     try {
-      const seller = await adminRepository.approveSeller(id);
+      const seller = await adminRepository.approveSeller(id, status);
       if (!seller) return Errors.doesNotExist;
       return {
         status: "success",
@@ -112,7 +113,7 @@ class AdminService {
         message: "Seller verified successfully",
         data: {
           id: seller.id,
-          isVerified: seller.isVerified,
+          status: seller.status,
         },
       };
     } catch (error) {

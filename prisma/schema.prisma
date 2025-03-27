@@ -68,7 +68,6 @@ model Seller {
   documents       String[] // Array of verification document URLs
   rating          Float         @default(0)
   totalSales      Int           @default(0)
-  isVerified      Boolean       @default(false)
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
   transactions    Transaction[]
