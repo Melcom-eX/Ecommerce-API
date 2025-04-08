@@ -23,6 +23,22 @@ class ReviewRepository {
           rating,
           comment,
         },
+        include: {
+          user: {
+            select: {
+              id: true,
+              fullName: true,
+              email: true,
+            },
+          },
+          product: {
+            select: {
+              id: true,
+              name: true,
+              description: true,
+            },
+          },
+        },
       });
       return review as Review;
     } catch (error) {

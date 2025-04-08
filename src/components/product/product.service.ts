@@ -23,6 +23,7 @@ class ProductService {
     sellerId: string
   ): Promise<ProductServiceResponse> {
     try {
+      console.log("Seller ID:", sellerId);
       const seller = await sellerService.findById(sellerId);
 
       if (!seller) {

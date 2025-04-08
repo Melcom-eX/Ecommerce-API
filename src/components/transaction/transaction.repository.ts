@@ -42,6 +42,11 @@ class TransactionRepository {
         referenceId,
         description,
       },
+      include: {
+        order: true,
+        user: true,
+        seller: true,
+      },
     });
   }
 }
