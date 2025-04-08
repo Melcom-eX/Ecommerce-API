@@ -73,9 +73,9 @@ class SellerService {
       throw error;
     }
   }
-  async findById(id: string): Promise<any> {
+  async findById(sellerId: string): Promise<any> {
     const seller = prisma.seller.findUnique({
-      where: { userId: id },
+      where: { id: sellerId },
     });
     return seller;
   }
